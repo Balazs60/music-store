@@ -10,15 +10,24 @@ const MainPage: React.FC = () => {
     fetchInstruments();
   }, []);
 
-  const fetchInstruments = async () => {
-    try {
-      const response = await fetch('/products');
-      const data = await response.json();
-      setInstruments(data);
-    } catch (error) {
-      console.error('Error fetching instruments:', error);
-    }
-  };
+
+    const fetchInstruments = () => {
+      fetch('/api/products' ,{method:"GET"})
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then(data => {
+          console.log(data)
+          setInstruments(data);
+        })
+        .catch(error => {
+          console.error('Error fetching instruments:', error);
+        });
+    };
+    
 
   const handleCategoryChange = (category: string) => {
     setSelectedCategory(category);
@@ -56,7 +65,7 @@ const MainPage: React.FC = () => {
       <ul className="list-group">
         {instruments.map((instrument, index) => (
           <li key={index} className="list-group-item">
-            {instrument}
+            {instrument.name}
           </li>
         ))}
       </ul>
