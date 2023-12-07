@@ -1,13 +1,14 @@
 import "bootstrap/dist/css/bootstrap.min.css"
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom"
 import MainPage from "./Pages/MaingPage"
+import Guitar from "./Pages/Guitar"
 
 function App() {
   return(
     <Router>
     <Routes>
       <Route path="/" element={<MainPage/>}/>
-      <Route path="/new" element={<h1>new</h1>}/>
+      <Route path="/guitars" element={<Guitar/>}/>
     </Routes>
     </Router>
   )

@@ -1,36 +1,37 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Dropdown, ButtonGroup, Row, Col } from 'react-bootstrap';
 
 const MainPage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('');
-  const [instruments, setInstruments] = useState<string[]>([]);
+  const [guitars, setGuitars] = useState<string[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchInstruments();
   }, []);
 
-
-    const fetchInstruments = () => {
-      fetch('/api/products' ,{method:"GET"})
-        .then(response => {
-          if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-          }
-          return response.json();
-        })
-        .then(data => {
-          console.log(data)
-          setInstruments(data);
-        })
-        .catch(error => {
-          console.error('Error fetching instruments:', error);
-        });
-    };
-    
+  const fetchInstruments = () => {
+    fetch('/api/mainpage/guitars', { method: 'GET' })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log(data);
+        setGuitars(data);
+      })
+      .catch(error => {
+        console.error('Error fetching instruments:', error);
+      });
+  };
 
   const handleCategoryChange = (category: string) => {
     setSelectedCategory(category);
+    navigate('/guitars');
   };
 
   return (
@@ -42,7 +43,7 @@ const MainPage: React.FC = () => {
               Select Category
             </Dropdown.Toggle>
             <Dropdown.Menu>
-              {['Pengetős', 'Ütős', 'Billentyűs', 'Fúvós'].map((category, index) => (
+              {['Gitár', 'Ütős', 'Billentyűs', 'Fúvós'].map((category, index) => (
                 <Dropdown.Item
                   key={index}
                   onClick={() => handleCategoryChange(category)}
@@ -63,9 +64,9 @@ const MainPage: React.FC = () => {
 
       <h1 className="mt-3">List of Instruments</h1>
       <ul className="list-group">
-        {instruments.map((instrument, index) => (
+        {guitars.map((guitar, index) => (
           <li key={index} className="list-group-item">
-            {instrument.name}
+            {guitar.name}
           </li>
         ))}
       </ul>
