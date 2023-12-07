@@ -9,7 +9,10 @@ import lombok.*;
 import java.util.UUID;
 
 @Entity
+@Setter
+    @Getter
 public abstract class Product {
+    String Brand;
 
     String name;
     @Id
