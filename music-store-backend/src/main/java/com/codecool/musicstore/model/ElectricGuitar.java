@@ -5,7 +5,7 @@ import jakarta.persistence.Table;
 import lombok.*;
 
 
-
+@Entity
 
 @Getter
 @Setter
