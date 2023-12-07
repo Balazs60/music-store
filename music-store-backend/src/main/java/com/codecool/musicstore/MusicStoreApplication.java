@@ -1,6 +1,5 @@
 package com.codecool.musicstore;
 
-import com.codecool.musicstore.Service.Dao.ProductDao;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
