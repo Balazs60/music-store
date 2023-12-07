@@ -5,13 +5,13 @@ import jakarta.persistence.Table;
 import lombok.*;
 
 @Entity
-@Builder
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @Table(name = "guitar")
-public class Guitar extends Product {
+public abstract class Guitar extends Product {
     private int numberOfStrings;
 
 

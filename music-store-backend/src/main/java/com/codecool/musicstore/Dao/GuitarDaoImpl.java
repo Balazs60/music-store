@@ -1,5 +1,7 @@
 package com.codecool.musicstore.Dao;
 
+import com.codecool.musicstore.model.AcousticGuitar;
+import com.codecool.musicstore.model.ElectricGuitar;
 import com.codecool.musicstore.model.Guitar;
 import com.codecool.musicstore.repositories.GuitarRepositoriy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,12 +116,25 @@ public class GuitarDaoImpl implements GuitarDao {
         };
 
         for(int i =0;i<20;i++){
-            Guitar guitar=new Guitar();
-            guitar.setBrand(guitarBrands[random.nextInt(guitarBrands.length)]);
-            guitar.setName(guitarBrands[random.nextInt(guitarNames.length)]);
-            guitar.setCollor(guitarBrands[random.nextInt(guitarColors.length)]);
-            guitar.setPriece(random.nextInt(200));
-            guitars.add(guitar);
+
+
+            AcousticGuitar acousticGuitar=new AcousticGuitar();
+
+            acousticGuitar.setBrand(guitarBrands[random.nextInt(guitarBrands.length)]);
+            acousticGuitar.setName(guitarBrands[random.nextInt(guitarNames.length)]);
+            acousticGuitar.setCollor(guitarBrands[random.nextInt(guitarColors.length)]);
+            acousticGuitar.setPriece(random.nextInt(200));
+            guitars.add(acousticGuitar);
+
+
+            ElectricGuitar electricGuitar=new ElectricGuitar();
+            electricGuitar.setBrand(guitarBrands[random.nextInt(guitarBrands.length)]);
+            electricGuitar.setName(guitarBrands[random.nextInt(guitarNames.length)]);
+            electricGuitar.setCollor(guitarBrands[random.nextInt(guitarColors.length)]);
+            electricGuitar.setPriece(random.nextInt(200));
+            guitars.add(electricGuitar);
+
+
         }
         guitarRepositoriy.saveAll(guitars);
 
