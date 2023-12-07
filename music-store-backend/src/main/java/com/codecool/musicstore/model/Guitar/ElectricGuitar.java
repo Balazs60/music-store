@@ -1,7 +1,6 @@
-package com.codecool.musicstore.model;
+package com.codecool.musicstore.model.Guitar;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
 import lombok.*;
 
 

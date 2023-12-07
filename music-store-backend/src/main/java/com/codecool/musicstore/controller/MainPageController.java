@@ -1,6 +1,6 @@
 package com.codecool.musicstore.controller;
 
-import com.codecool.musicstore.model.Guitar;
+import com.codecool.musicstore.model.Guitar.Guitar;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

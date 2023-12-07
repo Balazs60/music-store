@@ -1,11 +1,10 @@
 package com.codecool.musicstore.Dao;
 
-import com.codecool.musicstore.model.AcousticGuitar;
-import com.codecool.musicstore.model.ElectricGuitar;
-import com.codecool.musicstore.model.Guitar;
+import com.codecool.musicstore.model.Guitar.AcousticGuitar;
+import com.codecool.musicstore.model.Guitar.ElectricGuitar;
+import com.codecool.musicstore.model.Guitar.Guitar;
 import com.codecool.musicstore.repositories.GuitarRepositoriy;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
