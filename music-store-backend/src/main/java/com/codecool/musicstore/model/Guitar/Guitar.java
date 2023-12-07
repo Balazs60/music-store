@@ -1,5 +1,6 @@
-package com.codecool.musicstore.model;
+package com.codecool.musicstore.model.Guitar;
 
+import com.codecool.musicstore.model.Product;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.*;
@@ -10,7 +11,7 @@ import lombok.*;
 @AllArgsConstructor
 @Getter
 @Setter
-@Table(name = "guitar")
+
 public abstract class Guitar extends Product {
     private int numberOfStrings;
 

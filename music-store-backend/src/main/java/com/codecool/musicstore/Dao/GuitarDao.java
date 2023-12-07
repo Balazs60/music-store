@@ -1,7 +1,6 @@
 package com.codecool.musicstore.Dao;
 
-import com.codecool.musicstore.model.Guitar;
-import com.codecool.musicstore.repositories.GuitarRepositoriy;
+import com.codecool.musicstore.model.Guitar.Guitar;
 
 import java.util.List;
 import java.util.UUID;
