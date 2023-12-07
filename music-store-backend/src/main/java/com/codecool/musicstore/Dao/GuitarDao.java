@@ -13,4 +13,6 @@ public interface GuitarDao {
     public void  saveGuitars(List<Guitar> guitars);
 
     public  void seedGuitars();
+
+    public List<Guitar> getElectricGuitars();
 }
