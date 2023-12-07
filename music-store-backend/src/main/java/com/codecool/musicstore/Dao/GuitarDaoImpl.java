@@ -139,4 +139,10 @@ public class GuitarDaoImpl implements GuitarDao {
         guitarRepositoriy.saveAll(guitars);
 
     }
+
+    @Override
+    public List<Guitar> getElectricGuitars() {
+        List<Guitar> electricGuitars = guitarRepositoriy.findAll().stream().filter(guitar -> guitar instanceof ElectricGuitar).toList();
+        return electricGuitars;
+    }
 }

@@ -12,28 +12,34 @@ import java.util.UUID;
 public class GuitarService {
 
     private GuitarDao guitarDao;
-@Autowired
+
+    @Autowired
     public GuitarService(GuitarDao guitarDao) {
         this.guitarDao = guitarDao;
     }
 
 
-    public List<Guitar> getAllGuitars(){
-    return guitarDao.getAllGuitar();
+    public List<Guitar> getAllGuitars() {
+        return guitarDao.getAllGuitar();
     }
 
-    public Guitar getGuitarById(UUID id){
-    return guitarDao.getGuitarById(id);
-    }
-    public void saveGuitar(Guitar guitar){
-    guitarDao.saveGuitar(guitar);
+    public Guitar getGuitarById(UUID id) {
+        return guitarDao.getGuitarById(id);
     }
 
-    public void saveGuitars(List<Guitar> guitars){
-    guitarDao.saveGuitars(guitars);
+    public void saveGuitar(Guitar guitar) {
+        guitarDao.saveGuitar(guitar);
     }
 
-    public void populateGuitars(){
-    guitarDao.seedGuitars();
+    public void saveGuitars(List<Guitar> guitars) {
+        guitarDao.saveGuitars(guitars);
+    }
+
+    public void populateGuitars() {
+        guitarDao.seedGuitars();
+    }
+
+    public List<Guitar> getElectricGuitars() {
+        return guitarDao.getElectricGuitars();
     }
 }
