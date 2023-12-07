@@ -9,25 +9,13 @@ import lombok.*;
 import java.util.UUID;
 
 @Entity
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
-@Table(name = "product")
-public  class Product {
+public abstract class Product {
 
     String name;
     @Id
-    @GeneratedValue
     UUID id =UUID.randomUUID();
     Integer priece;
     String collor;
 
-    public Product(String name, Integer priece, String collor) {
-        this.name = name;
 
-        this.priece = priece;
-        this.collor = collor;
-    }
 }
