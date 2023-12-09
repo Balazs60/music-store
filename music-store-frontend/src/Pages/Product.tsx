@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-function SelectedGuitarPage() {
+function Product() {
     const { id } = useParams();
     const [selectedGuitar, setSelectedGuitar] = useState(null);
 
@@ -12,7 +12,7 @@ function SelectedGuitarPage() {
     }, [id]);
 
     const fetchGuitarById = (guitarId) => {
-        fetch(`/api/guitar/${guitarId}`, { method: 'GET' })
+        fetch(`/api/product/${guitarId}`, { method: 'GET' })
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
@@ -47,4 +47,4 @@ function SelectedGuitarPage() {
     );
 }
 
-export default SelectedGuitarPage;
+export default Product;

@@ -1,10 +1,9 @@
 package com.codecool.musicstore.controller;
 
-import com.codecool.musicstore.model.Guitar;
-import com.codecool.musicstore.service.GuitarService;
+import com.codecool.musicstore.model.Product;
+import com.codecool.musicstore.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,16 +13,16 @@ import java.util.List;
 @RequestMapping("/api/mainpage")
 public class MainPageController {
 
-    private GuitarService guitarService;
+    private ProductService productService;
 
     @Autowired
-    public MainPageController(GuitarService guitarService){
-        this.guitarService = guitarService;
+    public MainPageController(ProductService productService){
+        this.productService = productService;
     }
 
-    @GetMapping("/guitars")
-    public List<Guitar> getProducts() {
+    @GetMapping("/products")
+    public List<Product> getProducts() {
 
-        return guitarService.getAllGuitars();
+        return productService.getAllProducts();
     }
 }

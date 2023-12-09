@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-function ElectricGuitarList() {
-    const [electricGuitars, setElectricGuitars] = useState([]);
+function Category() {
+    const [subCategories, setSubCategories] = useState([]);
     const navigate = useNavigate();
+    const {category} = useParams();
+
 
     useEffect(() => {
-        fetchInstruments();
+        fetchSubCategories();
     }, []);
 
-    const fetchInstruments = () => {
-        fetch('/api/electric-guitars', { method: 'GET' })
+    const fetchSubCategories = () => {
+        fetch(`/api/category/${category}/subcategories`, { method: 'GET' })
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
@@ -20,24 +22,25 @@ function ElectricGuitarList() {
             })
             .then(data => {
                 console.log(data);
-                setElectricGuitars(data);
+                setSubCategories(data);
             })
             .catch(error => {
                 console.error('Error fetching instruments:', error);
             });
     };
 
-    const handleGuitarClick = (id) => {
-        navigate(`/product/${id}`);
+    const handleSubCategoryClick = (id) => {
+        console.log("ájdi " + id)
+        navigate(`subcategory/${id}`);
     };
 
     return (
         <div>
             <h1>Electric Guitars</h1>
             <ul>
-                {electricGuitars.map((guitar, index) => (
-                    <li key={index} onClick={() => handleGuitarClick(guitar.id)}>
-                        {guitar.name}
+                {subCategories.map((subCategory, index) => (
+                    <li key={index} onClick={() => handleSubCategoryClick(subCategory.id)}>
+                        {subCategory.name}
                     </li>
                 ))}
             </ul>
@@ -45,4 +48,4 @@ function ElectricGuitarList() {
     );
 }
 
-export default ElectricGuitarList;
+export default Category;

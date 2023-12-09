@@ -13,7 +13,7 @@ const MainPage: React.FC = () => {
   }, []);
 
   const fetchInstruments = () => {
-    fetch('/api/mainpage/guitars', { method: 'GET' })
+    fetch('/api/mainpage/products', { method: 'GET' })
       .then(response => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -31,8 +31,12 @@ const MainPage: React.FC = () => {
 
   const handleCategoryChange = (category: string) => {
     setSelectedCategory(category);
-    navigate('/guitars');
+    navigate(`/category/${category}`);
   };
+
+      const handleGuitarClick = (id) => {
+        navigate(`/product/${id}`);
+    };
 
   return (
     <div className="container mt-4">
@@ -43,13 +47,16 @@ const MainPage: React.FC = () => {
               Select Category
             </Dropdown.Toggle>
             <Dropdown.Menu>
-              {['Gitár', 'Ütős', 'Billentyűs', 'Fúvós'].map((category, index) => (
+              {[['guitars', 'Gitár'],
+                 ['percussion', 'Ütős'],
+                 ['key', 'Billentyűs'],
+                 ['mouth', 'Fúvós']].map((category, index) => (
                 <Dropdown.Item
                   key={index}
-                  onClick={() => handleCategoryChange(category)}
-                  active={selectedCategory === category}
+                  onClick={() => handleCategoryChange(category[0])}
+                  active={selectedCategory === category[0]}
                 >
-                  {category}
+                  {category[1]}
                 </Dropdown.Item>
               ))}
             </Dropdown.Menu>
@@ -65,7 +72,7 @@ const MainPage: React.FC = () => {
       <h1 className="mt-3">List of Instruments</h1>
       <ul className="list-group">
         {guitars.map((guitar, index) => (
-          <li key={index} className="list-group-item">
+          <li key={index} className="list-group-item"  onClick={() => handleGuitarClick(guitar.id)}>
             {guitar.name}
           </li>
         ))}
