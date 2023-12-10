@@ -12,7 +12,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public abstract class Cymbal extends PercussionInstruments {
+public class Cymbal extends PercussionInstruments {
 
     private Integer diameter;
 }

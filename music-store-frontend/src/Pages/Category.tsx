@@ -2,10 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+interface SubCategory {
+    name: string;
+    category: string;
+    id: string;
+}
+
 function Category() {
-    const [subCategories, setSubCategories] = useState([]);
+    const [subCategories, setSubCategories] = useState<SubCategory[]>([]);
     const navigate = useNavigate();
     const {category} = useParams();
+
+    console.log(category)
 
 
     useEffect(() => {
@@ -21,7 +29,7 @@ function Category() {
                 return response.json();
             })
             .then(data => {
-                console.log(data);
+                console.log(data)
                 setSubCategories(data);
             })
             .catch(error => {
@@ -29,14 +37,13 @@ function Category() {
             });
     };
 
-    const handleSubCategoryClick = (id) => {
-        console.log("ájdi " + id)
+    const handleSubCategoryClick = (id: string) => {
         navigate(`subcategory/${id}`);
     };
 
     return (
         <div>
-            <h1>Electric Guitars</h1>
+            <h1>{category}</h1>
             <ul>
                 {subCategories.map((subCategory, index) => (
                     <li key={index} onClick={() => handleSubCategoryClick(subCategory.id)}>

@@ -13,8 +13,8 @@ public interface ProductDao {
     public List<Product> getAllProduct();
     public void  saveProducts(List<Product> products);
 
-    public  void seedProducts();
-    public  void seedSubCategories();
+//    public  void seedProducts();
+//    public  void seedSubCategories();
 
     public List<SubCategory> findSubCategories(String category);
 

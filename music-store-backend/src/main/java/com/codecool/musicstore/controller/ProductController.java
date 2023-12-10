@@ -35,7 +35,7 @@ public class ProductController {
                                                   @PathVariable String subCategoryId) {
         String categoryConverted = productService.convertCategoryToDtype(category);
         UUID convertedSubCategoryId = UUID.fromString(subCategoryId);
-
+        System.out.println("product " + productService.findProductsBySubCategory(categoryConverted,convertedSubCategoryId));
         return productService.findProductsBySubCategory(categoryConverted,convertedSubCategoryId);
     }
 

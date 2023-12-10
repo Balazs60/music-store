@@ -11,7 +11,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public abstract class PercussionInstruments extends Product {
+public  class PercussionInstruments extends Product {
 
 
 }

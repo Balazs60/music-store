@@ -3,9 +3,24 @@ import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Dropdown, ButtonGroup, Row, Col } from 'react-bootstrap';
 
+interface Product {
+  id: string;
+  name: string;
+  color: string;
+  price: number;
+  brand: string;
+  dtype: string;
+  subCategoryId: string;
+  numberOfStrings: number;
+  numberOfSoundLayers: number;
+  numberOfKeys : number;
+  diameter: number;
+
+}
+
 const MainPage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('');
-  const [guitars, setGuitars] = useState<string[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,7 +37,7 @@ const MainPage: React.FC = () => {
       })
       .then(data => {
         console.log(data);
-        setGuitars(data);
+        setProducts(data);
       })
       .catch(error => {
         console.error('Error fetching instruments:', error);
@@ -34,7 +49,7 @@ const MainPage: React.FC = () => {
     navigate(`/category/${category}`);
   };
 
-      const handleGuitarClick = (id) => {
+      const handleGuitarClick = (id : string) => {
         navigate(`/product/${id}`);
     };
 
@@ -50,7 +65,7 @@ const MainPage: React.FC = () => {
               {[['guitars', 'Gitár'],
                  ['percussion', 'Ütős'],
                  ['key', 'Billentyűs'],
-                 ['mouth', 'Fúvós']].map((category, index) => (
+                 ['wind', 'Fúvós']].map((category, index) => (
                 <Dropdown.Item
                   key={index}
                   onClick={() => handleCategoryChange(category[0])}
@@ -71,9 +86,9 @@ const MainPage: React.FC = () => {
 
       <h1 className="mt-3">List of Instruments</h1>
       <ul className="list-group">
-        {guitars.map((guitar, index) => (
-          <li key={index} className="list-group-item"  onClick={() => handleGuitarClick(guitar.id)}>
-            {guitar.name}
+        {products.map((product, index) => (
+          <li key={index} className="list-group-item"  onClick={() => handleGuitarClick(product.id)}>
+            {product.name}
           </li>
         ))}
       </ul>

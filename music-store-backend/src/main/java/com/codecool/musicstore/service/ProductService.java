@@ -1,6 +1,7 @@
 package com.codecool.musicstore.service;
 
 import com.codecool.musicstore.Dao.ProductDao;
+import com.codecool.musicstore.model.PercussionInstruments.PercussionInstruments;
 import com.codecool.musicstore.model.Product;
 import com.codecool.musicstore.model.SubCategory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,14 @@ public class ProductService {
 public String convertCategoryToDtype(String category){
         if(category.equals("guitars")){
             return "Guitar";
-        }
+        } else if(category.equals("percussion")){
+            return "Percussion Instrument";
+        } else if(category.equals("key")){
+            return "KeyboardInstrument";
+        } else if (category.equals("wind")){
+            return "WindInstrument";
+    }
+
         return null;
 }
 
@@ -50,16 +58,16 @@ public String convertCategoryToDtype(String category){
     }
 
     public List<Product> findProductsBySubCategory(String category, UUID subCategory) {
-
+        System.out.println("subcategoryId " + subCategory);
         return productDao.findProductsBySubCategory(category,subCategory);
     }
 
-    public void populateProducts() {
-        productDao.seedProducts();
-    }
-    public void populateSubCategories() {
-        productDao.seedSubCategories();
-    }
+//    public void populateProducts() {
+//        productDao.seedProducts();
+//    }
+//    public void populateSubCategories() {
+//        productDao.seedSubCategories();
+//    }
 
 
 }
