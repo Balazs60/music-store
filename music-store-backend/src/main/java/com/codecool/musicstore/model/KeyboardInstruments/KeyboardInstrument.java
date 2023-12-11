@@ -13,7 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public abstract class KeyboardInstrument extends Product {
+public class KeyboardInstrument extends Product {
 
     private Integer numberOfKeys;
     private Integer numberOfSoundLayers;

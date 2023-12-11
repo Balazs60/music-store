@@ -3,9 +3,24 @@ import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Dropdown, ButtonGroup, Row, Col } from 'react-bootstrap';
 
+interface Product {
+  id: string;
+  name: string;
+  color: string;
+  price: number;
+  brand: string;
+  dtype: string;
+  subCategoryId: string;
+  numberOfStrings: number;
+  numberOfSoundLayers: number;
+  numberOfKeys : number;
+  diameter: number;
+
+}
+
 const MainPage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('');
-  const [guitars, setGuitars] = useState<string[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -13,7 +28,7 @@ const MainPage: React.FC = () => {
   }, []);
 
   const fetchInstruments = () => {
-    fetch('/api/mainpage/guitars', { method: 'GET' })
+    fetch('/api/mainpage/products', { method: 'GET' })
       .then(response => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -22,7 +37,7 @@ const MainPage: React.FC = () => {
       })
       .then(data => {
         console.log(data);
-        setGuitars(data);
+        setProducts(data);
       })
       .catch(error => {
         console.error('Error fetching instruments:', error);
@@ -31,8 +46,12 @@ const MainPage: React.FC = () => {
 
   const handleCategoryChange = (category: string) => {
     setSelectedCategory(category);
-    navigate('/guitars');
+    navigate(`/category/${category}`);
   };
+
+      const handleGuitarClick = (id : string) => {
+        navigate(`/product/${id}`);
+    };
 
   return (
     <div className="container mt-4">
@@ -43,13 +62,17 @@ const MainPage: React.FC = () => {
               Select Category
             </Dropdown.Toggle>
             <Dropdown.Menu>
-              {['Gitár', 'Ütős', 'Billentyűs', 'Fúvós'].map((category, index) => (
+              {[['Guitar', 'Gitár'],
+                 ['PercussionInstrument', 'Ütős'],
+                 ['KeyboardInstrument', 'Billentyűs'],
+                 ['WindInstrument', 'Fúvós'],
+                ['Bass', "Basszusgitár"]].map((category, index) => (
                 <Dropdown.Item
                   key={index}
-                  onClick={() => handleCategoryChange(category)}
-                  active={selectedCategory === category}
+                  onClick={() => handleCategoryChange(category[0])}
+                  active={selectedCategory === category[0]}
                 >
-                  {category}
+                  {category[1]}
                 </Dropdown.Item>
               ))}
             </Dropdown.Menu>
@@ -64,9 +87,9 @@ const MainPage: React.FC = () => {
 
       <h1 className="mt-3">List of Instruments</h1>
       <ul className="list-group">
-        {guitars.map((guitar, index) => (
-          <li key={index} className="list-group-item">
-            {guitar.name}
+        {products.map((product, index) => (
+          <li key={index} className="list-group-item"  onClick={() => handleGuitarClick(product.id)}>
+            {product.name}
           </li>
         ))}
       </ul>

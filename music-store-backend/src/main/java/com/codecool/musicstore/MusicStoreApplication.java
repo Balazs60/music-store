@@ -1,6 +1,7 @@
 package com.codecool.musicstore;
 
-import com.codecool.musicstore.service.GuitarService;
+import com.codecool.musicstore.generator.ProductGenerator;
+import com.codecool.musicstore.service.ProductService;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -8,14 +9,17 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class MusicStoreApplication {
-	private GuitarService guitarService;
+	private ProductService productService;
+	private ProductGenerator productGenerator;
 @Autowired
-	public MusicStoreApplication(GuitarService guitarService) {
-		this.guitarService = guitarService;
+	public MusicStoreApplication(ProductService productService, ProductGenerator productGenerator) {
+		this.productService = productService;
+		this.productGenerator = productGenerator;
 	}
 	@PostConstruct
 	public void seedDatabase() {
-		guitarService.populateGuitars();
+		productGenerator.seedSubCategories();
+		productGenerator.seedProducts();
 	}
 	public static void main(String[] args) {
 		SpringApplication.run(MusicStoreApplication.class, args);

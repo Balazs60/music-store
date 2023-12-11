@@ -1,17 +1,17 @@
 import "bootstrap/dist/css/bootstrap.min.css"
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom"
-import MainPage from "./Pages/MaingPage"
-import Guitar from "./Pages/GuitarList"
-import ElectricGuitarList from "./Pages/ElectricGuitarList"
-import SelectedGuitarPage from "./Pages/SelectedGuitarPage"
+import MainPage from "./Pages/MainPage"
+import SubCategory from "./Pages/SubCategory"
+import Category from "./Pages/Category"
+import SelectedGuitarPage from "./Pages/Product"
 
 function App() {
   return(
     <Router>
     <Routes>
       <Route path="/" element={<MainPage/>}/>
-      <Route path="/guitars" element={<Guitar/>}/>
-      <Route path="/electric-guitars" element={<ElectricGuitarList/>}/>
+      <Route path="/category/:category" element={<Category/>}/>
+      <Route path="/category/:category/subcategory/:subcategoryid" element={<SubCategory/>}/>
       <Route path="/product/:id" element={<SelectedGuitarPage/>}/>
 
 
