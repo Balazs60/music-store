@@ -67,7 +67,10 @@ const MainPage: React.FC = () => {
                  ['PercussionInstrument', 'Ütős'],
                  ['KeyboardInstrument', 'Billentyűs'],
                  ['WindInstrument', 'Fúvós'],
-                ['Bass', "Basszusgitár"]].map((category, index) => (
+                ['Bass', "Basszusgitár"],
+                ['SoundTechnic', "Hangtechnika"],
+                ['Merch', "Merch"]
+                 ].map((category, index) => (
                 <Dropdown.Item
                   key={index}
                   onClick={() => handleCategoryChange(category[0])}
