@@ -7,6 +7,8 @@ import com.codecool.musicstore.model.Product;
 import com.codecool.musicstore.model.SubCategory;
 import com.codecool.musicstore.model.WindInstruments.WindInstrument;
 import com.codecool.musicstore.model.bass.Bass;
+import com.codecool.musicstore.model.merch.Merch;
+import com.codecool.musicstore.model.soundtechnic.SoundTechnic;
 import com.codecool.musicstore.repositories.ProductRepository;
 import com.codecool.musicstore.repositories.SubCategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -121,6 +123,14 @@ public class ProductGeneratorImpl implements ProductGenerator {
         SubCategory tamSubCategory = subCategoryRepository.findSubCategoriesByName("Tam").get(0);
         SubCategory rideCymbalSubCategory = subCategoryRepository.findSubCategoriesByName("Ride-Cymbal").get(0);
         SubCategory hitHatCymbalSubCategory = subCategoryRepository.findSubCategoriesByName("Hi-Hat-Cymbal").get(0);
+        SubCategory micSubCategory = subCategoryRepository.findSubCategoriesByName("Mic").get(0);
+        SubCategory standSubCategory = subCategoryRepository.findSubCategoriesByName("Stand").get(0);
+        SubCategory headSetSubCategory = subCategoryRepository.findSubCategoriesByName("Headset").get(0);
+        SubCategory tShirtSubCategory = subCategoryRepository.findSubCategoriesByName("T-Shirt").get(0);
+        SubCategory giftSubCategory = subCategoryRepository.findSubCategoriesByName("Gift").get(0);
+
+
+
 
 
 
@@ -292,6 +302,46 @@ public class ProductGeneratorImpl implements ProductGenerator {
             ride.setPrice(random.nextInt(200));
             ride.setSubCategoryId(rideCymbalSubCategory.getId());
             products.add(ride);
+
+            SoundTechnic mic = new SoundTechnic();
+            mic.setBrand(guitarBrands[random.nextInt(guitarBrands.length)]);
+            mic.setName(guitarBrands[random.nextInt(guitarNames.length)]);
+            mic.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
+            mic.setPrice(random.nextInt(200));
+            mic.setSubCategoryId(micSubCategory.getId());
+            products.add(mic);
+
+            SoundTechnic stand = new SoundTechnic();
+            stand.setBrand(guitarBrands[random.nextInt(guitarBrands.length)]);
+            stand.setName(guitarBrands[random.nextInt(guitarNames.length)]);
+            stand.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
+            stand.setPrice(random.nextInt(200));
+            stand.setSubCategoryId(standSubCategory.getId());
+            products.add(stand);
+
+            SoundTechnic headSet = new SoundTechnic();
+            headSet.setBrand(guitarBrands[random.nextInt(guitarBrands.length)]);
+            headSet.setName(guitarBrands[random.nextInt(guitarNames.length)]);
+            headSet.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
+            headSet.setPrice(random.nextInt(200));
+            headSet.setSubCategoryId(headSetSubCategory.getId());
+            products.add(headSet);
+
+            Merch tShirt = new Merch();
+            tShirt.setBrand(guitarBrands[random.nextInt(guitarBrands.length)]);
+            tShirt.setName(guitarBrands[random.nextInt(guitarNames.length)]);
+            tShirt.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
+            tShirt.setPrice(random.nextInt(200));
+            tShirt.setSubCategoryId(tShirtSubCategory.getId());
+            products.add(tShirt);
+
+            Merch gift = new Merch();
+            gift.setBrand(guitarBrands[random.nextInt(guitarBrands.length)]);
+            gift.setName(guitarBrands[random.nextInt(guitarNames.length)]);
+            gift.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
+            gift.setPrice(random.nextInt(200));
+            gift.setSubCategoryId(giftSubCategory.getId());
+            products.add(gift);
         }
 
 
@@ -322,7 +372,12 @@ public class ProductGeneratorImpl implements ProductGenerator {
         "Snare-Drum",
         "Tam",
         "Ride-Cymbal",
-        "Hi-Hat-Cymbal"};
+        "Hi-Hat-Cymbal",
+        "Mic",
+        "Stand",
+        "Headset",
+        "T-Shirt",
+        "Gift"};
 
 
         String[] categories = {
@@ -345,15 +400,15 @@ public class ProductGeneratorImpl implements ProductGenerator {
                 "PercussionInstrument",
                 "PercussionInstrument",
                 "PercussionInstrument",
-                "PercussionInstrument"
-
-
-
-
-
+                "PercussionInstrument",
+                "SoundTechnic",
+                "SoundTechnic",
+                "SoundTechnic",
+                "Merch",
+                "Merch"
         };
 
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < categories.length; i++) {
             SubCategory subCategory = new SubCategory();
             subCategory.setCategory(categories[i]);
             subCategory.setName(subCategoryNames[i]);
