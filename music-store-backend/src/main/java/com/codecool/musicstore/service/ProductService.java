@@ -3,6 +3,7 @@ package com.codecool.musicstore.service;
 import com.codecool.musicstore.Dao.ProductDao;
 import com.codecool.musicstore.model.Product;
 import com.codecool.musicstore.model.SubCategory;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -57,7 +58,7 @@ public String convertCategoryToDtype(String category){
         List<SubCategory> subcategories = productDao.findSubCategories(category);
         return subcategories;
     }
-
+    @Transactional
     public List<Product> findProductsBySubCategory(String category, UUID subCategory) {
         System.out.println("subcategoryId " + subCategory);
         return productDao.findProductsBySubCategory(category,subCategory);

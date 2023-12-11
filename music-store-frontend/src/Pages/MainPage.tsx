@@ -15,6 +15,7 @@ interface Product {
   numberOfSoundLayers: number;
   numberOfKeys : number;
   diameter: number;
+  
 
 }
 

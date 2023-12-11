@@ -19,6 +19,8 @@ public abstract class Product {
     private Integer price;
     private String color;
     private String description;
+    @Lob
+    private byte[] image;
 
 
 
