@@ -2,9 +2,11 @@ package com.codecool.musicstore.generator;
 
 import com.codecool.musicstore.model.Guitar.Guitar;
 import com.codecool.musicstore.model.KeyboardInstruments.KeyboardInstrument;
+import com.codecool.musicstore.model.PercussionInstruments.PercussionInstrument;
 import com.codecool.musicstore.model.Product;
 import com.codecool.musicstore.model.SubCategory;
 import com.codecool.musicstore.model.WindInstruments.WindInstrument;
+import com.codecool.musicstore.model.bass.Bass;
 import com.codecool.musicstore.repositories.ProductRepository;
 import com.codecool.musicstore.repositories.SubCategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -110,6 +112,18 @@ public class ProductGeneratorImpl implements ProductGenerator {
         SubCategory trumpetSubCategory = subCategoryRepository.findSubCategoriesByName("Trumpet").get(0);
         SubCategory saxophoneSubCategory = subCategoryRepository.findSubCategoriesByName("Saxophone").get(0);
         SubCategory fluteSubCategory = subCategoryRepository.findSubCategoriesByName("Flute").get(0);
+        SubCategory electricBassGuitarSubCategory = subCategoryRepository.findSubCategoriesByName("Electric-Bass-Guitar").get(0);
+        SubCategory acousticBassGuitarSubCategory = subCategoryRepository.findSubCategoriesByName("Acoustic-Bass-Guitar").get(0);
+        SubCategory fiveStringBassGuitarSubCategory = subCategoryRepository.findSubCategoriesByName("Five-String-Bass-Guitar").get(0);
+        SubCategory acousticDrumSubCategory = subCategoryRepository.findSubCategoriesByName("Acoustic-Drum").get(0);
+        SubCategory electricDrumSubCategory = subCategoryRepository.findSubCategoriesByName("Electric-Drum").get(0);
+        SubCategory snareDrumSubCategory = subCategoryRepository.findSubCategoriesByName("Snare-Drum").get(0);
+        SubCategory tamSubCategory = subCategoryRepository.findSubCategoriesByName("Tam").get(0);
+        SubCategory rideCymbalSubCategory = subCategoryRepository.findSubCategoriesByName("Ride-Cymbal").get(0);
+        SubCategory hitHatCymbalSubCategory = subCategoryRepository.findSubCategoriesByName("Hi-Hat-Cymbal").get(0);
+
+
+
 
 
 
@@ -206,7 +220,81 @@ public class ProductGeneratorImpl implements ProductGenerator {
             trumpet.setPrice(random.nextInt(200));
             trumpet.setSubCategoryId(trumpetSubCategory.getId());
             products.add(trumpet);
+
+            Bass electricBassGuitar = new Bass();
+            electricBassGuitar.setBrand(guitarBrands[random.nextInt(guitarBrands.length)]);
+            electricBassGuitar.setName(guitarBrands[random.nextInt(guitarNames.length)]);
+            electricBassGuitar.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
+            electricBassGuitar.setPrice(random.nextInt(200));
+            electricBassGuitar.setSubCategoryId(electricBassGuitarSubCategory.getId());
+            products.add(electricBassGuitar);
+
+            Bass acousticBassGuitar = new Bass();
+            acousticBassGuitar.setBrand(guitarBrands[random.nextInt(guitarBrands.length)]);
+            acousticBassGuitar.setName(guitarBrands[random.nextInt(guitarNames.length)]);
+            acousticBassGuitar.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
+            acousticBassGuitar.setPrice(random.nextInt(200));
+            acousticBassGuitar.setSubCategoryId(acousticBassGuitarSubCategory.getId());
+            products.add(acousticBassGuitar);
+
+            Bass fiveStringBassGuitar = new Bass();
+            fiveStringBassGuitar.setBrand(guitarBrands[random.nextInt(guitarBrands.length)]);
+            fiveStringBassGuitar.setName(guitarBrands[random.nextInt(guitarNames.length)]);
+            fiveStringBassGuitar.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
+            fiveStringBassGuitar.setPrice(random.nextInt(200));
+            fiveStringBassGuitar.setSubCategoryId(fiveStringBassGuitarSubCategory.getId());
+            products.add(fiveStringBassGuitar);
+
+            PercussionInstrument acousticDrum = new PercussionInstrument();
+            acousticDrum.setBrand(guitarBrands[random.nextInt(guitarBrands.length)]);
+            acousticDrum.setName(guitarBrands[random.nextInt(guitarNames.length)]);
+            acousticDrum.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
+            acousticDrum.setPrice(random.nextInt(200));
+            acousticDrum.setSubCategoryId(acousticDrumSubCategory.getId());
+            products.add(acousticDrum);
+
+            PercussionInstrument electricDrum = new PercussionInstrument();
+            electricDrum.setBrand(guitarBrands[random.nextInt(guitarBrands.length)]);
+            electricDrum.setName(guitarBrands[random.nextInt(guitarNames.length)]);
+            electricDrum.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
+            electricDrum.setPrice(random.nextInt(200));
+            electricDrum.setSubCategoryId(electricDrumSubCategory.getId());
+            products.add(electricDrum);
+
+            PercussionInstrument snareDrum = new PercussionInstrument();
+            snareDrum.setBrand(guitarBrands[random.nextInt(guitarBrands.length)]);
+            snareDrum.setName(guitarBrands[random.nextInt(guitarNames.length)]);
+            snareDrum.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
+            snareDrum.setPrice(random.nextInt(200));
+            snareDrum.setSubCategoryId(snareDrumSubCategory.getId());
+            products.add(snareDrum);
+
+            PercussionInstrument tamDrum = new PercussionInstrument();
+            tamDrum.setBrand(guitarBrands[random.nextInt(guitarBrands.length)]);
+            tamDrum.setName(guitarBrands[random.nextInt(guitarNames.length)]);
+            tamDrum.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
+            tamDrum.setPrice(random.nextInt(200));
+            tamDrum.setSubCategoryId(tamSubCategory.getId());
+            products.add(tamDrum);
+
+            PercussionInstrument hiHatCymbal = new PercussionInstrument();
+            hiHatCymbal.setBrand(guitarBrands[random.nextInt(guitarBrands.length)]);
+            hiHatCymbal.setName(guitarBrands[random.nextInt(guitarNames.length)]);
+            hiHatCymbal.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
+            hiHatCymbal.setPrice(random.nextInt(200));
+            hiHatCymbal.setSubCategoryId(hitHatCymbalSubCategory.getId());
+            products.add(hiHatCymbal);
+
+            PercussionInstrument ride = new PercussionInstrument();
+            ride.setBrand(guitarBrands[random.nextInt(guitarBrands.length)]);
+            ride.setName(guitarBrands[random.nextInt(guitarNames.length)]);
+            ride.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
+            ride.setPrice(random.nextInt(200));
+            ride.setSubCategoryId(rideCymbalSubCategory.getId());
+            products.add(ride);
         }
+
+
         productRepository.saveAll(products);
 
     }
@@ -225,7 +313,16 @@ public class ProductGeneratorImpl implements ProductGenerator {
         "Piano",
         "Trumpet",
         "Saxophone",
-        "Flute"};
+        "Flute",
+        "Electric-Bass-Guitar",
+        "Acoustic-Bass-Guitar",
+        "Five-String-Bass-Guitar",
+                "Acoustic-Drum",
+                "Electric-Drum",
+        "Snare-Drum",
+        "Tam",
+        "Ride-Cymbal",
+        "Hi-Hat-Cymbal"};
 
 
         String[] categories = {
@@ -239,13 +336,24 @@ public class ProductGeneratorImpl implements ProductGenerator {
                 "KeyboardInstrument",
                 "WindInstrument",
                 "WindInstrument",
-                "WindInstrument"
+                "WindInstrument",
+                "Bass",
+                "Bass",
+                "Bass",
+                "PercussionInstrument",
+                "PercussionInstrument",
+                "PercussionInstrument",
+                "PercussionInstrument",
+                "PercussionInstrument",
+                "PercussionInstrument"
+
+
 
 
 
         };
 
-        for (int i = 0; i < 11; i++) {
+        for (int i = 0; i < 20; i++) {
             SubCategory subCategory = new SubCategory();
             subCategory.setCategory(categories[i]);
             subCategory.setName(subCategoryNames[i]);

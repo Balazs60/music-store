@@ -18,6 +18,7 @@ public abstract class Product {
     private UUID id = UUID.randomUUID();
     private Integer price;
     private String color;
+    private String description;
 
 
 

@@ -28,15 +28,15 @@ public class ProductController {
     @GetMapping("/category/{category}/subcategories")
     public List<SubCategory> getSubCategories(@PathVariable String category) {
         String categoryConverted = productService.convertCategoryToDtype(category);
-        return productService.findSubCategories(categoryConverted);
+        return productService.findSubCategories(category);
     }
     @GetMapping("/category/{category}/subcategory/{subCategoryId}/products")
     public List<Product> getProductsBySubCategory(@PathVariable String category,
                                                   @PathVariable String subCategoryId) {
         String categoryConverted = productService.convertCategoryToDtype(category);
         UUID convertedSubCategoryId = UUID.fromString(subCategoryId);
-        System.out.println("product " + productService.findProductsBySubCategory(categoryConverted,convertedSubCategoryId));
-        return productService.findProductsBySubCategory(categoryConverted,convertedSubCategoryId);
+        System.out.println("product " + productService.findProductsBySubCategory(category,convertedSubCategoryId));
+        return productService.findProductsBySubCategory(category,convertedSubCategoryId);
     }
 
     @GetMapping("/product/{id}")

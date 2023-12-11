@@ -62,10 +62,11 @@ const MainPage: React.FC = () => {
               Select Category
             </Dropdown.Toggle>
             <Dropdown.Menu>
-              {[['guitars', 'Gitár'],
-                 ['percussion', 'Ütős'],
-                 ['key', 'Billentyűs'],
-                 ['wind', 'Fúvós']].map((category, index) => (
+              {[['Guitar', 'Gitár'],
+                 ['PercussionInstrument', 'Ütős'],
+                 ['KeyboardInstrument', 'Billentyűs'],
+                 ['WindInstrument', 'Fúvós'],
+                ['Bass', "Basszusgitár"]].map((category, index) => (
                 <Dropdown.Item
                   key={index}
                   onClick={() => handleCategoryChange(category[0])}

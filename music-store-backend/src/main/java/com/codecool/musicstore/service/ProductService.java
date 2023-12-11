@@ -1,7 +1,6 @@
 package com.codecool.musicstore.service;
 
 import com.codecool.musicstore.Dao.ProductDao;
-import com.codecool.musicstore.model.PercussionInstruments.PercussionInstruments;
 import com.codecool.musicstore.model.Product;
 import com.codecool.musicstore.model.SubCategory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,12 +41,14 @@ public String convertCategoryToDtype(String category){
         if(category.equals("guitars")){
             return "Guitar";
         } else if(category.equals("percussion")){
-            return "Percussion Instrument";
+            return "PercussionInstrument";
         } else if(category.equals("key")){
             return "KeyboardInstrument";
         } else if (category.equals("wind")){
             return "WindInstrument";
-    }
+    } else if (category.equals("bass")){
+            return "Bass";
+        }
 
         return null;
 }
