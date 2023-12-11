@@ -12,6 +12,9 @@ import com.codecool.musicstore.repositories.SubCategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -138,6 +141,10 @@ public class ProductGeneratorImpl implements ProductGenerator {
             acousticGuitar.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
             acousticGuitar.setPrice(random.nextInt(200));
             acousticGuitar.setSubCategoryId(acousticGuitarSubCategory.getId());
+
+            setPictureOfInstrument(acousticGuitar , "C:/Users/PC/codecool/ADVANCE/music-store/music-store-backend/src/main/resources/stockpohotos/Guitars/akuszt_k.jpg");
+
+
             products.add(acousticGuitar);
 
 
@@ -147,6 +154,7 @@ public class ProductGeneratorImpl implements ProductGenerator {
             electricGuitar.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
             electricGuitar.setPrice(random.nextInt(200));
             electricGuitar.setSubCategoryId(electricGuitarSubCategory.getId());
+            setPictureOfInstrument(electricGuitar , "C:/Users/PC/codecool/ADVANCE/music-store/music-store-backend/src/main/resources/stockpohotos/Guitars/Elektromos_git___4d8b2663d4c79_k.jpg");
             products.add(electricGuitar);
 
             Guitar banjo = new Guitar();
@@ -155,6 +163,7 @@ public class ProductGeneratorImpl implements ProductGenerator {
             banjo.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
             banjo.setPrice(random.nextInt(200));
             banjo.setSubCategoryId(banjoSubCategory.getId());
+            setPictureOfInstrument(banjo , "C:/Users/PC/codecool/ADVANCE/music-store/music-store-backend/src/main/resources/stockpohotos/Guitars/Benjo_4d8b38c5edb1b_k.jpg");
             products.add(banjo);
 
             Guitar mandolin = new Guitar();
@@ -163,6 +172,7 @@ public class ProductGeneratorImpl implements ProductGenerator {
             mandolin.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
             mandolin.setPrice(random.nextInt(200));
             mandolin.setSubCategoryId(mandolinSubcategory.getId());
+            setPictureOfInstrument(mandolin , "C:/Users/PC/codecool/ADVANCE/music-store/music-store-backend/src/main/resources/stockpohotos/Guitars/Mandolin_51e7fc30a26a7_k.jpg");
             products.add(mandolin);
 
             Guitar ukulele = new Guitar();
@@ -171,6 +181,7 @@ public class ProductGeneratorImpl implements ProductGenerator {
             ukulele.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
             ukulele.setPrice(random.nextInt(200));
             ukulele.setSubCategoryId(ukuleleSubcategory.getId());
+            setPictureOfInstrument(ukulele , "C:/Users/PC/codecool/ADVANCE/music-store/music-store-backend/src/main/resources/stockpohotos/Guitars/010165_k.jpg");
             products.add(ukulele);
 
             KeyboardInstrument piano = new KeyboardInstrument();
@@ -179,6 +190,7 @@ public class ProductGeneratorImpl implements ProductGenerator {
             piano.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
             piano.setPrice(random.nextInt(200));
             piano.setSubCategoryId(pianoSubCategory.getId());
+            setPictureOfInstrument(piano , "C:/Users/PC/codecool/ADVANCE/music-store/music-store-backend/src/main/resources/stockpohotos/KeyboardInstruments/casio-ap-270-bn.jpg");
             products.add(piano);
 
             KeyboardInstrument midiKeyboard = new KeyboardInstrument();
@@ -187,6 +199,7 @@ public class ProductGeneratorImpl implements ProductGenerator {
             midiKeyboard.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
             midiKeyboard.setPrice(random.nextInt(200));
             midiKeyboard.setSubCategoryId(midiKeyboardSubCategory.getId());
+            setPictureOfInstrument(midiKeyboard , "C:/Users/PC/codecool/ADVANCE/music-store/music-store-backend/src/main/resources/stockpohotos/KeyboardInstruments/MIDI_billenty__z_4d8b44370f524_k.jpg");
             products.add(midiKeyboard);
 
             KeyboardInstrument synthesizer = new KeyboardInstrument();
@@ -195,6 +208,7 @@ public class ProductGeneratorImpl implements ProductGenerator {
             synthesizer.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
             synthesizer.setPrice(random.nextInt(200));
             synthesizer.setSubCategoryId(synthesizerSubCategory.getId());
+            setPictureOfInstrument(synthesizer , "C:/Users/PC/codecool/ADVANCE/music-store/music-store-backend/src/main/resources/stockpohotos/KeyboardInstruments/Szintetiz__tor_4d8b43be9d01c_k.jpg");
             products.add(synthesizer);
 
             WindInstrument flute = new WindInstrument();
@@ -203,6 +217,7 @@ public class ProductGeneratorImpl implements ProductGenerator {
             flute.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
             flute.setPrice(random.nextInt(200));
             flute.setSubCategoryId(fluteSubCategory.getId());
+            setPictureOfInstrument(flute , "C:/Users/PC/codecool/ADVANCE/music-store/music-store-backend/src/main/resources/stockpohotos/WindInstruments/fuvolak_k.jpg");
             products.add(flute);
 
             WindInstrument saxophone = new WindInstrument();
@@ -211,6 +226,7 @@ public class ProductGeneratorImpl implements ProductGenerator {
             saxophone.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
             saxophone.setPrice(random.nextInt(200));
             saxophone.setSubCategoryId(saxophoneSubCategory.getId());
+            setPictureOfInstrument(saxophone , "C:/Users/PC/codecool/ADVANCE/music-store/music-store-backend/src/main/resources/stockpohotos/WindInstruments/sax_k.jpg");
             products.add(saxophone);
 
             WindInstrument trumpet = new WindInstrument();
@@ -219,6 +235,7 @@ public class ProductGeneratorImpl implements ProductGenerator {
             trumpet.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
             trumpet.setPrice(random.nextInt(200));
             trumpet.setSubCategoryId(trumpetSubCategory.getId());
+            setPictureOfInstrument(trumpet , "C:/Users/PC/codecool/ADVANCE/music-store/music-store-backend/src/main/resources/stockpohotos/WindInstruments/trombita_k.jpg");
             products.add(trumpet);
 
             Bass electricBassGuitar = new Bass();
@@ -227,6 +244,7 @@ public class ProductGeneratorImpl implements ProductGenerator {
             electricBassGuitar.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
             electricBassGuitar.setPrice(random.nextInt(200));
             electricBassGuitar.setSubCategoryId(electricBassGuitarSubCategory.getId());
+            setPictureOfInstrument(electricBassGuitar , "C:/Users/PC/codecool/ADVANCE/music-store/music-store-backend/src/main/resources/stockpohotos/Bass/el_bass_k.jpg");
             products.add(electricBassGuitar);
 
             Bass acousticBassGuitar = new Bass();
@@ -235,6 +253,8 @@ public class ProductGeneratorImpl implements ProductGenerator {
             acousticBassGuitar.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
             acousticBassGuitar.setPrice(random.nextInt(200));
             acousticBassGuitar.setSubCategoryId(acousticBassGuitarSubCategory.getId());
+            setPictureOfInstrument(acousticBassGuitar , "C:/Users/PC/codecool/ADVANCE/music-store/music-store-backend/src/main/resources/stockpohotos/Bass/01011_k.jpg");
+
             products.add(acousticBassGuitar);
 
             Bass fiveStringBassGuitar = new Bass();
@@ -243,6 +263,8 @@ public class ProductGeneratorImpl implements ProductGenerator {
             fiveStringBassGuitar.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
             fiveStringBassGuitar.setPrice(random.nextInt(200));
             fiveStringBassGuitar.setSubCategoryId(fiveStringBassGuitarSubCategory.getId());
+            setPictureOfInstrument(fiveStringBassGuitar , "C:/Users/PC/codecool/ADVANCE/music-store/music-store-backend/src/main/resources/stockpohotos/Bass/el_bass_lh_k.jpg");
+
             products.add(fiveStringBassGuitar);
 
             PercussionInstrument acousticDrum = new PercussionInstrument();
@@ -251,6 +273,8 @@ public class ProductGeneratorImpl implements ProductGenerator {
             acousticDrum.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
             acousticDrum.setPrice(random.nextInt(200));
             acousticDrum.setSubCategoryId(acousticDrumSubCategory.getId());
+            setPictureOfInstrument(acousticDrum , "C:/Users/PC/codecool/ADVANCE/music-store/music-store-backend/src/main/resources/stockpohotos/PercussionInstrument/acoustic-drum-sets-1005.png");
+
             products.add(acousticDrum);
 
             PercussionInstrument electricDrum = new PercussionInstrument();
@@ -259,6 +283,8 @@ public class ProductGeneratorImpl implements ProductGenerator {
             electricDrum.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
             electricDrum.setPrice(random.nextInt(200));
             electricDrum.setSubCategoryId(electricDrumSubCategory.getId());
+            setPictureOfInstrument(electricDrum , "C:/Users/PC/codecool/ADVANCE/music-store/music-store-backend/src/main/resources/stockpohotos/PercussionInstrument/electric-drum-sets-1006.png");
+
             products.add(electricDrum);
 
             PercussionInstrument snareDrum = new PercussionInstrument();
@@ -267,6 +293,8 @@ public class ProductGeneratorImpl implements ProductGenerator {
             snareDrum.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
             snareDrum.setPrice(random.nextInt(200));
             snareDrum.setSubCategoryId(snareDrumSubCategory.getId());
+            setPictureOfInstrument(snareDrum , "C:/Users/PC/codecool/ADVANCE/music-store/music-store-backend/src/main/resources/stockpohotos/PercussionInstrument/01064_k.jpg");
+
             products.add(snareDrum);
 
             PercussionInstrument tamDrum = new PercussionInstrument();
@@ -275,6 +303,8 @@ public class ProductGeneratorImpl implements ProductGenerator {
             tamDrum.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
             tamDrum.setPrice(random.nextInt(200));
             tamDrum.setSubCategoryId(tamSubCategory.getId());
+            setPictureOfInstrument(tamDrum , "C:/Users/PC/codecool/ADVANCE/music-store/music-store-backend/src/main/resources/stockpohotos/PercussionInstrument/handpan_k.jpg");
+
             products.add(tamDrum);
 
             PercussionInstrument hiHatCymbal = new PercussionInstrument();
@@ -283,6 +313,8 @@ public class ProductGeneratorImpl implements ProductGenerator {
             hiHatCymbal.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
             hiHatCymbal.setPrice(random.nextInt(200));
             hiHatCymbal.setSubCategoryId(hitHatCymbalSubCategory.getId());
+            setPictureOfInstrument(hiHatCymbal , "C:/Users/PC/codecool/ADVANCE/music-store/music-store-backend/src/main/resources/stockpohotos/PercussionInstrument/01087_k.jpg");
+
             products.add(hiHatCymbal);
 
             PercussionInstrument ride = new PercussionInstrument();
@@ -291,12 +323,27 @@ public class ProductGeneratorImpl implements ProductGenerator {
             ride.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
             ride.setPrice(random.nextInt(200));
             ride.setSubCategoryId(rideCymbalSubCategory.getId());
+            setPictureOfInstrument(ride , "C:/Users/PC/codecool/ADVANCE/music-store/music-store-backend/src/main/resources/stockpohotos/PercussionInstrument/ride.jpg");
+
             products.add(ride);
         }
 
 
         productRepository.saveAll(products);
 
+    }
+
+    private static void setPictureOfInstrument(Product instrument , String filePath ) {
+
+        Path path = Path.of(filePath);
+
+        try {
+            byte[] imageData = Files.readAllBytes(path);
+            instrument.setImage(imageData);
+        } catch (IOException e) {
+            System.out.println("No photoFounded");
+            e.printStackTrace();
+        }
     }
 
     @Override
