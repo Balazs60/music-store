@@ -1,0 +1,38 @@
+
+
+.subcategory {
+min-height: 100vh;
+display: flex;
+align-items: center;
+background: #cdd9ed;
+}
+
+
+
+.filter-section {
+    padding: 20px;
+}
+.box {
+    width: 100%;
+    max-width: 320px;
+    padding: 36px 32px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 1px 4px rgba(18, 22, 33, .12);
+}
+
+.slider {
+    width: 100;
+    height: 10px;
+    background-color: #cdd9ed;
+    margin-top: 20px;
+}
+
+.slider .thumb {
+    width: 23px;
+    height: 23px;
+    cursor: pointer;
+    background: #fff;
+    border-radius: 50%;
+    border: 2px solid #275efe
+}
