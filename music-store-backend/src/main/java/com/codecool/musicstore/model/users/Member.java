@@ -4,6 +4,7 @@ import com.codecool.musicstore.model.cart.Cart;
 import jakarta.persistence.*;
 import lombok.*;
 
+
 @Entity
 @Builder
 @NoArgsConstructor
