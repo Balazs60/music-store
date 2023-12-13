@@ -12,31 +12,6 @@ Postgresql
 TypeScript  
 React  
 
-## Getting Started  
-
-### Prerequisites:  
-Java JDK   
-
-### Installation:  
-
-#### Clone the repository  
-git clone https://github.com/Balazs60/music-store   
-
-#### Install dependencies  
-
-### Backend  
-cd music-store/music-store-backend   
-./mvnw install  
-
-### Frontend  
-cd music-store/music-store-frontend  
-npm i  
-
-#### Run the application  
-cd music-store/music-store-backend  
-./mvnw spring-boot:run  
-cd music-store/music-store-frontend   
-npm run dev  
 
 ## Authors  
 Borisz Bisits  
