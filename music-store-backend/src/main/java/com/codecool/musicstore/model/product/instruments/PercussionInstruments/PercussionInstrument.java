@@ -1,6 +1,6 @@
-package com.codecool.musicstore.model.PercussionInstruments;
+package com.codecool.musicstore.model.product.instruments.PercussionInstruments;
 
-import com.codecool.musicstore.model.Product;
+import com.codecool.musicstore.model.product.Product;
 import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.Setter;

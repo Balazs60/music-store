@@ -1,9 +1,8 @@
-package com.codecool.musicstore.model;
+package com.codecool.musicstore.model.users;
 
+import com.codecool.musicstore.model.cart.Cart;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.UUID;
 
 @Entity
 @Builder
@@ -16,6 +15,9 @@ public class Member {
     @Id
     @GeneratedValue
     private Long id;
+    @OneToOne(mappedBy = "member")
+    private Cart cart;
+
     private String name;
     private String password;
     private String email;

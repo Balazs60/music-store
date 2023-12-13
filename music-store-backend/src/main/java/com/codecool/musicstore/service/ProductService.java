@@ -1,8 +1,8 @@
 package com.codecool.musicstore.service;
 
 import com.codecool.musicstore.Dao.ProductDao;
-import com.codecool.musicstore.model.Product;
-import com.codecool.musicstore.model.SubCategory;
+import com.codecool.musicstore.model.product.Product;
+import com.codecool.musicstore.model.product.instruments.SubCategory;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

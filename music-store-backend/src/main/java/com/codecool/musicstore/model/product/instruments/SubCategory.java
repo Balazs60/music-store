@@ -1,4 +1,4 @@
-package com.codecool.musicstore.model;
+package com.codecool.musicstore.model.product.instruments;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

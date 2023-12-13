@@ -1,6 +1,6 @@
 package com.codecool.musicstore.controller;
 
-import com.codecool.musicstore.model.Product;
+import com.codecool.musicstore.model.product.Product;
 import com.codecool.musicstore.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

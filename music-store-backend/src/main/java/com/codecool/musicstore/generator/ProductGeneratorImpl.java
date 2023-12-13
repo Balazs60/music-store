@@ -1,14 +1,14 @@
 package com.codecool.musicstore.generator;
 
-import com.codecool.musicstore.model.Guitar.Guitar;
-import com.codecool.musicstore.model.KeyboardInstruments.KeyboardInstrument;
-import com.codecool.musicstore.model.PercussionInstruments.PercussionInstrument;
-import com.codecool.musicstore.model.Product;
-import com.codecool.musicstore.model.SubCategory;
-import com.codecool.musicstore.model.WindInstruments.WindInstrument;
-import com.codecool.musicstore.model.bass.Bass;
-import com.codecool.musicstore.model.merch.Merch;
-import com.codecool.musicstore.model.soundtechnic.SoundTechnic;
+import com.codecool.musicstore.model.product.instruments.Guitar.Guitar;
+import com.codecool.musicstore.model.product.instruments.KeyboardInstruments.KeyboardInstrument;
+import com.codecool.musicstore.model.product.instruments.PercussionInstruments.PercussionInstrument;
+import com.codecool.musicstore.model.product.Product;
+import com.codecool.musicstore.model.product.instruments.SubCategory;
+import com.codecool.musicstore.model.product.instruments.WindInstruments.WindInstrument;
+import com.codecool.musicstore.model.product.instruments.bass.Bass;
+import com.codecool.musicstore.model.product.merch.Merch;
+import com.codecool.musicstore.model.product.soundtechnic.SoundTechnic;
 import com.codecool.musicstore.repositories.ProductRepository;
 import com.codecool.musicstore.repositories.SubCategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
