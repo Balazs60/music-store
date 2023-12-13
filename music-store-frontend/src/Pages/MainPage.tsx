@@ -29,7 +29,14 @@ const MainPage: React.FC = () => {
   }, []);
 
   const fetchInstruments = () => {
-    fetch('/api/mainpage/products', { method: 'GET' })
+    const token = localStorage.getItem("token");
+    
+    const headers = {
+        Authorization: `Bearer ${token}`,
+    };
+    fetch('/api/mainpage/products', {
+      
+      method: 'GET' ,headers: headers})
       .then(response => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);

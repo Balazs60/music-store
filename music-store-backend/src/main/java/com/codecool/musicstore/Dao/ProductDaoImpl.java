@@ -5,11 +5,13 @@ import com.codecool.musicstore.model.product.instruments.SubCategory;
 import com.codecool.musicstore.repositories.ProductRepository;
 import com.codecool.musicstore.repositories.SubCategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
+@Primary
 @Repository
 public class ProductDaoImpl implements ProductDao {
 

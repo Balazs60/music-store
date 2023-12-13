@@ -34,6 +34,12 @@ public class MemberDaoImpl implements MemberDao{
         memberRepository.saveAll(memberList);
     }
 
+    @Override
+    public Member findMemberByName(String memberName) {
+return         memberRepository.findMemberByName(memberName);
+
+    }
+
     public void populateDataBase() {
         // TODO: only do this if there is no data
 
