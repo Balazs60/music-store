@@ -1,6 +1,6 @@
-package com.codecool.musicstore.model.soundtechnic;
+package com.codecool.musicstore.model.product.soundtechnic;
 
-import com.codecool.musicstore.model.Product;
+import com.codecool.musicstore.model.product.Product;
 import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.Setter;

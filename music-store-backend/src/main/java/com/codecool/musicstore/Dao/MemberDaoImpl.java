@@ -1,6 +1,6 @@
 package com.codecool.musicstore.Dao;
 
-import com.codecool.musicstore.model.Member;
+import com.codecool.musicstore.model.users.Member;
 import com.codecool.musicstore.repositories.MemberRepository;
 
 

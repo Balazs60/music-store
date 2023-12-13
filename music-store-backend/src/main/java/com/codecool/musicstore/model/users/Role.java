@@ -1,4 +1,4 @@
-package com.codecool.musicstore.model;
+package com.codecool.musicstore.model.users;
 
 public enum Role {
     USER,
