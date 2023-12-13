@@ -17,7 +17,7 @@ public class Member {
     @GeneratedValue
     private Long id;
 
-    @OneToOne(mappedBy = "member")
+    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Cart cart;
 
     private String name;

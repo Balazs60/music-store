@@ -39,5 +39,8 @@ public class Cart {
                 .filter(cartItem -> cartItem.isItemStillInCart())
                 .toList();
     }
+     public void addCartItemtoCart(CartItem cartItem){
+        cartItems.add(cartItem);
+     }
 
 }

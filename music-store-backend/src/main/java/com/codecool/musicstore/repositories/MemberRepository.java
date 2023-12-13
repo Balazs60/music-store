@@ -7,7 +7,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-
 public interface MemberRepository extends JpaRepository<Member, Long> {
 
 

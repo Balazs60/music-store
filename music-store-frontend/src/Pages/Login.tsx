@@ -44,7 +44,7 @@ function Login() {
         localStorage.setItem('username', username);
         setToken(data.token);
         setIsLoggedIn(true);
-        navigate('/mainpage');
+        navigate('/');
       })
       .catch((error) => {
         alert('Authentication failed. Please check your credentials.');

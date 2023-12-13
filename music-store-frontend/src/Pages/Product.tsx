@@ -1,20 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-interface Product {
-  id: string;
-  name: string;
-  color: string;
-  price: number;
-  brand: string;
-  dtype: string;
-  subCategoryId: string;
-  numberOfStrings: number;
-  numberOfSoundLayers: number;
-  numberOfKeys: number;
-  diameter: number;
-  image: string;
-}
+// ... (Your Product interface and other code)
 
 function Product() {
   const { id } = useParams();
@@ -40,7 +27,12 @@ function Product() {
   }, [id]);
 
   const fetchProductById = (productId: string) => {
-    fetch(`/api/product/${productId}`, { method: 'GET' })
+    const token = localStorage.getItem("token");
+    
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    fetch(`/api/product/${productId}`, { method: 'GET', headers: headers })
       .then(response => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -56,6 +48,39 @@ function Product() {
       });
   };
 
+  const handleAddToCart = () => {
+    const token = localStorage.getItem("token");
+  
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json', 
+    };
+    const member=localStorage.getItem("username")
+  
+    const productid = selectedProduct.id;
+     
+  
+  
+    fetch(`/api/cart/${member}/${productid}`, {
+      method: 'POST',
+      headers: headers,
+        
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Product added to cart:', data);
+        // Handle any additional logic after successfully adding to the cart
+      })
+      .catch(error => {
+        console.error('Error adding product to cart:', error);
+      });
+  };
+  
   return (
     <div>
       {selectedProduct ? (
@@ -65,10 +90,17 @@ function Product() {
           <p>Price: {selectedProduct.price}</p>
           <p>Color: {selectedProduct.color}</p>
           <p>Picture:</p>
-          <img src={`data:image/png;base64,${selectedProduct.image}`} alt={selectedProduct.name} style={{ maxWidth: '100%', height: 'auto' }} />
+          <img
+            src={`data:image/png;base64,${selectedProduct.image}`}
+            alt={selectedProduct.name}
+            style={{ maxWidth: '100%', height: 'auto' }}
+          />
           {selectedProduct.numberOfStrings && (
             <p>Number of Strings: {selectedProduct.numberOfStrings}</p>
           )}
+          
+          {/* Add to Cart Button */}
+          <button onClick={handleAddToCart}>Add to Cart</button>
         </div>
       ) : (
         <p>Loading...</p>
