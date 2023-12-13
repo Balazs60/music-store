@@ -1,14 +1,12 @@
 package com.codecool.musicstore.Dao;
 
-import com.codecool.musicstore.model.Guitar.Guitar;
-import com.codecool.musicstore.model.Product;
-import com.codecool.musicstore.model.SubCategory;
+import com.codecool.musicstore.model.product.Product;
+import com.codecool.musicstore.model.product.instruments.SubCategory;
 import com.codecool.musicstore.repositories.ProductRepository;
 import com.codecool.musicstore.repositories.SubCategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;

@@ -1,6 +1,6 @@
 package com.codecool.musicstore.service;
 
-import com.codecool.musicstore.model.Member;
+import com.codecool.musicstore.model.users.Member;
 import com.codecool.musicstore.repositories.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
