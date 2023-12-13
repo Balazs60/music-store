@@ -64,35 +64,53 @@ const MainPage: React.FC = () => {
     setFilteredProducts(filteredProducts);
   };
 
-  const handleDropdownItemClick = (id: string) => {
-    navigate(`/product/${id}`);
-  };
-
   return (
     <div className="container mt-4">
       <Row>
         <Col md={3}>
           <Dropdown as={ButtonGroup}>
-            {/* ... (unchanged) */}
+            <Dropdown.Toggle variant="outline-secondary" id="categoryDropdown">
+              Select Category
+            </Dropdown.Toggle>
+            <Dropdown.Menu>
+              {[['Guitar', 'Gitár'],
+                ['PercussionInstrument', 'Ütős'],
+                ['KeyboardInstrument', 'Billentyűs'],
+                ['WindInstrument', 'Fúvós'],
+                ['Bass', "Basszusgitár"],
+                ['SoundTechnic', "Hangtechnika"],
+                ['Merch', "Merch"]
+                ].map((category, index) => (
+                <Dropdown.Item
+                  key={index}
+                  onClick={() => handleCategoryChange(category[0])}
+                  active={selectedCategory === category[0]}
+                >
+                  {category[1]}
+                </Dropdown.Item>
+              ))}
+            </Dropdown.Menu>
           </Dropdown>
         </Col>
         <Col md={9}>
           <div className="input-group">
-            <Dropdown show={filteredProducts.length > 0}>
-              <Dropdown.Toggle variant="outline-secondary" id="dropdown-basic">
-                Select a product
-              </Dropdown.Toggle>
-              <Dropdown.Menu>
-                {filteredProducts.map(product => (
-                  <Dropdown.Item
-                    key={product.id}
-                    onClick={() => handleProductClick(product.id)}
-                  >
-                    {product.name}
-                  </Dropdown.Item>
-                ))}
-              </Dropdown.Menu>
-            </Dropdown>
+            {filteredProducts.length > 0 && (
+              <Dropdown show={true}>
+                <Dropdown.Toggle variant="outline-secondary" id="dropdown-basic">
+                  Select a product
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  {filteredProducts.map(product => (
+                    <Dropdown.Item
+                      key={product.id}
+                      onClick={() => handleProductClick(product.id)}
+                    >
+                      {product.name}
+                    </Dropdown.Item>
+                  ))}
+                </Dropdown.Menu>
+              </Dropdown>
+            )}
             <input
               list="filteredProducts"
               type="text"
