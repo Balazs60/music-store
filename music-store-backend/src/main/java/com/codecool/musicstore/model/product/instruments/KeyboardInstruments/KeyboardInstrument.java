@@ -1,5 +1,6 @@
 package com.codecool.musicstore.model.product.instruments.KeyboardInstruments;
 
+
 import com.codecool.musicstore.model.product.Product;
 import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
