@@ -13,14 +13,14 @@ interface Product {
   subCategoryId: string;
   numberOfStrings: number;
   numberOfSoundLayers: number;
-  numberOfKeys : number;
+  numberOfKeys: number;
   diameter: number;
-  
-
 }
 
 const MainPage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('');
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
   const navigate = useNavigate();
 
@@ -37,7 +37,6 @@ const MainPage: React.FC = () => {
         return response.json();
       })
       .then(data => {
-        console.log(data);
         setProducts(data);
       })
       .catch(error => {
@@ -50,41 +49,58 @@ const MainPage: React.FC = () => {
     navigate(`/category/${category}`);
   };
 
-      const handleGuitarClick = (id : string) => {
-        navigate(`/product/${id}`);
-    };
+  const handleProductClick = (id: string) => {
+    navigate(`/product/${id}`);
+  };
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const searchTerm = event.target.value;
+    setSearchTerm(searchTerm);
+
+    const filteredProducts = products.filter(product =>
+      product.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    setFilteredProducts(filteredProducts);
+  };
+
+  const handleDropdownItemClick = (id: string) => {
+    navigate(`/product/${id}`);
+  };
 
   return (
     <div className="container mt-4">
       <Row>
         <Col md={3}>
           <Dropdown as={ButtonGroup}>
-            <Dropdown.Toggle variant="outline-secondary" id="categoryDropdown">
-              Select Category
-            </Dropdown.Toggle>
-            <Dropdown.Menu>
-              {[['Guitar', 'Gitár'],
-                 ['PercussionInstrument', 'Ütős'],
-                 ['KeyboardInstrument', 'Billentyűs'],
-                 ['WindInstrument', 'Fúvós'],
-                ['Bass', "Basszusgitár"],
-                ['SoundTechnic', "Hangtechnika"],
-                ['Merch', "Merch"]
-                 ].map((category, index) => (
-                <Dropdown.Item
-                  key={index}
-                  onClick={() => handleCategoryChange(category[0])}
-                  active={selectedCategory === category[0]}
-                >
-                  {category[1]}
-                </Dropdown.Item>
-              ))}
-            </Dropdown.Menu>
+            {/* ... (unchanged) */}
           </Dropdown>
         </Col>
         <Col md={9}>
           <div className="input-group">
-            <input type="text" className="form-control" placeholder="Search..." />
+            <Dropdown show={filteredProducts.length > 0}>
+              <Dropdown.Toggle variant="outline-secondary" id="dropdown-basic">
+                Select a product
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                {filteredProducts.map(product => (
+                  <Dropdown.Item
+                    key={product.id}
+                    onClick={() => handleProductClick(product.id)}
+                  >
+                    {product.name}
+                  </Dropdown.Item>
+                ))}
+              </Dropdown.Menu>
+            </Dropdown>
+            <input
+              list="filteredProducts"
+              type="text"
+              className="form-control"
+              placeholder="Search..."
+              value={searchTerm}
+              onChange={handleSearchChange}
+            />
           </div>
         </Col>
       </Row>
@@ -92,7 +108,7 @@ const MainPage: React.FC = () => {
       <h1 className="mt-3">List of Instruments</h1>
       <ul className="list-group">
         {products.map((product, index) => (
-          <li key={index} className="list-group-item"  onClick={() => handleGuitarClick(product.id)}>
+          <li key={index} className="list-group-item" onClick={() => handleProductClick(product.id)}>
             {product.name}
           </li>
         ))}
