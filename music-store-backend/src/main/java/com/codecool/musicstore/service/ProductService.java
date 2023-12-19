@@ -34,34 +34,36 @@ public class ProductService {
     }
 
 
-
     public void saveProducts(List<Product> products) {
         productDao.saveProducts(products);
     }
-public String convertCategoryToDtype(String category){
-        if(category.equals("guitars")){
+
+    public String convertCategoryToDtype(String category) {
+        if (category.equals("guitars")) {
             return "Guitar";
-        } else if(category.equals("percussion")){
+        } else if (category.equals("percussion")) {
             return "PercussionInstrument";
-        } else if(category.equals("key")){
+        } else if (category.equals("key")) {
             return "KeyboardInstrument";
-        } else if (category.equals("wind")){
+        } else if (category.equals("wind")) {
             return "WindInstrument";
-    } else if (category.equals("bass")){
+        } else if (category.equals("bass")) {
             return "Bass";
         }
 
         return null;
-}
+    }
 
+    @Transactional
     public List<SubCategory> findSubCategories(String category) {
         List<SubCategory> subcategories = productDao.findSubCategories(category);
         return subcategories;
     }
+
     @Transactional
     public List<Product> findProductsBySubCategory(String category, UUID subCategory) {
         System.out.println("subcategoryId " + subCategory);
-        return productDao.findProductsBySubCategory(category,subCategory);
+        return productDao.findProductsBySubCategory(category, subCategory);
     }
 
 //    public void populateProducts() {
