@@ -4,6 +4,7 @@ import com.codecool.musicstore.model.users.Member;
 import com.codecool.musicstore.repositories.MemberRepository;
 
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Random;
 
 @Repository
+@Transactional
 public class MemberDaoImpl implements MemberDao{
     private MemberRepository memberRepository;
 
@@ -33,7 +35,7 @@ public class MemberDaoImpl implements MemberDao{
 
         memberRepository.saveAll(memberList);
     }
-
+    @Transactional
     @Override
     public Member findMemberByName(String memberName) {
 return         memberRepository.findMemberByName(memberName);
@@ -75,6 +77,7 @@ return         memberRepository.findMemberByName(memberName);
 
 
     @Override
+    @Transactional
     public Member getMemberById(Long id) {
         return memberRepository.findById(id).get();
     }
