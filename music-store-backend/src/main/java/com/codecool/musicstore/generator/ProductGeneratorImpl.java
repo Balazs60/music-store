@@ -11,6 +11,7 @@ import com.codecool.musicstore.model.product.merch.Merch;
 import com.codecool.musicstore.model.product.soundtechnic.SoundTechnic;
 import com.codecool.musicstore.repositories.ProductRepository;
 import com.codecool.musicstore.repositories.SubCategoryRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -37,6 +38,7 @@ public class ProductGeneratorImpl implements ProductGenerator {
         this.random = new Random();
     }
 
+    @Transactional
     @Override
     public void seedProducts() {
         List<Product> products = new ArrayList<>();
@@ -399,6 +401,21 @@ public class ProductGeneratorImpl implements ProductGenerator {
         }
     }
 
+
+    public void setPictureOfSubCategory(SubCategory subCategory, String filePath) {
+        String imagePath = "src/main/resources/stockpohotos/" + filePath;
+Path path = Path.of(imagePath);
+        System.out.println("peth " + path);
+        try {
+            byte[] imageData = Files.readAllBytes(path);
+            subCategory.setImage(imageData);
+        } catch (IOException e) {
+            System.out.println("No photo found for subcategory: " + subCategory.getName());
+            e.printStackTrace();
+        }
+    }
+
+    @Transactional
     @Override
     public void seedSubCategories() {
         List<SubCategory> subCategories = new ArrayList<>();
@@ -430,6 +447,8 @@ public class ProductGeneratorImpl implements ProductGenerator {
         "Gift"};
 
 
+
+
         String[] categories = {
                 "Guitar",
                 "Guitar",
@@ -458,11 +477,46 @@ public class ProductGeneratorImpl implements ProductGenerator {
                 "Merch"
         };
 
+        String[] subCategoryImagePaths = {
+                // Add paths to your subcategory images here
+                "SubCategory/Elektromos_git___4d8b2663d4c79_k.jpg",
+                "SubCategory/akuszt_k.jpg",
+                "SubCategory/010165_k.jpg",
+                "SubCategory/Benjo_4d8b38c5edb1b_k.jpg",
+                "SubCategory/Mandolin_51e7fc30a26a7_k.jpg",
+                "SubCategory/Szintetiz__tor_4d8b43be9d01c_k.jpg",
+                "SubCategory/MIDI_billenty__z_4d8b44370f524_k.jpg",
+                "SubCategory/casio-ap-270-bn.jpg",
+                "SubCategory/trombita_k.jpg",
+                "SubCategory/sax_k.jpg",
+                "SubCategory/fuvolak_k.jpg",
+                "SubCategory/el_bass_k.jpg",
+                "SubCategory/01011_k.jpg",
+                "SubCategory/el_bass_lh_k.jpg",
+                "SubCategory/acoustic-drum-sets-1005.png",
+                "SubCategory/electric-drum-sets-1006.png",
+                "SubCategory/el_bass_k.jpg2",
+                "SubCategory/01064_k.jpg",
+                "SubCategory/ride.jpg",
+                "SubCategory/hihat.jpg",
+                "SubCategory/hihat.jpg2",
+                "SubCategory/hihat.jpg3",
+                "SubCategory/hihat.jpg4",
+                "SubCategory/hihat.jpg5",
+                "SubCategory/hihat.jpg6",
+
+
+
+
+                // Add paths for other subcategories
+        };
+
         for (int i = 0; i < categories.length; i++) {
             SubCategory subCategory = new SubCategory();
             subCategory.setCategory(categories[i]);
             subCategory.setName(subCategoryNames[i]);
             subCategories.add(subCategory);
+            setPictureOfSubCategory(subCategory, subCategoryImagePaths[i]);
 
         }
         subCategoryRepository.saveAll(subCategories);

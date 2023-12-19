@@ -23,6 +23,8 @@ public class MusicStoreApplication {
 		productGenerator.seedSubCategories();
 		productGenerator.seedProducts();
 	}
+
+
 	public static void main(String[] args) {
 		SpringApplication.run(MusicStoreApplication.class, args);
 	}
