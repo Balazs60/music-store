@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
 
 interface CartItem {
-  id: number;
-  quantity: number;
-  endOfReservation: string;
-  product: {
-    id: number;
-    name: string;
-    price: number;
-    // Add any other properties you need for a product
-  };
-  // Add any other properties you need for a cart item
+  id: "",
+  name: "",
+  color: "",
+  price: 0,
+  brand: "",
+  dtype: "",
+  subCategoryId: "",
+  numberOfStrings: 0,
+  numberOfSoundLayers: 0,
+  numberOfKeys: 0,
+  diameter: 0,
+  image: "",
+
 }
 
 const Cart: React.FC = () => {
@@ -42,29 +45,34 @@ const Cart: React.FC = () => {
     fetchCartData();
   }, []);
 
-  // Calculate total price
-  const totalPrice = cart.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
+ 
 
   return (
-    <div>
+    <div className="cart-container">
       <h2>Your Shopping Cart</h2>
       {cart.length === 0 ? (
         <p>Your cart is empty</p>
       ) : (
         <div>
-          <ul>
+          <ul className="cart-list">
             {cart.map(item => (
-              <li key={item.id}>
-                <div>
-                  <strong>{item.product.name}</strong>
+              <li key={item.id} className="cart-item">
+                <div className="cart-item-details">
+                  <strong>{item.name}</strong>
+                  <p>Brand: {item.brand}</p>
+                  <p>Price: ${item.price}</p>
+                  <img
+            src={`data:image/png;base64,${item.image}`}
+            alt={item.name}
+            style={{ maxWidth: '100%', height: 'auto' }}
+          />
                 </div>
-            
                 {/* Add more details as needed */}
               </li>
             ))}
           </ul>
-          <div>
-            <strong>Total Price: ${totalPrice}</strong>
+          <div className="cart-summary">
+            {/* Add a total price or any other summary information */}
           </div>
           {/* Add more elements/buttons as needed */}
         </div>
