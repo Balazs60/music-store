@@ -6,6 +6,7 @@ import Category from "./Pages/Category"
 import SelectedGuitarPage from "./Pages/Product"
 import Registration from "./Pages/Registration"
 import Login from "./Pages/Login"
+import Cart from "./Pages/Cart"
 
 function App() {
   return(
@@ -17,6 +18,7 @@ function App() {
       <Route path="/product/:id" element={<SelectedGuitarPage/>}/>
       <Route path="/register" element={<Registration/>}/>
       <Route path="/login" element={<Login/>}/>
+      <Route path="/cart" element={<Cart/>}/>
 
 
 

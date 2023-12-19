@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 // ... (Your Product interface and other code)
 
@@ -26,6 +27,7 @@ function Product() {
     }
   }, [id]);
 
+  const navigate = useNavigate();
   const fetchProductById = (productId: string) => {
     const token = localStorage.getItem("token");
     
@@ -50,36 +52,43 @@ function Product() {
 
   const handleAddToCart = () => {
     const token = localStorage.getItem("token");
+    const member = localStorage.getItem("username");
+    const productid = selectedProduct.id;
+  
+    if (!token || !member || !productid) {
+      console.error('Invalid token, member, or productid');
+      // Handle the error or notify the user
+      return;
+    }
   
     const headers = {
       Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json', 
+      'Content-Type': 'application/json',
     };
-    const member=localStorage.getItem("username")
-  
-    const productid = selectedProduct.id;
-     
-  
   
     fetch(`/api/cart/${member}/${productid}`, {
       method: 'POST',
       headers: headers,
-        
     })
       .then(response => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
-        return response.json();
-      })
-      .then(data => {
-        console.log('Product added to cart:', data);
-        // Handle any additional logic after successfully adding to the cart
+        // No need to return response.json(), as there's no expected data
+        // Perform any additional logic after successfully adding to the cart
+        console.log('Product added to cart successfully!');
+        navigate(`/cart`);
       })
       .catch(error => {
         console.error('Error adding product to cart:', error);
+        // Handle errors during the fetch or non-successful response
+        // You can show an error message to the user if needed
       });
   };
+  
+  
+  
+  
   
   return (
     <div>

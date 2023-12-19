@@ -1,19 +1,26 @@
 package com.codecool.musicstore.model.cart;
 
 import com.codecool.musicstore.model.product.Product;
+import com.codecool.musicstore.model.users.Member;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Transactional
 @Getter
 @Setter
+@JsonIgnoreProperties({"product","member"})
 @Table(name = "cart_item")
 public class CartItem {
     @Id
@@ -21,20 +28,20 @@ public class CartItem {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "cart_id")
-    private Cart cart;
+
+    private Member member;
 
     @ManyToOne
+
     @JoinColumn(name = "product_id")
     private Product product;
 
     private int quantity;
-    private LocalDate endOfReservation;
 
 
 
 
-    public boolean isItemStillInCart() {
+   /* public boolean isItemStillInCart() {
         return !LocalDate.now().isAfter(endOfReservation);
-    }
+    }*/
 }
