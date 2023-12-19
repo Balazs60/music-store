@@ -58,9 +58,7 @@ const Cart: React.FC = () => {
                 <div>
                   <strong>{item.product.name}</strong>
                 </div>
-                <div>Price: ${item.product.price}</div>
-                <div>Quantity: {item.quantity}</div>
-                <div>End of Reservation: {item.endOfReservation}</div>
+            
                 {/* Add more details as needed */}
               </li>
             ))}
