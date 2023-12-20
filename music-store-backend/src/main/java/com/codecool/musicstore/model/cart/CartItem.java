@@ -2,8 +2,7 @@ package com.codecool.musicstore.model.cart;
 
 import com.codecool.musicstore.model.product.Product;
 import com.codecool.musicstore.model.users.Member;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -17,22 +16,21 @@ import java.util.UUID;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Transactional
 @Getter
 @Setter
-@JsonIgnoreProperties({"product","member"})
 @Table(name = "cart_item")
 public class CartItem {
     @Id
     @GeneratedValue
     private Long id;
 
+    //@JsonIgnore
+    @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
+    @JsonIdentityReference(alwaysAsId=true)
     @ManyToOne
-
     private Member member;
 
     @ManyToOne
-
     @JoinColumn(name = "product_id")
     private Product product;
 
