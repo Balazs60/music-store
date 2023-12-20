@@ -17,7 +17,6 @@ import java.util.List;
 
 
 @Service
-@Transactional
 public class MemberService {
     private MemberDao memberDao;
 
@@ -41,22 +40,24 @@ public class MemberService {
 
 
     @Transactional
-    public List<Product> getMembersChartByName(String membername) {
+    public List<CartItem> getMembersChartByName(String membername) {
 
+        System.out.println("1");
         List<CartItem> cartItems=cartItemDao.getAllChartItem();
+        System.out.println("2");
         List<CartItem> finteredCartItems=cartItems.stream().filter(cartItem -> cartItem.getMember().getName().equals(membername)).toList();
-        List<Product> allProducts=productDao.getAllProduct();
-        List<Product>filteredProducts=new ArrayList<>();
-        for (Product product:allProducts){
-            for (CartItem cartItem:finteredCartItems){
-                if (product.getId().equals(cartItem.getProduct().getId())){
-                    filteredProducts.add(product);
-                }
-            }
-
-        }
-
-        return filteredProducts;
+//        List<Product> allProducts=productDao.getAllProduct();
+//        List<Product>filteredProducts=new ArrayList<>();
+//        for (Product product:allProducts){
+//            for (CartItem cartItem:finteredCartItems){
+//                if (product.getId().equals(cartItem.getProduct().getId())){
+//                    filteredProducts.add(product);
+//                }
+//            }
+//
+//        }
+        System.out.println("3");
+        return finteredCartItems;
     }
 
 

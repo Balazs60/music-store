@@ -14,7 +14,6 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-@Transactional
 @Table(name = "member")
 public class Member {
     @Id
@@ -24,7 +23,7 @@ public class Member {
 
 
 
- @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
  private List<CartItem> CartItems;
 
     private String name;

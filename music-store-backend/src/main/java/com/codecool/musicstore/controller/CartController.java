@@ -43,14 +43,14 @@ public class CartController {
 @Transactional
     @GetMapping(value = "/{memberName}", produces = MediaType.APPLICATION_JSON_VALUE)
 
-    public List<Product> getCartByMemberName(@PathVariable String memberName) {
+    public List<CartItem> getCartByMemberName(@PathVariable String memberName) {
         try {
 
-            List<Product> cartItemList = memberService.getMembersChartByName(memberName);
-
+            List<CartItem> cartItemList = memberService.getMembersChartByName(memberName);
+            System.out.println("cartitems" + memberService.getMembersChartByName(memberName));
 
             if (cartItemList != null && !cartItemList.isEmpty()) {
-                List<Product> cartItem = cartItemList;
+                List<CartItem> cartItem = cartItemList;
                 System.out.println("------------------------------------");
                 System.out.println("cart itemlist size"+cartItem.size());
                 return cartItem;

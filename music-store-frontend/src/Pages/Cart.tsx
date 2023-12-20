@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
+
+
 interface CartItem {
+  id: "",
+member:"",
+product:{
   id: "",
   name: "",
   color: "",
@@ -13,8 +18,12 @@ interface CartItem {
   numberOfKeys: 0,
   diameter: 0,
   image: "",
+},
+quantity:""
 
 }
+
+
 
 const Cart: React.FC = () => {
   const [cart, setCart] = useState<CartItem[]>([]);
@@ -58,14 +67,15 @@ const Cart: React.FC = () => {
             {cart.map(item => (
               <li key={item.id} className="cart-item">
                 <div className="cart-item-details">
-                  <strong>{item.name}</strong>
-                  <p>Brand: {item.brand}</p>
-                  <p>Price: ${item.price}</p>
-                  <img
-            src={`data:image/png;base64,${item.image}`}
-            alt={item.name}
+                  <strong>{item.product.name}</strong>
+                  <p>Brand: {item.product.brand}</p>
+                  <p>Price: ${item.product.price}</p>
+                  <p>Quantity: {item.quantity}</p>
+                  { <img
+            src={`data:image/png;base64,${item.product.image}`}
+            alt={item.product.name}
             style={{ maxWidth: '100%', height: 'auto' }}
-          />
+          /> }
                 </div>
                 {/* Add more details as needed */}
               </li>
