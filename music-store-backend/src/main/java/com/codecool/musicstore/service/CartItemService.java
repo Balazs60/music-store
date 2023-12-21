@@ -10,6 +10,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -18,6 +19,7 @@ public class CartItemService {
     private MemberDao memberDao;
     private CartItemDao cartItemDao;
     private ProductDao productDao;
+
     @Autowired
     public CartItemService(MemberDao memberDao, CartItemDao cartItemDao, ProductDao productDao) {
         this.memberDao = memberDao;
@@ -25,29 +27,37 @@ public class CartItemService {
         this.productDao = productDao;
     }
 
+    public CartItem checkCartItemIsExistWithProductAndMember(String productId, Long memberId) {
 
+        List<CartItem> cartItems = cartItemDao.getAllChartItem();
 
-    public void addCartItemToMembersCartItems(String productId, String memberId){
-
-
-        Member member=memberDao.findMemberByName(memberId);
-        System.out.println("---------------------------------");
-        System.out.println("membername in addcartitem "+member.getName());
-
-        Product product=productDao.getProductById(UUID.fromString(productId));
-        System.out.println("---------------------------------");
-        System.out.println("product name in addcartitem "+product.getName());
-        CartItem cartItem=new CartItem();
-        cartItem.setMember(member);
-        cartItem.setQuantity(1);
-        cartItem.setProduct(product);
-
-
-        cartItemDao.saveCartItem(cartItem);
-        System.out.println("cartitem id"+cartItem.getId());
-
-
+        for (CartItem cartItem : cartItems) {
+            if (cartItem.getProduct().getId().equals(UUID.fromString(productId)) &&
+                    cartItem.getMember().getId().equals(memberId)) {
+                return cartItem;
+            }
+        }
+        return null;
     }
 
+    public void addCartItemToMembersCartItems(String productId, String memberName, int quantity) {
 
+        Member member = memberDao.findMemberByName(memberName);
+        Product product = productDao.getProductById(UUID.fromString(productId));
+        if (checkCartItemIsExistWithProductAndMember(productId, member.getId()) != null) {
+            CartItem cartItem = checkCartItemIsExistWithProductAndMember(productId, member.getId());
+            int quantityInDataBase = cartItem.getQuantity() + quantity;
+            cartItem.setQuantity(quantityInDataBase);
+            cartItemDao.saveCartItem(cartItem);
+        } else {
+
+            CartItem cartItem = new CartItem();
+            cartItem.setMember(member);
+            cartItem.setQuantity(quantity);
+            cartItem.setProduct(product);
+
+
+            cartItemDao.saveCartItem(cartItem);
+        }
+    }
 }
