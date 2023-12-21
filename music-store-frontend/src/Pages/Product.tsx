@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 function Product() {
   const { id } = useParams();
+  const [quantity, setQuantity] = useState(1);
   const [selectedProduct, setSelectedProduct] = useState<Product>({
     id: "",
     name: "",
@@ -66,7 +67,7 @@ function Product() {
       'Content-Type': 'application/json',
     };
   
-    fetch(`/api/cart/${member}/${productid}`, {
+    fetch(`/api/cart/${member}/${productid}/${quantity}`, {
       method: 'POST',
       headers: headers,
     })
@@ -86,9 +87,16 @@ function Product() {
       });
   };
   
-  
-  
-  
+
+  const handleIncreaseQuantity = () => {
+    setQuantity(quantity + 1);
+  };
+
+  const handleDecreaseQuantity = () => {
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+    }
+  };
   
   return (
     <div>
@@ -107,9 +115,13 @@ function Product() {
           {selectedProduct.numberOfStrings && (
             <p>Number of Strings: {selectedProduct.numberOfStrings}</p>
           )}
-          
+          <div>
+          <button onClick={handleIncreaseQuantity}>+</button>
+          <p>{quantity}</p>
+          <button onClick={handleDecreaseQuantity}>-</button>
           {/* Add to Cart Button */}
           <button onClick={handleAddToCart}>Add to Cart</button>
+          </div>
         </div>
       ) : (
         <p>Loading...</p>

@@ -28,12 +28,15 @@ public class CartController {
     }
 
 
-    @PostMapping("/{memberName}/{productId}")
-    public ResponseEntity<Void> addToCart(@PathVariable String memberName, @PathVariable String productId) {
+    @PostMapping("/{memberName}/{productId}/{quantity}")
+    public ResponseEntity<Void> addToCart(@PathVariable String memberName,
+                                          @PathVariable String productId,
+                                          @PathVariable String quantity) {
         try {
             System.out.println("membername  "+memberName);
             System.out.println("productid"+productId);
-            cartItemService.addCartItemToMembersCartItems(productId, memberName);
+            System.out.println("quantity " + quantity);
+            cartItemService.addCartItemToMembersCartItems(productId, memberName, Integer.parseInt(quantity));
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             System.out.println("error");

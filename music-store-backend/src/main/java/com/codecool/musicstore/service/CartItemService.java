@@ -40,20 +40,20 @@ public class CartItemService {
         return null;
     }
 
-    public void addCartItemToMembersCartItems(String productId, String memberName) {
+    public void addCartItemToMembersCartItems(String productId, String memberName, int quantity) {
 
         Member member = memberDao.findMemberByName(memberName);
         Product product = productDao.getProductById(UUID.fromString(productId));
         if (checkCartItemIsExistWithProductAndMember(productId, member.getId()) != null) {
             CartItem cartItem = checkCartItemIsExistWithProductAndMember(productId, member.getId());
-            int quantity = cartItem.getQuantity() + 1;
-            cartItem.setQuantity(quantity);
+            int quantityInDataBase = cartItem.getQuantity() + quantity;
+            cartItem.setQuantity(quantityInDataBase);
             cartItemDao.saveCartItem(cartItem);
         } else {
 
             CartItem cartItem = new CartItem();
             cartItem.setMember(member);
-            cartItem.setQuantity(1);
+            cartItem.setQuantity(quantity);
             cartItem.setProduct(product);
 
 
