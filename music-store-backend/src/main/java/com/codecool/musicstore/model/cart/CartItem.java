@@ -39,6 +39,8 @@ public class CartItem {
 
 
 
+
+
    /* public boolean isItemStillInCart() {
         return !LocalDate.now().isAfter(endOfReservation);
     }*/

@@ -12,8 +12,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -42,22 +42,12 @@ public class MemberService {
     @Transactional
     public List<CartItem> getMembersChartByName(String membername) {
 
-        System.out.println("1");
         List<CartItem> cartItems=cartItemDao.getAllChartItem();
-        System.out.println("2");
-        List<CartItem> finteredCartItems=cartItems.stream().filter(cartItem -> cartItem.getMember().getName().equals(membername)).toList();
-//        List<Product> allProducts=productDao.getAllProduct();
-//        List<Product>filteredProducts=new ArrayList<>();
-//        for (Product product:allProducts){
-//            for (CartItem cartItem:finteredCartItems){
-//                if (product.getId().equals(cartItem.getProduct().getId())){
-//                    filteredProducts.add(product);
-//                }
-//            }
-//
-//        }
-        System.out.println("3");
-        return finteredCartItems;
+        List<CartItem> filteredCartItems=cartItems.stream().filter(cartItem -> cartItem.getMember().getName().equals(membername)).toList();
+
+
+
+        return filteredCartItems;
     }
 
 
