@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Slider from 'react-slider';
 import '../musicStore.css'
@@ -68,9 +68,9 @@ function SubCategory() {
 
 
     function filterProductsByPrice() {
-        let min = minPrice === '' || minPrice < lowestPrice ? lowestPrice : minPrice;
-        let max = maxPrice === '' || maxPrice > highestPrice ? highestPrice : maxPrice;
-        let filteredProducts = products.filter(product => product.price >= min && product.price <= max);
+        const min = minPrice === '' || minPrice < lowestPrice ? lowestPrice : minPrice;
+        const max = maxPrice === '' || maxPrice > highestPrice ? highestPrice : maxPrice;
+        const filteredProducts = products.filter(product => product.price >= min && product.price <= max);
         return filteredProducts
     }
 
@@ -79,7 +79,7 @@ function SubCategory() {
 if(selectedBrands.length === 0){
     return products
 } else {
-    let filteredProducts = products.filter(product => selectedBrands.includes(product.brand))
+    const filteredProducts = products.filter(product => selectedBrands.includes(product.brand))
     return filteredProducts
 }
     }
@@ -97,20 +97,20 @@ if(selectedBrands.length === 0){
         setFilteredProducts(filteredProductsByPrice);
     };
 
-   function setValuesAndMinPriceMaxPriceWithSlider(newValues){
+   function setValuesAndMinPriceMaxPriceWithSlider(newValues : number[]){
     const [min, max] = newValues
     setMinPrice(min)
     setMaxPrice(max)
     setValues(newValues)
     }
 
-    function setMinPriceWithInputField(e){
+    function setMinPriceWithInputField(e: React.ChangeEvent<HTMLInputElement>){
 setMinPrice(parseFloat(e.target.value))
 setValues([parseFloat(e.target.value),values[1]])
 
     }
 
-    function setMaxPriceWithInputField(e){
+    function setMaxPriceWithInputField(e: React.ChangeEvent<HTMLInputElement>){
         setMaxPrice(parseFloat(e.target.value))
         setValues([values[0],parseFloat(e.target.value)])
 
@@ -154,7 +154,7 @@ setValues([parseFloat(e.target.value),values[1]])
                 <h3>Price <span>Range</span></h3>
                 <div>${values[0]}-${values[1]}</div>
             <Slider className={'slider'}
-            onChange={(newValues) => setValuesAndMinPriceMaxPriceWithSlider(newValues)}
+            onChange={(newValues: number[]) => setValuesAndMinPriceMaxPriceWithSlider(newValues)}
             value={values}
                 min={lowestPrice} 
                 max={highestPrice}/>

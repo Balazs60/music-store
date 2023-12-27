@@ -1,8 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
 // ... (Your Product interface and other code)
+
+interface Product {
+  id: string;
+  name: string;
+  color: string;
+  price: number;
+  brand: string;
+  dtype: string;
+  subCategoryId: string;
+  numberOfStrings: number;
+  numberOfSoundLayers: number;
+  numberOfKeys: number;
+  diameter: number;
+  image: string;
+}
 
 function Product() {
   const { id } = useParams();

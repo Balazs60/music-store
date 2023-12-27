@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -6,6 +6,7 @@ interface SubCategory {
     name: string;
     category: string;
     id: string;
+    image: string;
 }
 
 function Category() {
