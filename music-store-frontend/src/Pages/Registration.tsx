@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -23,7 +23,9 @@ function Registration() {
   const [errorMassage , setErrorMassage]=useState("");
   const navigate = useNavigate();
 
-  const handleRegistration = (e) => {
+  console.log(token)
+
+  const handleRegistration = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       if (password == passwordConfirm) {
           const data = {
