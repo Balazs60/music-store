@@ -7,6 +7,8 @@ import SelectedGuitarPage from "./Pages/Product"
 import Registration from "./Pages/Registration"
 import Login from "./Pages/Login"
 import Cart from "./Pages/Cart"
+import Contact from "./Pages/Contact"
+import About from "./Pages/About"
 
 function App() {
   return(
@@ -19,6 +21,8 @@ function App() {
       <Route path="/register" element={<Registration/>}/>
       <Route path="/login" element={<Login/>}/>
       <Route path="/cart" element={<Cart/>}/>
+      <Route path="/contact" element={<Contact/>}/>
+      <Route path="/about" element={<About/>}/>
 
 
 

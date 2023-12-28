@@ -1,0 +1,33 @@
+.product-container {
+    display: flex;
+    overflow-x: auto;
+    animation: scroll 10s linear infinite;
+  }
+  
+  .product-card {
+    margin-right: 20px;
+    flex: 0 0 auto;
+    max-width: 300px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+  }
+  
+  .card-img-top {
+    width: 100%;
+    border-radius: 8px;
+  }
+  
+  .product-info {
+    margin-top: 10px;
+  }
+  
+  @keyframes scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+  
