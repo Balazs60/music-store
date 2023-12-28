@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Dropdown, ButtonGroup, Row, Col } from 'react-bootstrap';
 import '../musicStore.css';
-
-
-interface Product {
+import { Product } from './Products';
+import DiscountedProducts from './DiscountedProduct'
+/*interface Product {
   id: string;
   name: string;
   color: string;
@@ -17,8 +17,10 @@ interface Product {
   numberOfSoundLayers: number;
   numberOfKeys: number;
   diameter: number;
-  image:string
-}
+  image: string;
+  getDiscountPrice(): number;
+}*/
+
 
 const MainPage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('');
@@ -76,6 +78,9 @@ const MainPage: React.FC = () => {
   };
 
   return (
+   
+   
+  
     <div lang='en'>
          <head>
         <meta charSet="utf-8" />
@@ -95,8 +100,8 @@ const MainPage: React.FC = () => {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                         <li className="nav-item"><a className="nav-link active" aria-current="page" href="#!">Home</a></li>
-                        <li className="nav-item"><a className="nav-link" href="#!">About</a></li>
-                                              <li className="nav-item"><a className="nav-link" href="#!">Contact</a></li>
+                        <li className="nav-item"><a className="nav-link" href="/about">About</a></li>
+                                              <li className="nav-item"><a className="nav-link" href="/contact">Contact</a></li>
                     </ul>
                     <form className="d-flex">
                         <button className="btn btn-outline-dark" type="submit">
@@ -173,6 +178,20 @@ const MainPage: React.FC = () => {
                     <p className="lead fw-normal text-white-50 mb-0">Hangszerek széles választéka</p>
                 </div>
             </div>
+            <div lang='en'>
+      {/* ... (your existing JSX) */}
+
+      <section className="py-5">
+        
+     <div >
+      <div >
+          <DiscountedProducts products={products} />
+
+        </div>
+        </div>
+        
+      </section>
+    </div>
         </header>
            <section className="py-5">
         <div className="container px-4 px-lg-5 mt-5">

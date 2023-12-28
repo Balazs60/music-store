@@ -22,7 +22,14 @@ public class MainPageController {
 
     @GetMapping("/products")
     public List<Product> getProducts() {
-
+        List<Product>allproducts=productService.getAllProducts();
+        for (Product product:allproducts){
+            System.out.println("-------------------");
+            System.out.println(product.getName());
+            System.out.println(product.getPrice());
+            System.out.println(product.getDiscountPrice());
+            System.out.println("----------------------");
+        }
         return productService.getAllProducts();
     }
 }
