@@ -200,9 +200,7 @@ const MainPage: React.FC = () => {
             {products.map((product, index) => (
               <div key={index} className="col mb-5">
                 <div className="card h-100">
-                  <div className="badge bg-dark text-white position-absolute" style={{ top: '0.5rem', right: '0.5rem' }}>
-                    Sale
-                  </div>
+                
                   <img className="card-img-top" onClick={() => handleProductClick(product.id)} src={product.image ? `data:image/jpeg;base64,${product.image}` : 'default-image-url'} alt="..." />
                   <div className="card-body p-4">
                     <div className="text-center">
