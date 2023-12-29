@@ -126,9 +126,10 @@ const Cart: React.FC = () => {
 };
 
   const submitDelete = (itemId : string) => {
+
     confirmAlert({
         title: 'Confirm to delete',
-        message: 'Are you sure to delete this task?',
+        message: 'Are you sure to delete this item?',
         buttons: [
             {
                 label: 'Yes',
@@ -138,6 +139,14 @@ const Cart: React.FC = () => {
                 label: 'No',
             },
         ],
+        customUI: ({ onClose }) => (
+          <div className="custom-ui">
+            <h1>Confirm delete</h1>
+            <p>Are you sure to delete this item?</p>
+            <button onClick={() => { onClose(); handleDelete(itemId); }}>Yes</button>
+            <button onClick={onClose}>No</button>
+          </div>
+        ),
     });
 };
 
@@ -171,9 +180,8 @@ const Cart: React.FC = () => {
                     alt={item.product.name}
                     style={{ maxWidth: '100%', height: 'auto' }}
                   />
+                                  <button onClick={() => submitDelete(item.id)}>Delete</button>
                 </div>
-                <button onClick={() => submitDelete(item.id)}>Delete</button>
-
               </li>
             ))}
           </ul>

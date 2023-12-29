@@ -4,6 +4,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Dropdown, ButtonGroup, Row, Col } from 'react-bootstrap';
 import '../musicStore.css';
 import { Product } from './Products';
+import { confirmAlert } from 'react-confirm-alert';
+
 
 import DiscountedProducts from './DiscountedProduct'
 
@@ -79,7 +81,68 @@ const MainPage: React.FC = () => {
     setFilteredProducts(filteredProducts);
   };
  
+  const handleCartButtonClick = () => {
+    navigate('/cart');
+  };
+
+  const handleAddToCart = (productId: string) => {
+    const token = localStorage.getItem("token");
+    const member = localStorage.getItem("username");
   
+    // if (!token || !member || !productid) {
+    //   console.error('Invalid token, member, or productid');
+    //   // Handle the error or notify the user
+    //   return;
+    // }
+  
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    };
+  
+    fetch(`/api/cart/${member}/${productId}/${"1"}`, {
+      method: 'POST',
+      headers: headers,
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        // No need to return response.json(), as there's no expected data
+        // Perform any additional logic after successfully adding to the cart
+        console.log('Product added to cart successfully!');
+      })
+      .catch(error => {
+        console.error('Error adding product to cart:', error);
+        // Handle errors during the fetch or non-successful response
+        // You can show an error message to the user if needed
+      });
+  };
+
+  const handleAddToCartButtonClick = (productId: string) => {
+    handleAddToCart(productId);
+    confirmAlert({
+      title: 'Product added to the cart',
+      message: 'Move to the cart or continue shopping?',
+      buttons: [
+        {
+          label: 'Cart',
+          onClick: () => navigate("/cart"),
+        },
+        {
+          label: 'Shopping',
+        },
+      ],
+      customUI: ({ onClose }) => (
+        <div className="custom-ui">
+          <h1>Product added to the cart</h1>
+          <p>Move to the cart or continue shopping?</p>
+          <button onClick={() => { onClose(); navigate("/cart"); }}>Cart</button>
+          <button onClick={onClose}>Shopping</button>
+        </div>
+      ),
+    });
+  };
 
   return (
    
@@ -110,7 +173,7 @@ const MainPage: React.FC = () => {
  
                     </ul>
                     <form className="d-flex">
-                        <button className="btn btn-outline-dark" type="submit">
+                        <button className="btn btn-outline-dark" type="button" onClick={handleCartButtonClick}>
                             <i className="bi-cart-fill me-1"></i>
                             Cart
                             <span className="badge bg-dark text-white ms-1 rounded-pill">0</span>
@@ -216,9 +279,10 @@ const MainPage: React.FC = () => {
                   </div>
                   <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
                     <div className="text-center">
-                      <a className="btn btn-outline-dark mt-auto" href="#">
+                      {/* <a className="btn btn-outline-dark mt-auto" href="#">
                         Add to cart
-                      </a>
+                      </a> */}
+                        <button className="btn btn-outline-dark mt-auto" type="button" onClick={()=> handleAddToCartButtonClick(product.id)}>Add to cart</button>
                     </div>
                   </div>
                 </div>
