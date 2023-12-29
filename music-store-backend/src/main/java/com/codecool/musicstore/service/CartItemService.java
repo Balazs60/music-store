@@ -8,6 +8,7 @@ import com.codecool.musicstore.model.product.Product;
 import com.codecool.musicstore.model.users.Member;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -59,5 +60,18 @@ public class CartItemService {
 
             cartItemDao.saveCartItem(cartItem);
         }
+    }
+
+    public void updateQuantity(Long cartItemId, String newQuantity) {
+        CartItem cartItem = cartItemDao.getCartItemById(cartItemId);
+        cartItem.setQuantity(Integer.parseInt(newQuantity));
+        cartItemDao.saveCartItem(cartItem);
+    }
+
+    public ResponseEntity<String> deleteCartItemById(Long cartItemId){
+
+        ResponseEntity<String> response = cartItemDao.deleteCartItemById(cartItemId);
+
+        return response;
     }
 }

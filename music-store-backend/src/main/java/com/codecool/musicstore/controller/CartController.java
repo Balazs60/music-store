@@ -43,6 +43,21 @@ public class CartController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
+        @PatchMapping("/update-quantity/{itemId}/{newQuantity}")
+    public ResponseEntity<Void> updateQuantity(@PathVariable String itemId,
+                                          @PathVariable String newQuantity
+                                          ) {
+        try {
+            System.out.println("itemId " + itemId);
+            System.out.println("newQuantity " + newQuantity);
+            cartItemService.updateQuantity(Long.valueOf(itemId), newQuantity);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            System.out.println("error");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 @Transactional
     @GetMapping(value = "/{memberName}", produces = MediaType.APPLICATION_JSON_VALUE)
 
@@ -54,11 +69,8 @@ public class CartController {
 
             if (cartItemList != null && !cartItemList.isEmpty()) {
                 List<CartItem> cartItem = cartItemList;
-                System.out.println("------------------------------------");
-                System.out.println("cart itemlist size"+cartItem.size());
                 return cartItem;
             } else {
-                System.out.println("ures a chart -------------------");
                 return null;
             }
         } catch (Exception e) {
@@ -66,5 +78,13 @@ public class CartController {
             return null;
         }
 
+    }
+    @DeleteMapping("/{cartItemId}")
+    public ResponseEntity<String> deleteTask(
+            @PathVariable String cartItemId
+
+    ) {
+        ResponseEntity<String> response = cartItemService.deleteCartItemById(Long.valueOf(cartItemId));
+        return response;
     }
 }
