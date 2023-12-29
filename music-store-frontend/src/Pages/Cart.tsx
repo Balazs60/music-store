@@ -1,32 +1,28 @@
 import React, { useState, useEffect } from 'react';
 
-
-
 interface CartItem {
-  id: "",
-member:"",
-product:{
-  id: "",
-  name: "",
-  color: "",
-  price: 0,
-  brand: "",
-  dtype: "",
-  subCategoryId: "",
-  numberOfStrings: 0,
-  numberOfSoundLayers: 0,
-  numberOfKeys: 0,
-  diameter: 0,
-  image: "",
-},
-quantity:""
-
+  id: string;
+  member: string;
+  product: {
+    id: string;
+    name: string;
+    color: string;
+    price: number;
+    brand: string;
+    dtype: string;
+    subCategoryId: string;
+    numberOfStrings: number;
+    numberOfSoundLayers: number;
+    numberOfKeys: number;
+    diameter: number;
+    image: string;
+  };
+  quantity: number;
 }
-
-
 
 const Cart: React.FC = () => {
   const [cart, setCart] = useState<CartItem[]>([]);
+
   const fetchCartData = () => {
     const member = localStorage.getItem("username");
     const token = localStorage.getItem("token");
@@ -34,6 +30,7 @@ const Cart: React.FC = () => {
     const headers = {
       Authorization: `Bearer ${token}`,
     };
+
     fetch(`/api/cart/${member}`, { method: 'GET', headers: headers })
       .then(response => {
         if (!response.ok) {
@@ -54,7 +51,66 @@ const Cart: React.FC = () => {
     fetchCartData();
   }, []);
 
- 
+  const updateQuantityOnBackend = (itemId: string, newQuantity: number) => {
+    const token = localStorage.getItem("token");
+  
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    };
+  
+  
+    fetch(`/api/cart/update-quantity/${itemId}/${newQuantity}`, {
+      method: 'PATCH', // Use PATCH for partial updates
+      headers: headers,
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        // Handle successful response if needed
+        console.log('Quantity updated successfully:', data);
+      })
+      .catch(error => {
+        console.error('Error updating quantity:', error);
+      });
+  };
+  
+
+  const handleIncreaseQuantity = (itemId: string) => {
+    const updatedCart = cart.map(item => {
+      if (item.id === itemId) {
+        const newQuantity = item.quantity + 1;
+        updateQuantityOnBackend(itemId, newQuantity);
+        return {
+          ...item,
+          quantity: newQuantity,
+        };
+      }
+      return item;
+    });
+
+    setCart(updatedCart);
+  };
+
+  const handleDecreaseQuantity = (itemId: string) => {
+    const updatedCart = cart.map(item => {
+      if (item.id === itemId && item.quantity > 1) {
+        const newQuantity = item.quantity - 1;
+        updateQuantityOnBackend(itemId, newQuantity);
+        return {
+          ...item,
+          quantity: newQuantity,
+        };
+      }
+      return item;
+    });
+
+    setCart(updatedCart);
+  };
 
   return (
     <div className="cart-container">
@@ -71,13 +127,14 @@ const Cart: React.FC = () => {
                   <p>Brand: {item.product.brand}</p>
                   <p>Price: ${item.product.price}</p>
                   <p>Quantity: {item.quantity}</p>
-                  { <img
-            src={`data:image/png;base64,${item.product.image}`}
-            alt={item.product.name}
-            style={{ maxWidth: '100%', height: 'auto' }}
-          /> }
+                  <button onClick={() => handleIncreaseQuantity(item.id)}>+</button>
+                  <button onClick={() => handleDecreaseQuantity(item.id)}>-</button>
+                  <img
+                    src={`data:image/png;base64,${item.product.image}`}
+                    alt={item.product.name}
+                    style={{ maxWidth: '100%', height: 'auto' }}
+                  />
                 </div>
-                {/* Add more details as needed */}
               </li>
             ))}
           </ul>

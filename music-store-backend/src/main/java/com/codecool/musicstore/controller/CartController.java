@@ -43,6 +43,21 @@ public class CartController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
+        @PatchMapping("/update-quantity/{itemId}/{newQuantity}")
+    public ResponseEntity<Void> updateQuantity(@PathVariable String itemId,
+                                          @PathVariable String newQuantity
+                                          ) {
+        try {
+            System.out.println("itemId " + itemId);
+            System.out.println("newQuantity " + newQuantity);
+            cartItemService.updateQuantity(Long.valueOf(itemId), newQuantity);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            System.out.println("error");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 @Transactional
     @GetMapping(value = "/{memberName}", produces = MediaType.APPLICATION_JSON_VALUE)
 

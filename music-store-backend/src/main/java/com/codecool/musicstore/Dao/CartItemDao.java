@@ -7,4 +7,6 @@ import java.util.List;
 public interface CartItemDao {
     public void saveCartItem(CartItem cartItem);
 public List<CartItem>getAllChartItem();
+
+public CartItem getCartItemById(Long cartItemId);
 }

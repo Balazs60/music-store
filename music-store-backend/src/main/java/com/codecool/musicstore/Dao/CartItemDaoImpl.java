@@ -29,4 +29,9 @@ public class CartItemDaoImpl implements CartItemDao{
     public List<CartItem> getAllChartItem() {
         return cartItemRepository.findAll();
     }
+
+    @Override
+    public CartItem getCartItemById(Long cartItemId) {
+        return cartItemRepository.findById(cartItemId).get();
+    }
 }

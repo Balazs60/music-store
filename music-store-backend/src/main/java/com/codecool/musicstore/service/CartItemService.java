@@ -60,4 +60,10 @@ public class CartItemService {
             cartItemDao.saveCartItem(cartItem);
         }
     }
+
+    public void updateQuantity(Long cartItemId, String newQuantity) {
+        CartItem cartItem = cartItemDao.getCartItemById(cartItemId);
+        cartItem.setQuantity(Integer.parseInt(newQuantity));
+        cartItemDao.saveCartItem(cartItem);
+    }
 }
