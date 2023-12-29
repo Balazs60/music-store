@@ -69,11 +69,8 @@ public class CartController {
 
             if (cartItemList != null && !cartItemList.isEmpty()) {
                 List<CartItem> cartItem = cartItemList;
-                System.out.println("------------------------------------");
-                System.out.println("cart itemlist size"+cartItem.size());
                 return cartItem;
             } else {
-                System.out.println("ures a chart -------------------");
                 return null;
             }
         } catch (Exception e) {
@@ -81,5 +78,13 @@ public class CartController {
             return null;
         }
 
+    }
+    @DeleteMapping("/{cartItemId}")
+    public ResponseEntity<String> deleteTask(
+            @PathVariable String cartItemId
+
+    ) {
+        ResponseEntity<String> response = cartItemService.deleteCartItemById(Long.valueOf(cartItemId));
+        return response;
     }
 }

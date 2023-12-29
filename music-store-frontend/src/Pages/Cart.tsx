@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { confirmAlert } from 'react-confirm-alert';
+
 
 interface CartItem {
   id: string;
@@ -112,6 +114,41 @@ const Cart: React.FC = () => {
     setCart(updatedCart);
   };
 
+  const deleteCartItem = (cartItemId: string) => {
+    const token = localStorage.getItem('token');
+    return fetch(`/api/cart/${cartItemId}`, {
+        method: 'DELETE',
+        headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+        },
+    }).then((res) => res.json());
+};
+
+  const submitDelete = (itemId : string) => {
+    confirmAlert({
+        title: 'Confirm to delete',
+        message: 'Are you sure to delete this task?',
+        buttons: [
+            {
+                label: 'Yes',
+                onClick: () => handleDelete(itemId),
+            },
+            {
+                label: 'No',
+            },
+        ],
+    });
+};
+
+  const handleDelete = (itemId: string) => {
+    deleteCartItem(itemId);
+
+    setCart((prevCartItems) => {
+        return prevCartItems.filter((cartItem) => cartItem.id !== itemId);
+    });
+};
+
   return (
     <div className="cart-container">
       <h2>Your Shopping Cart</h2>
@@ -135,6 +172,8 @@ const Cart: React.FC = () => {
                     style={{ maxWidth: '100%', height: 'auto' }}
                   />
                 </div>
+                <button onClick={() => submitDelete(item.id)}>Delete</button>
+
               </li>
             ))}
           </ul>
