@@ -59,6 +59,12 @@ public class ProductService {
         List<SubCategory> subcategories = productDao.findSubCategories(category);
         return subcategories;
     }
+    public void UpdateProductDiscountByID(String id, Integer discount){
+      Product product= productDao.getProductById(UUID.fromString(id));
+      product.setDiscount(discount);
+      productDao.saveProduct(product);
+
+    }
 
     @Transactional
     public List<Product> findProductsBySubCategory(String category, UUID subCategory) {

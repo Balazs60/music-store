@@ -4,7 +4,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Dropdown, ButtonGroup, Row, Col } from 'react-bootstrap';
 import '../musicStore.css';
 import { Product } from './Products';
+
 import DiscountedProducts from './DiscountedProduct'
+
 /*interface Product {
   id: string;
   name: string;
@@ -76,6 +78,8 @@ const MainPage: React.FC = () => {
 
     setFilteredProducts(filteredProducts);
   };
+ 
+  
 
   return (
    
@@ -102,6 +106,8 @@ const MainPage: React.FC = () => {
                         <li className="nav-item"><a className="nav-link active" aria-current="page" href="#!">Home</a></li>
                         <li className="nav-item"><a className="nav-link" href="/about">About</a></li>
                                               <li className="nav-item"><a className="nav-link" href="/contact">Contact</a></li>
+                                              <li className="nav-item"><a className="nav-link" href="/discount">Discount</a></li>
+ 
                     </ul>
                     <form className="d-flex">
                         <button className="btn btn-outline-dark" type="submit">

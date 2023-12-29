@@ -6,10 +6,7 @@ import com.codecool.musicstore.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -51,4 +48,17 @@ public class ProductController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+    @PostMapping ("/products/{productId}/productdiscount/{productSale}")
+    public ResponseEntity<Product> setProductDiscountById(
+            @PathVariable String productId,
+            @PathVariable Number productSale
+    ) {
+        System.out.println("POST LE ------------------------------");
+        System.out.println("Put req Id Of Product" + productId);
+        System.out.println("Product discount " +productSale);
+        productService.UpdateProductDiscountByID(productId, productSale.intValue());
+        return new ResponseEntity<>( HttpStatus.OK);
+    }
+
 }
