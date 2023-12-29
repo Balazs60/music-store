@@ -15,7 +15,7 @@ interface Product {
     numberOfSoundLayers: number;
     numberOfKeys: number;
     diameter: number;
-
+    image:string
 }
 
 
@@ -43,7 +43,12 @@ function SubCategory() {
       }, [lowestPrice, highestPrice]);
 
     const fetchProducts = () => {
-        fetch(`/api/category/${category}/subcategory/${subcategoryid}/products`, { method: 'GET' })
+        const token = localStorage.getItem("token");
+    
+        const headers = {
+          Authorization: `Bearer ${token}`,
+        };
+        fetch(`/api/category/${category}/subcategory/${subcategoryid}/products`,  { method: 'GET', headers: headers })
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
@@ -162,13 +167,42 @@ setValues([parseFloat(e.target.value),values[1]])
                 <button onClick={handleSearch}>Search</button>
             </div>
            
-            <ul>
+            {/* <ul>
                 {filterProductsByBrand(filteredProducts).map((product, index) => (
                     <li key={index} onClick={() => handleProductClick(product.id)}>
                         Name: {product.name}
                     </li>
                 ))}
-            </ul>
+            </ul> */}
+              <section className="py-5">
+        <div className="container px-4 px-lg-5 mt-5">
+          <div className="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            {filterProductsByBrand(filteredProducts).map((product, index) => (
+              <div key={index} className="col mb-5">
+                <div className="card h-100">
+                  <div className="badge bg-dark text-white position-absolute" style={{ top: '0.5rem', right: '0.5rem' }}>
+                    Sale
+                  </div>
+                  <img className="card-img-top" onClick={() => handleProductClick(product.id)} src={product.image ? `data:image/jpeg;base64,${product.image}` : 'default-image-url'} alt="..." />
+                  <div className="card-body p-4">
+                    <div className="text-center">
+                      <h5 className="fw-bolder" onClick={() => handleProductClick(product.id)}>{product.name}</h5>
+                      {product.price}$
+                    </div>
+                  </div>
+                  <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                    <div className="text-center">
+                      <a className="btn btn-outline-dark mt-auto" href="#">
+                        Add to cart
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
         </div>
     );
 }
