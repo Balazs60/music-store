@@ -1,5 +1,6 @@
 package com.codecool.musicstore.config;
 
+import com.codecool.musicstore.model.users.Role;
 import com.codecool.musicstore.service.MemberDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -32,7 +33,8 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req -> {
                     req.requestMatchers("/api/v1/auth/**").permitAll();
-                    req.anyRequest().authenticated();
+                    req.requestMatchers("/api/products/{productId}/productdiscount/{productSale}").hasRole(Role.ADMIN.name())
+                            .anyRequest().authenticated();
                 })
                 .sessionManagement(session-> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthFilter, AnonymousAuthenticationFilter.class);

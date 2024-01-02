@@ -33,7 +33,7 @@ public class MemberDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Member memberByName = memberRepository.findMemberByName(username);
-        User user = new User(username, memberByName.getPassword(), List.of(new SimpleGrantedAuthority(memberByName.getRole().name())));
+        User user = new User(username, memberByName.getPassword(), List.of(new SimpleGrantedAuthority("ROLE_"+memberByName.getRole().name())));
         return user;
     }
 }
