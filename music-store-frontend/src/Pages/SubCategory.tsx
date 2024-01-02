@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Slider from 'react-slider';
 import '../musicStore.css'
+import Header from './Header';
+
 
 interface Product {
     id: string;
@@ -129,10 +131,13 @@ setValues([parseFloat(e.target.value),values[1]])
 
 
     return (
+        <div>
+            <Header/>
         <div className='subcategory'>
             <div className='filter-section'>
+            <div className='box'>
             <div>
-                <label>Filter by Brand:</label>
+                <h5>Filter by Brand:</h5>
                 {Array.from(new Set(products.map(product => product.brand))).map(brand => (
                     <div key={brand}>
                         <input
@@ -145,8 +150,8 @@ setValues([parseFloat(e.target.value),values[1]])
                     </div>
                 ))}
             </div>
-            <div className='box'>
-                <label>
+<h5>Search by price</h5>           
+     <label>
                     Minimum Price:
                     <input type="number" value={minPrice}  onChange={e => setMinPriceWithInputField(e)} />
                 </label>
@@ -203,6 +208,7 @@ setValues([parseFloat(e.target.value),values[1]])
           </div>
         </div>
       </section>
+        </div>
         </div>
     );
 }

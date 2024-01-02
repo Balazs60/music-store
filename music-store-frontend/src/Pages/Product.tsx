@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import Header from './Header';
+
 
 // ... (Your Product interface and other code)
 
@@ -115,6 +117,7 @@ function Product() {
   
   return (
     <div>
+      <Header/>
       {selectedProduct ? (
         <div>
           <h1>{selectedProduct.name}</h1>
