@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { confirmAlert } from 'react-confirm-alert';
+import Header from './Header';
 
 
 interface CartItem {
@@ -160,6 +161,7 @@ const Cart: React.FC = () => {
 
   return (
     <div className="cart-container">
+      <Header/>
       <h2>Your Shopping Cart</h2>
       {cart.length === 0 ? (
         <p>Your cart is empty</p>

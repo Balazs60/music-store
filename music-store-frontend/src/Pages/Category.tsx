@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Header from './Header';
 
 interface SubCategory {
     name: string;
@@ -19,7 +20,7 @@ function Category() {
 
     useEffect(() => {
         fetchSubCategories();
-    }, []);
+    }, [category]);
 
     const fetchSubCategories = () => {
         const token = localStorage.getItem("token");
@@ -51,6 +52,7 @@ function Category() {
 
     return (
         <div>
+          <Header/>
             <h1>{category}</h1>
             <section className="py-5">
         <div className="container px-4 px-lg-5 mt-5">
