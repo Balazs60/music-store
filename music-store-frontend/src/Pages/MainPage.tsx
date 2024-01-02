@@ -33,6 +33,24 @@ const MainPage: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const navigate = useNavigate();
 
+
+  const token = localStorage.getItem("token");
+  const splitToken = token?.split(".") || [];
+console.log("split token " + splitToken)
+  console.log("decoded payload: ", splitToken[1]);
+
+  let decodedPayload = "";
+  if (splitToken[1]) {
+   
+    try {
+      decodedPayload = atob(splitToken[1]);
+      console.log("decoded: ", decodedPayload);
+    } catch (error) {
+      console.error("Error decoding payload:", error);
+    }
+  }
+
+
   useEffect(() => {
     fetchInstruments();
   }, []);

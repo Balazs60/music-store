@@ -53,6 +53,7 @@ public class ProductController {
     public ResponseEntity<Product> setProductDiscountById(
             @PathVariable String productId,
             @PathVariable Number productSale
+
     ) {
         System.out.println("POST LE ------------------------------");
         System.out.println("Put req Id Of Product" + productId);
