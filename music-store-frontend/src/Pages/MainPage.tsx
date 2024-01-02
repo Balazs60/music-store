@@ -36,19 +36,26 @@ const MainPage: React.FC = () => {
 
   const token = localStorage.getItem("token");
   const splitToken = token?.split(".") || [];
-console.log("split token " + splitToken)
+  console.log("split token " + splitToken)
   console.log("decoded payload: ", splitToken[1]);
 
   let decodedPayload = "";
-  if (splitToken[1]) {
-   
-    try {
-      decodedPayload = atob(splitToken[1]);
-      console.log("decoded: ", decodedPayload);
-    } catch (error) {
-      console.error("Error decoding payload:", error);
-    }
+let roles = "";
+
+if (splitToken[1]) {
+  try {
+    decodedPayload = atob(splitToken[1]);
+    console.log("decoded: ", decodedPayload);
+
+    const parsedPayload = JSON.parse(decodedPayload);
+    roles = parsedPayload.Roles || ""; // Access the "Roles" claim
+
+    console.log("Roles: ", roles);
+  } catch (error) {
+    console.error("Error decoding payload:", error);
   }
+}
+
 
 
   useEffect(() => {
@@ -162,6 +169,7 @@ console.log("split token " + splitToken)
     });
   };
 
+
   return (
    
    
@@ -187,7 +195,9 @@ console.log("split token " + splitToken)
                         <li className="nav-item"><a className="nav-link active" aria-current="page" href="#!">Home</a></li>
                         <li className="nav-item"><a className="nav-link" href="/about">About</a></li>
                                               <li className="nav-item"><a className="nav-link" href="/contact">Contact</a></li>
-                                              <li className="nav-item"><a className="nav-link" href="/discount">Discount</a></li>
+                                              {roles && roles.includes("ROLE_ADMIN") && (
+      <li className="nav-item"><a className="nav-link" href="/discount">Discount</a></li>
+    )}
  
                     </ul>
                     <form className="d-flex">
