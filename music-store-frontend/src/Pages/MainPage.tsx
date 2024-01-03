@@ -35,6 +35,7 @@ const MainPage: React.FC = () => {
 
 
   const token = localStorage.getItem("token");
+  console.log("token"+token)
   const splitToken = token?.split(".") || [];
   console.log("split token " + splitToken)
   console.log("decoded payload: ", splitToken[1]);
@@ -61,13 +62,24 @@ if (splitToken[1]) {
   useEffect(() => {
     fetchInstruments();
   }, []);
+      const handleLogout = () => {
+      
+      localStorage.removeItem("token");
+      localStorage.removeItem("username");
+  
+      navigate("/login");
+    };
 
   const fetchInstruments = () => {
     const token = localStorage.getItem("token");
+    console.log("token most"+token)
 
     const headers = {
       Authorization: `Bearer ${token}`,
     };
+    if(token){
+
+  
     fetch('/api/mainpage/products', {
 
       method: 'GET', headers: headers
@@ -83,7 +95,26 @@ if (splitToken[1]) {
       })
       .catch(error => {
         console.error('Error fetching instruments:', error);
-      });
+      });}
+      if(!token){ 
+         fetch('/api/mainpage/products', {
+
+        method: 'GET'
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then(data => {
+          setProducts(data);
+        })
+        .catch(error => {
+          console.error('Error fetching instruments:', error);
+        });
+
+      }
   };
 
   const handleCategoryChange = (category: string) => {
@@ -124,6 +155,7 @@ if (splitToken[1]) {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     };
+
   
     fetch(`/api/cart/${member}/${productId}/${"1"}`, {
       method: 'POST',
@@ -186,30 +218,37 @@ if (splitToken[1]) {
         <link href="css/styles.css" rel="stylesheet" />
     </head>
     <body>
-         <nav className="navbar navbar-expand-lg navbar-light bg-light">
-            <div className="container px-4 px-lg-5">
-                <a className="navbar-brand" href="#!">Music Shop</a>
-                <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span className="navbar-toggler-icon"></span></button>
-                <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul className="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                        <li className="nav-item"><a className="nav-link active" aria-current="page" href="#!">Home</a></li>
-                        <li className="nav-item"><a className="nav-link" href="/about">About</a></li>
-                                              <li className="nav-item"><a className="nav-link" href="/contact">Contact</a></li>
-                                              {roles && roles.includes("ROLE_ADMIN") && (
-      <li className="nav-item"><a className="nav-link" href="/discount">Discount</a></li>
-    )}
- 
-                    </ul>
-                    <form className="d-flex">
-                        <button className="btn btn-outline-dark" type="button" onClick={handleCartButtonClick}>
-                            <i className="bi-cart-fill me-1"></i>
-                            Cart
-                            <span className="badge bg-dark text-white ms-1 rounded-pill">0</span>
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </nav>
+    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+  <div className="container px-4 px-lg-5">
+    <a className="navbar-brand" href="#!">Music Shop</a>
+    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span className="navbar-toggler-icon"></span>
+    </button>
+    <div className="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul className="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+        <li className="nav-item"><a className="nav-link active" aria-current="page" href="#!">Home</a></li>
+        <li className="nav-item"><a className="nav-link" href="/about">About</a></li>
+        <li className="nav-item"><a className="nav-link" href="/contact">Contact</a></li>
+        {roles && roles.includes("ROLE_ADMIN") && (
+          <>
+            <li className="nav-item"><a className="nav-link" href="/discount">Discount</a></li>
+            {token && (
+              <li className="nav-item"><a className="nav-link" href="#" onClick={handleLogout}>Log Out</a></li>
+            )}
+          </>
+        )}
+      </ul>
+      <form className="d-flex">
+        <button className="btn btn-outline-dark" type="button" onClick={handleCartButtonClick}>
+          <i className="bi-cart-fill me-1"></i>
+          Cart
+          <span className="badge bg-dark text-white ms-1 rounded-pill">0</span>
+        </button>
+      </form>
+    </div>
+  </div>
+</nav>
+
     <div className="container mt-4">
       <Row>
         <Col md={3}>
