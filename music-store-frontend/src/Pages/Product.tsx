@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import Header from './Header';
 
-
-// ... (Your Product interface and other code)
+interface WantedProduct {
+  productId: string;
+  productQuantity: number;
+}
 
 interface Product {
   id: string;
@@ -24,20 +25,7 @@ interface Product {
 function Product() {
   const { id } = useParams();
   const [quantity, setQuantity] = useState(1);
-  const [selectedProduct, setSelectedProduct] = useState<Product>({
-    id: "",
-    name: "",
-    color: "",
-    price: 0,
-    brand: "",
-    dtype: "",
-    subCategoryId: "",
-    numberOfStrings: 0,
-    numberOfSoundLayers: 0,
-    numberOfKeys: 0,
-    diameter: 0,
-    image: "",
-  });
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
   useEffect(() => {
     if (id) {
@@ -46,14 +34,14 @@ function Product() {
   }, [id]);
 
   const navigate = useNavigate();
+
   const fetchProductById = (productId: string) => {
     const token = localStorage.getItem("token");
-    if(token){
-      const headers = {
-        Authorization: `Bearer ${token}`,
-      }
+    const headers: Record<string, string> = token
+      ? { Authorization: `Bearer ${token}` }
+      : {};
 
-      fetch(`/api/product/${productId}`, { method: 'GET', headers: headers })
+    fetch(`/api/product/${productId}`, { method: 'GET', headers: headers })
       .then(response => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -67,62 +55,59 @@ function Product() {
       .catch(error => {
         console.error('Error fetching product details:', error);
       });
-    }
-  
-    if(!token){
-    fetch(`/api/product/${productId}`, { method: 'GET'})
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then(data => {
-        console.log(data);
-        setSelectedProduct(data);
-      })
-      .catch(error => {
-        console.error('Error fetching product details:', error);
-      });
-    }
   };
 
   const handleAddToCart = () => {
     const token = localStorage.getItem("token");
     const member = localStorage.getItem("username");
-    const productid = selectedProduct.id;
-  
-    if (!token || !member || !productid) {
-      console.error('Invalid token, member, or productid');
-      // Handle the error or notify the user
+    const productid = selectedProduct?.id;
+
+    if (!productid) {
+      console.error("Product ID is missing.");
       return;
     }
-  
-    const headers = {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    };
-  
-    fetch(`/api/cart/${member}/${productid}/${quantity}`, {
-      method: 'POST',
-      headers: headers,
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        // No need to return response.json(), as there's no expected data
-        // Perform any additional logic after successfully adding to the cart
-        console.log('Product added to cart successfully!');
-        navigate(`/cart`);
+
+    if (token) {
+      const headers: Record<string, string> = {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      };
+
+      fetch(`/api/cart/${member}/${productid}/${quantity}`, {
+        method: 'POST',
+        headers: headers,
       })
-      .catch(error => {
-        console.error('Error adding product to cart:', error);
-        // Handle errors during the fetch or non-successful response
-        // You can show an error message to the user if needed
-      });
-  };
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          console.log('Product added to cart successfully!');
+          navigate(`/cart`);
+        })
+        .catch(error => {
+          console.error('Error adding product to cart:', error);
+        });
+    } else {
+      const wantedProduct: WantedProduct = {
+        productId: productid,
+        productQuantity: quantity,
+      };
   
+      const storedWantedProducts = localStorage.getItem("wantedProducts");
+      const wantedProducts: WantedProduct[] = storedWantedProducts ? JSON.parse(storedWantedProducts) : [];
+      
+      const existingProductIndex = wantedProducts.findIndex(item => item.productId === productid);
+  
+      if (existingProductIndex !== -1) {
+        wantedProducts[existingProductIndex].productQuantity += quantity;
+      } else {
+        wantedProducts.push(wantedProduct);
+      }
+  
+      localStorage.setItem("wantedProducts", JSON.stringify(wantedProducts));
+      console.log("wantedproductLength " + wantedProducts.length)
+  }
+  };
 
   const handleIncreaseQuantity = () => {
     setQuantity(quantity + 1);
@@ -133,10 +118,10 @@ function Product() {
       setQuantity(quantity - 1);
     }
   };
-  
+
   return (
     <div>
-      <Header/>
+      <Header />
       {selectedProduct ? (
         <div>
           <h1>{selectedProduct.name}</h1>
@@ -153,11 +138,10 @@ function Product() {
             <p>Number of Strings: {selectedProduct.numberOfStrings}</p>
           )}
           <div>
-          <button onClick={handleIncreaseQuantity}>+</button>
-          <p>{quantity}</p>
-          <button onClick={handleDecreaseQuantity}>-</button>
-          {/* Add to Cart Button */}
-          <button onClick={handleAddToCart}>Add to Cart</button>
+            <button onClick={handleIncreaseQuantity}>+</button>
+            <p>{quantity}</p>
+            <button onClick={handleDecreaseQuantity}>-</button>
+            <button onClick={handleAddToCart}>Add to Cart</button>
           </div>
         </div>
       ) : (
