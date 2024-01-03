@@ -66,6 +66,7 @@ if (splitToken[1]) {
       
       localStorage.removeItem("token");
       localStorage.removeItem("username");
+      localStorage.removeItem("wantedProducts");
   
       navigate("/login");
     };
@@ -73,6 +74,7 @@ if (splitToken[1]) {
       
       localStorage.removeItem("token");
       localStorage.removeItem("username");
+      localStorage.removeItem("wantedProducts");
   
       navigate("/login");
     };
@@ -162,7 +164,7 @@ if (splitToken[1]) {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     };
-
+   if(token){
   
     fetch(`/api/cart/${member}/${productId}/${"1"}`, {
       method: 'POST',
@@ -181,9 +183,10 @@ if (splitToken[1]) {
         // Handle errors during the fetch or non-successful response
         // You can show an error message to the user if needed
       });
+    }
   };
 
-  const handleAddToCartButtonClick = (productId: string) => {
+  const handleAddToCartButtonClick = (productId: string) => { guestCartProduct.add(product);
     handleAddToCart(productId);
     confirmAlert({
       title: 'Product added to the cart',

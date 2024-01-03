@@ -36,7 +36,7 @@ public class SecurityConfiguration {
                     req.requestMatchers("/api/product/**").permitAll();
                     req.requestMatchers("/api/mainpage/**").permitAll();
                     req.requestMatchers("/api/v1/auth/**").permitAll();
-                    req.requestMatchers("/api/cart/guest").permitAll();
+                    req.requestMatchers("/api/guestcart/guest").permitAll();
                     req.requestMatchers("/api/products/{productId}/productdiscount/{productSale}").hasRole(Role.ADMIN.name())
                             .anyRequest().authenticated();
                 })
