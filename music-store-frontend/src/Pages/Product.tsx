@@ -48,11 +48,12 @@ function Product() {
   const navigate = useNavigate();
   const fetchProductById = (productId: string) => {
     const token = localStorage.getItem("token");
-    
-    const headers = {
-      Authorization: `Bearer ${token}`,
-    };
-    fetch(`/api/product/${productId}`, { method: 'GET', headers: headers })
+    if(token){
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      }
+
+      fetch(`/api/product/${productId}`, { method: 'GET', headers: headers })
       .then(response => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -66,6 +67,24 @@ function Product() {
       .catch(error => {
         console.error('Error fetching product details:', error);
       });
+    }
+  
+    if(!token){
+    fetch(`/api/product/${productId}`, { method: 'GET'})
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log(data);
+        setSelectedProduct(data);
+      })
+      .catch(error => {
+        console.error('Error fetching product details:', error);
+      });
+    }
   };
 
   const handleAddToCart = () => {
