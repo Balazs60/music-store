@@ -40,7 +40,7 @@ function Header() {
     const headers = {
       Authorization: `Bearer ${token}`,
     };
-
+    if(token){
     fetch(`/api/cart/${member}`, { method: 'GET', headers: headers })
       .then(response => {
         if (!response.ok) {
@@ -54,7 +54,7 @@ function Header() {
       })
       .catch(error => {
         console.error('Error fetching product details:', error);
-      });
+      });}
   };
 
   useEffect(() => {
@@ -71,6 +71,7 @@ function Header() {
     const headers = {
       Authorization: `Bearer ${token}`,
     };
+    if(token){
     fetch('/api/mainpage/products', {
       method: 'GET',
       headers: headers
@@ -87,6 +88,7 @@ function Header() {
       .catch(error => {
         console.error('Error fetching instruments:', error);
       });
+    }
   };
 
   const handleCategoryChange = (category: string) => {
