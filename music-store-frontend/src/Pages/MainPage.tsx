@@ -69,6 +69,13 @@ if (splitToken[1]) {
   
       navigate("/login");
     };
+    const handleLogIn = () => {
+      
+      localStorage.removeItem("token");
+      localStorage.removeItem("username");
+  
+      navigate("/login");
+    };
 
   const fetchInstruments = () => {
     const token = localStorage.getItem("token");
@@ -229,12 +236,16 @@ if (splitToken[1]) {
         <li className="nav-item"><a className="nav-link active" aria-current="page" href="#!">Home</a></li>
         <li className="nav-item"><a className="nav-link" href="/about">About</a></li>
         <li className="nav-item"><a className="nav-link" href="/contact">Contact</a></li>
+        {token && (
+              <li className="nav-item"><a className="nav-link" href="#" onClick={handleLogout}>Log Out</a></li>
+            )}
+       {!token && (
+              <li className="nav-item"><a className="nav-link" href="#" onClick={handleLogIn}>Log In</a></li>
+            )}
         {roles && roles.includes("ROLE_ADMIN") && (
           <>
             <li className="nav-item"><a className="nav-link" href="/discount">Discount</a></li>
-            {token && (
-              <li className="nav-item"><a className="nav-link" href="#" onClick={handleLogout}>Log Out</a></li>
-            )}
+         
           </>
         )}
       </ul>
