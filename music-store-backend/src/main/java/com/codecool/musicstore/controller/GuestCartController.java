@@ -49,7 +49,11 @@ public class GuestCartController {
         for (WantedProduct wantedProduct:guestChart){
             Product product=productDao.getProductById(UUID.fromString(wantedProduct.productId));
             if(product!=null){
-                guestCartProduct.add(product);
+                int quantity= Integer.parseInt(wantedProduct.productQuantity);
+                for (int i = 0; i <=quantity ; i++) {
+                    guestCartProduct.add(product);
+                }
+
             }
 
         }
