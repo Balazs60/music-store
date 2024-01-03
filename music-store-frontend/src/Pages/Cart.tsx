@@ -29,25 +29,57 @@ const Cart: React.FC = () => {
   const fetchCartData = () => {
     const member = localStorage.getItem("username");
     const token = localStorage.getItem("token");
+    console.log("token"+token)
 
-    const headers = {
-      Authorization: `Bearer ${token}`,
-    };
+      if(token){
+       // console.log("nem kellene belemennie")
+            const headers = {
+            Authorization: `Bearer ${token}`,
+          };
 
-    fetch(`/api/cart/${member}`, { method: 'GET', headers: headers })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
+            fetch(`/api/cart/${member}`, { method: 'GET', headers: headers })
+            .then(response => {
+              if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+              }
+              return response.json();
+            })
+            .then(data => {
+              console.log(data);
+              setCart(data);
+            })
+            .catch(error => {
+              console.error('Error fetching product details:', error);
+            });
+          
+          }
+      if(!token){
+     
+        const guestChart = JSON.parse(localStorage.getItem("wantedProducts") || '[]');
+        console.log("guestchart size "+guestChart.length)
+
+      fetch(`/api/cart/guest`, {
+
+        method: 'POST',
+     
+        body: JSON.stringify({ guestChart }),
       })
-      .then(data => {
-        console.log(data);
-        setCart(data);
-      })
-      .catch(error => {
-        console.error('Error fetching product details:', error);
-      });
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then(data => {
+          console.log(data);
+          setCart(data);
+        })
+        .catch(error => {
+          console.error('Error fetching product details:', error);
+        });
+              
+
+            }
   };
 
   useEffect(() => {
@@ -61,12 +93,14 @@ const Cart: React.FC = () => {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     };
+    if(token){
   
   
     fetch(`/api/cart/update-quantity/${itemId}/${newQuantity}`, {
       method: 'PATCH', // Use PATCH for partial updates
       headers: headers,
     })
+   
       .then(response => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -80,6 +114,7 @@ const Cart: React.FC = () => {
       .catch(error => {
         console.error('Error updating quantity:', error);
       });
+    }
   };
   
 
@@ -117,6 +152,7 @@ const Cart: React.FC = () => {
 
   const deleteCartItem = (cartItemId: string) => {
     const token = localStorage.getItem('token');
+    if(token){
     return fetch(`/api/cart/${cartItemId}`, {
         method: 'DELETE',
         headers: {
@@ -124,6 +160,7 @@ const Cart: React.FC = () => {
             'Content-Type': 'application/json',
         },
     }).then((res) => res.json());
+  }
 };
 
   const submitDelete = (itemId : string) => {

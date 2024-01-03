@@ -85,7 +85,7 @@ if (splitToken[1]) {
       Authorization: `Bearer ${token}`,
     };
     if(token){
-
+    console.log("nem kellene belemennie mainpage products")
   
     fetch('/api/mainpage/products', {
 
