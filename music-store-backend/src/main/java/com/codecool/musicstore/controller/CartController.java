@@ -27,7 +27,34 @@ public class CartController {
         this.cartItemService = cartItemService;
     }
 
+    public static class GuestCartRequest {
+        public List<WantedProduct> guestChart;
 
+
+    }
+    public static class WantedProduct {
+        public int productId;
+
+        public int productQuantity;
+
+
+    }
+
+@PostMapping("/guest")
+public ResponseEntity<List<Product>> createGuestOrder(@RequestBody GuestCartRequest guestCartRequest) {
+    System.out.println("----------------wated product guest chart----------------------------");
+    List<WantedProduct> guestChart = guestCartRequest.guestChart;
+    System.out.println("----------------wated product guest chart----------------------------");
+    for (WantedProduct wantedProduct:guestChart){
+
+        System.out.println(wantedProduct.productId);
+        System.out.println(wantedProduct.productQuantity);
+    }
+
+
+
+    return null;
+}
     @PostMapping("/{memberName}/{productId}/{quantity}")
     public ResponseEntity<Void> addToCart(@PathVariable String memberName,
                                           @PathVariable String productId,
