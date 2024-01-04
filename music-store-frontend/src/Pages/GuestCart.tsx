@@ -5,11 +5,11 @@ import Product from './Product';
 
 const GuestCart: React.FC = () => {
   const [cart, setCart] = useState<Product[]>([]);
+  const [filteredCart, setFilteredCart] = useState<Product[]>([]);
 
   const fetchCartData = () => {
     const guestChart = JSON.parse(localStorage.getItem('wantedProducts') || '[]');
 
-    // Set loading state to true while fetching
     setCart([]);
 
     fetch(`/api/guestcart/guest`, {
@@ -26,25 +26,25 @@ const GuestCart: React.FC = () => {
         return response.json();
       })
       .then(data => {
-        console.log(data);
+        // Group products by name and calculate total quantity
+        const groupedCart: Record<string, Product> = {};
+        data.forEach(product => {
+          if (!groupedCart[product.id]) {
+            groupedCart[product.id] = { ...product, quantity: 1 };
+          } else {
+            groupedCart[product.id].quantity += 1;
+          }
+        });
 
-        // Update the cart state with unique products and quantity information
-        const updatedCart: Product[] = data.map(product => ({
-          ...product,
-          quantity: countProductOccurrences(data, product.id),
-        }));
+        const updatedCart: Product[] = Object.values(groupedCart);
 
         setCart(updatedCart);
+        setFilteredCart(updatedCart);
       })
       .catch(error => {
         console.error('Error fetching cart data:', error);
-        // You might want to set an error state or display an error message to the user
+        // Handle errors, set an error state, or display an error message to the user
       });
-  };
-
-  // Helper function to count occurrences of a product in the cart by its ID
-  const countProductOccurrences = (products: Product[], productId: string) => {
-    return products.filter(product => product.id === productId).length;
   };
 
   useEffect(() => {
@@ -66,7 +66,7 @@ const GuestCart: React.FC = () => {
                   <strong>{item.name}</strong>
                   <p>Brand: {item.brand}</p>
                   <p>Price: ${item.price}</p>
-                  <p>Quantity: {countProductOccurrences(cart, item.id)}</p>
+                  <p>Quantity: {item.quantity}</p>
                   <img
                     src={`data:image/png;base64,${item.image}`}
                     alt={item.name}
@@ -76,10 +76,7 @@ const GuestCart: React.FC = () => {
               </li>
             ))}
           </ul>
-          <div className="cart-summary">
-          
-          </div>
-         
+          <div className="cart-summary">{/* Add any summary information here */}</div>
         </div>
       )}
     </div>

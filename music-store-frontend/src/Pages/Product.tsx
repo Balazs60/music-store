@@ -106,6 +106,7 @@ function Product() {
   
       localStorage.setItem("wantedProducts", JSON.stringify(wantedProducts));
       console.log("wantedproductLength " + wantedProducts.length)
+      console.log("wandtedproducts 1 quantity " + wantedProducts[0].productQuantity)
   }
   };
 

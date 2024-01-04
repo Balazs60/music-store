@@ -24,12 +24,11 @@ public class GuestCartController {
     private final ProductDao productDao;
 
 
-
     @Autowired
-    public GuestCartController(MemberService memberService, CartItemService cartItemService , ProductDao productDao) {
+    public GuestCartController(MemberService memberService, CartItemService cartItemService, ProductDao productDao) {
         this.memberService = memberService;
         this.cartItemService = cartItemService;
-        this.productDao=productDao;
+        this.productDao = productDao;
     }
 
     public static class GuestCartRequest {
@@ -44,37 +43,7 @@ public class GuestCartController {
     @PostMapping("/guest")
     public ResponseEntity<List<Product>> createGuestOrder(@RequestBody GuestCartRequest guestCartRequest) {
         List<WantedProduct> guestChart = guestCartRequest.guestChart;
-
-        List<Product> guestCartProduct=new ArrayList<>();
-        for (WantedProduct wantedProduct:guestChart){
-            Product product=productDao.getProductById(UUID.fromString(wantedProduct.productId));
-            if(product!=null){
-                int quantity= Integer.parseInt(wantedProduct.productQuantity);
-                for (int i = 0; i <=quantity ; i++) {
-                    guestCartProduct.add(product);
-                }
-
-            }
-
-        }
-
-
-        logGuestCartDetails(guestChart);
-
-
-
-
-
-         return ResponseEntity.ok(guestCartProduct);
-
+        return cartItemService.createGuestOrder(guestChart);
     }
 
-    private void logGuestCartDetails(List<WantedProduct> guestChart) {
-        System.out.println("---------------- Guest Cart Details ----------------");
-        for (WantedProduct wantedProduct : guestChart) {
-            System.out.println("Product ID: " + wantedProduct.productId);
-            System.out.println("Product Quantity: " + wantedProduct.productQuantity);
-        }
-        System.out.println("---------------- End of Guest Cart Details ----------------");
-    }
 }

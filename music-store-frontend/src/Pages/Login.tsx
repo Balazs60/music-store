@@ -68,12 +68,12 @@ function Login() {
     >
       {/* Left Side: Logo and Title, Login Card */}
       <div>
-        <Box mb={2} textAlign="center">
+        {/* <Box mb={2} textAlign="center">
           <Typography variant="h4" style={{ color: '#007BFF' }}>
             Circles
           </Typography>
-          {/* <img src={CircleLogo} alt="Circle Logo" style={{ width: '50px', marginLeft: '10px' }} /> */}
-        </Box>
+          { <img src={CircleLogo} alt="Circle Logo" style={{ width: '50px', marginLeft: '10px' }} /> }
+        </Box> */}
 
         <Grid container style={{ maxWidth: '400px' }}>
           <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
@@ -91,7 +91,7 @@ function Login() {
               </Typography>
               <Typography variant="subtitle1" style={{ marginBottom: '30px', color: '#666' }}>
                 Don't have an account?{' '}
-                <Link to={`/registration`} style={{ color: '#007BFF', textDecoration: 'none' }}>
+                <Link to={`/register`} style={{ color: '#007BFF', textDecoration: 'none' }}>
                   Register
                 </Link>
               </Typography>
@@ -135,7 +135,7 @@ function Login() {
       </div>
 
       {/* Right Side: Information about Circles app */}
-      <div>
+      {/* <div>
         <Paper elevation={3} style={{ padding: '20px', maxWidth: '400px', background: '#fff', borderRadius: '8px' }}>
           <Typography variant="h6" style={{ color: '#333' }}>
             WHAT IS CIRCLES?
@@ -180,7 +180,7 @@ function Login() {
             Start today and transform the way you work!
           </Typography>
         </Paper>
-      </div>
+      </div> */}
     </Container>
   );
 }

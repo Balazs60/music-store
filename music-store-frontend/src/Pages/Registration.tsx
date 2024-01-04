@@ -75,12 +75,12 @@ function Registration() {
     >
       {/* Left Side: Logo and Title, Registration Card */}
       <div>
-      <Box mb={2} textAlign="center">
+      {/* <Box mb={2} textAlign="center">
           <Typography variant="h4" style={{ color: '#007BFF' }}>
             Circles
           </Typography>
-          {/* <img src={CircleLogo} alt="Circle Logo" style={{ width: '50px', marginLeft: '10px' }} /> */}
-        </Box>
+          { <img src={CircleLogo} alt="Circle Logo" style={{ width: '50px', marginLeft: '10px' }} /> }
+        </Box> */}
         <Grid container style={{ maxWidth: '400px' }}>
           <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <Paper
@@ -156,7 +156,7 @@ function Registration() {
       </div>
 
       {/* Right Side: Information about Circles app */}
-      <div>
+      {/* <div>
         <Paper
           elevation={3}
           style={{
@@ -209,7 +209,7 @@ function Registration() {
             Start today and transform the way you work!
           </Typography>
         </Paper>
-      </div>
+      </div> */}
     </Container>
   );
 }
