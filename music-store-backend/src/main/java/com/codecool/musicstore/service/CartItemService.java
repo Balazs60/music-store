@@ -3,6 +3,7 @@ package com.codecool.musicstore.service;
 import com.codecool.musicstore.Dao.CartItemDao;
 import com.codecool.musicstore.Dao.MemberDao;
 import com.codecool.musicstore.Dao.ProductDao;
+import com.codecool.musicstore.controller.GuestCartController;
 import com.codecool.musicstore.model.cart.CartItem;
 import com.codecool.musicstore.model.product.Product;
 import com.codecool.musicstore.model.users.Member;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -73,5 +75,31 @@ public class CartItemService {
         ResponseEntity<String> response = cartItemDao.deleteCartItemById(cartItemId);
 
         return response;
+    }
+
+    public ResponseEntity<List<Product>> createGuestOrder(List<GuestCartController.WantedProduct> guestChart){
+        List<Product> guestCartProduct=new ArrayList<>();
+        for (GuestCartController.WantedProduct wantedProduct:guestChart){
+            Product product=productDao.getProductById(UUID.fromString(wantedProduct.productId));
+            if(product!=null){
+                int quantity= Integer.parseInt(wantedProduct.productQuantity);
+                for (int i = 0; i <quantity ; i++) {
+                    guestCartProduct.add(product);
+                }
+            }
+        }
+
+       // logGuestCartDetails(guestChart);
+
+        return ResponseEntity.ok(guestCartProduct);
+    }
+
+    private void logGuestCartDetails(List<GuestCartController.WantedProduct> guestChart) {
+        System.out.println("---------------- Guest Cart Details ----------------");
+        for (GuestCartController.WantedProduct wantedProduct : guestChart) {
+            System.out.println("Product ID: " + wantedProduct.productId);
+            System.out.println("Product Quantity: " + wantedProduct.productQuantity);
+        }
+        System.out.println("---------------- End of Guest Cart Details ----------------");
     }
 }

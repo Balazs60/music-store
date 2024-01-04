@@ -25,6 +25,11 @@ import DiscountedProducts from './DiscountedProduct'
   getDiscountPrice(): number;
 }*/
 
+interface WantedProduct {
+  productId: string;
+  productQuantity: number;
+}
+
 
 const MainPage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('');
@@ -186,8 +191,30 @@ if (splitToken[1]) {
     }
   };
 
-  const handleAddToCartButtonClick = (productId: string) => { guestCartProduct.add(product);
+  const handleAddToCartButtonClick = (productId: string) => {
+    if(token){
     handleAddToCart(productId);
+    }  else {
+      const wantedProduct: WantedProduct = {
+        productId: productId,
+        productQuantity: 1,
+      };
+  
+      const storedWantedProducts = localStorage.getItem("wantedProducts");
+      const wantedProducts: WantedProduct[] = storedWantedProducts ? JSON.parse(storedWantedProducts) : [];
+      
+      const existingProductIndex = wantedProducts.findIndex(item => item.productId === productId);
+  
+      if (existingProductIndex !== -1) {
+        wantedProducts[existingProductIndex].productQuantity += 1;
+      } else {
+        wantedProducts.push(wantedProduct);
+      }
+  
+      localStorage.setItem("wantedProducts", JSON.stringify(wantedProducts));
+      console.log("wantedproductLength " + wantedProducts.length)
+      console.log("wandtedproducts 1 quantity " + wantedProducts[0].productQuantity)
+    }
     confirmAlert({
       title: 'Product added to the cart',
       message: 'Move to the cart or continue shopping?',
@@ -209,6 +236,7 @@ if (splitToken[1]) {
         </div>
       ),
     });
+ 
   };
 
 
