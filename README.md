@@ -12,6 +12,30 @@ Postgresql
 TypeScript  
 React  
 
+## Getting Started  
+
+### Prerequisites  
+
+Java JDK  
+Docker Desktop  
+
+### Installation  
+
+#### Clone the repository  
+
+git clone https://github.com/Balazs60/music-store  
+
+#### Navigate to the required directory:  
+
+cd music-store/music-store-backend  
+
+#### Run command:  
+
+docker compose up  
+
+#### Use the following port:  
+
+http://localehost:4200/  
 
 ## Authors  
 Borisz Bisits  
