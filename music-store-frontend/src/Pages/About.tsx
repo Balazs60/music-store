@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import '../musicStore.css';
 
 interface AboutProps {
-  coworkersData: { name: string; linkedin: string }[];
 }
 
 const About: React.FC<AboutProps> = () => {

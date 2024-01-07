@@ -20,6 +20,7 @@ interface Product {
   numberOfKeys: number;
   diameter: number;
   image: string;
+  quantity: number
 }
 
 function Product() {

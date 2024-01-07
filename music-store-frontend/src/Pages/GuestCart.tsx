@@ -7,6 +7,8 @@ const GuestCart: React.FC = () => {
   const [cart, setCart] = useState<Product[]>([]);
   const [filteredCart, setFilteredCart] = useState<Product[]>([]);
 
+  console.log(filteredCart)
+
   const fetchCartData = () => {
     const guestChart = JSON.parse(localStorage.getItem('wantedProducts') || '[]');
 
@@ -28,7 +30,7 @@ const GuestCart: React.FC = () => {
       .then(data => {
         // Group products by name and calculate total quantity
         const groupedCart: Record<string, Product> = {};
-        data.forEach(product => {
+        data.forEach((product: Product) => {
           if (!groupedCart[product.id]) {
             groupedCart[product.id] = { ...product, quantity: 1 };
           } else {
