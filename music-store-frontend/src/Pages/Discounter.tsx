@@ -37,6 +37,11 @@ const Discounter: React.FC = () => {
       });
   };
 
+  const handleProductClick = (productId: string) => {
+    // Handle the product click logic here
+    console.log(`Product clicked: ${productId}`);
+  };
+
   return (
     <div>
       <Row>
@@ -46,7 +51,7 @@ const Discounter: React.FC = () => {
       </Row>
 
       {/* Correct usage of ProductList */}
-      <ProductList products={products} />
+      <ProductList products={products} onProductClick={handleProductClick}  />
     </div>
   );
 };

@@ -370,7 +370,7 @@ if (splitToken[1]) {
         </header>
            <section className="py-5">
            <div >
-          <DiscountedProducts products={products} />
+          <DiscountedProducts products={products} handleProductClick={handleProductClick}/>
 
         </div>
         <div className="container px-4 px-lg-5 mt-5">
