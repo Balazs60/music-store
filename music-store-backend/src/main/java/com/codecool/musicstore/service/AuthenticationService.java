@@ -26,6 +26,12 @@ public class AuthenticationService {
     private final MemberDetailsService memberDetailsService;
     public AuthenticationResponse register(RegisterRequest request) {
 
+        System.out.println("Requst " + request.getCity());
+        System.out.println("Requst " + request.getBirthDate());
+        System.out.println("Requst " + request.getPostCode());
+
+
+
         List<String> MemberNames=memberRepository.findAll().stream().map(member -> member.getName()).collect(Collectors.toList());
         for (String name:MemberNames){
             if(name.equals(request.getName())){
@@ -39,6 +45,11 @@ public class AuthenticationService {
                 .name(request.getName())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
+                .birthDate(request.getBirthDate())
+                .phoneNumber(request.getPhoneNumber())
+                .postCode(request.getPostCode())
+                .city(request.getCity())
+                .streetAndHouseNumber(request.getStreetAndHouseNumber())
                 .role(Role.USER)
                 .build();
         System.out.println("user " + user.getName());

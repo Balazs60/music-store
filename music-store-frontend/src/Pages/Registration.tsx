@@ -19,6 +19,11 @@ function Registration() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [birthDate, setBirthDate] = useState('')
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [postCode, setPostcode] = useState('');
+  const [city, setCity] = useState('');
+  const [streetAndHouseNumber, setStreetAndHouseNumber] = useState('');
   const [token, setToken] = useState(null);
   const [errorMassage , setErrorMassage]=useState("");
   const navigate = useNavigate();
@@ -29,7 +34,9 @@ function Registration() {
       e.preventDefault();
       if (password == passwordConfirm) {
           const data = {
-              name: username, email: email, password: password
+              name: username, email: email, password: password,
+              birthDate: birthDate, phoneNumber: phoneNumber, postCode: postCode,
+              city: city, streetAndHouseNumber: streetAndHouseNumber,
           };
           fetch(`/api/v1/auth/register`, {
               method: 'POST', headers: {
@@ -137,6 +144,56 @@ function Registration() {
                   name="password-confirm"
                   value={passwordConfirm}
                   onChange={(e) => setPasswordConfirm(e.target.value)}
+                  required
+                />
+                  <TextField
+                  label="Birth date"
+                  variant="outlined"
+                  type="birthDate"
+                  id="birthDate"
+                  name="birthDate"
+                  value={birthDate}
+                  onChange={(e) => setBirthDate(e.target.value)}
+                  required
+                />
+                  <TextField
+                  label="Phone number"
+                  variant="outlined"
+                  type="phoneNumber"
+                  id="phoneNumber"
+                  name="phoneNumber"
+                  value={phoneNumber}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  required
+                />
+                  <TextField
+                  label="Post code"
+                  variant="outlined"
+                  type="postCode"
+                  id="postCode"
+                  name="postCode"
+                  value={postCode}
+                  onChange={(e) => setPostcode(e.target.value)}
+                  required
+                />
+                  <TextField
+                  label="City"
+                  variant="outlined"
+                  type="city"
+                  id="city"
+                  name="city"
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
+                  required
+                />
+                  <TextField
+                  label="Street and house number"
+                  variant="outlined"
+                  type="streetAndHouseNumber"
+                  id="streetAndHouseNumber"
+                  name="streetAndHouseNumber"
+                  value={streetAndHouseNumber}
+                  onChange={(e) => setStreetAndHouseNumber(e.target.value)}
                   required
                 />
                 <Button type="submit" variant="contained" color="primary" style={{ marginTop: '16px' }}>
