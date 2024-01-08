@@ -5,73 +5,97 @@ import { Dropdown, ButtonGroup, Row, Col } from 'react-bootstrap';
 import '../musicStore.css';
 import { Product } from './Products';
 
-interface CartItem {
-  id: string;
-  member: string;
-  product: {
-    id: string;
-    name: string;
-    color: string;
-    price: number;
-    brand: string;
-    dtype: string;
-    subCategoryId: string;
-    numberOfStrings: number;
-    numberOfSoundLayers: number;
-    numberOfKeys: number;
-    diameter: number;
-    image: string;
-  };
-  quantity: number;
-}
+// interface CartItem {
+//   id: string;
+//   member: string;
+//   product: {
+//     id: string;
+//     name: string;
+//     color: string;
+//     price: number;
+//     brand: string;
+//     dtype: string;
+//     subCategoryId: string;
+//     numberOfStrings: number;
+//     numberOfSoundLayers: number;
+//     numberOfKeys: number;
+//     diameter: number;
+//     image: string;
+//   };
+//   quantity: number;
+// }
 
 function Header() {
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
-  const [cart, setCart] = useState<CartItem[]>([]);
+ // const [cart, setCart] = useState<CartItem[]>([]);
+  const [numberOfCartItem, setNumberOfCartItems] = useState(0)
   const navigate = useNavigate();
 
-  const fetchCartData = () => {
-    const member = localStorage.getItem("username");
-    const token = localStorage.getItem("token");
+  // const fetchCartData = () => {
+  //   const member = localStorage.getItem("username");
+  //   const token = localStorage.getItem("token");
 
-    const headers = {
-      Authorization: `Bearer ${token}`,
-    };
-    if(token){
-    fetch(`/api/cart/${member}`, { method: 'GET', headers: headers })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then(data => {
-        console.log(data);
-        setCart(data);
-      })
-      .catch(error => {
-        console.error('Error fetching product details:', error);
-      });}
-  };
+  //   const headers: Record<string, string> = token
+  //   ? { Authorization: `Bearer ${token}` }
+  //   : {};
 
-  useEffect(() => {
-    fetchCartData();
-  }, []);
+  //   fetch(`/api/cart/${member}`, { method: 'GET', headers: headers })
+  //     .then(response => {
+  //       if (!response.ok) {
+  //         throw new Error(`HTTP error! Status: ${response.status}`);
+  //       }
+  //       return response.json();
+  //     })
+  //     .then(data => {
+  //       console.log(data);
+  //       setCart(data);
+  //     })
+  //     .catch(error => {
+  //       console.error('Error fetching product details:', error);
+  //     });
+  // };
+
+  // useEffect(() => {
+  //   fetchCartData();
+  // }, []);
 
   useEffect(() => {
     fetchInstruments();
   }, []);
 
+  useEffect(() => {
+    filterUniqueProductsInLocaleStorage()
+  }, []);
+
+ function filterUniqueProductsInLocaleStorage(){
+  const localStorageCart = localStorage.getItem('wantedProducts');
+    if (localStorageCart) {
+      const parsedCart = JSON.parse(localStorageCart);
+      console.log("parsed " + parsedCart[0])
+      const groupedCart: Record<string, Product> = {};
+      parsedCart.forEach((product: Product) => {
+        if (!groupedCart[product.id]) {
+          groupedCart[product.id] = { ...product, quantity: 1 };
+        } else {
+          groupedCart[product.id].quantity += 1;
+        }
+      })
+      const updatedCart: Product[] = Object.values(groupedCart);
+
+      setNumberOfCartItems(updatedCart.length);
+    }
+ }
+
   const fetchInstruments = () => {
     const token = localStorage.getItem("token");
 
-    const headers = {
-      Authorization: `Bearer ${token}`,
-    };
-    if(token){
+    const headers: Record<string, string> = token
+    ? { Authorization: `Bearer ${token}` }
+    : {};
+
     fetch('/api/mainpage/products', {
       method: 'GET',
       headers: headers
@@ -88,7 +112,7 @@ function Header() {
       .catch(error => {
         console.error('Error fetching instruments:', error);
       });
-    }
+    
   };
 
   const handleCategoryChange = (category: string) => {
@@ -134,7 +158,7 @@ function Header() {
               <button className="btn btn-outline-dark" type="button" onClick={handleCartButtonClick}>
                 <i className="bi-cart-fill me-1"></i>
                 Cart
-                <span className="badge bg-dark text-white ms-1 rounded-pill">{cart.length}</span>
+                <span className="badge bg-dark text-white ms-1 rounded-pill">{numberOfCartItem}</span>
               </button>
             </form>
           </div>

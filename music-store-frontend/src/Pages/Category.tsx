@@ -25,9 +25,10 @@ function Category() {
     const fetchSubCategories = () => {
         const token = localStorage.getItem("token");
 
-        const headers = {
-          Authorization: `Bearer ${token}`,
-        };
+        const headers: Record<string, string> = token
+        ? { Authorization: `Bearer ${token}` }
+        : {};
+        
         fetch(`/api/category/${category}/subcategories`, {  
                  method: 'GET', headers: headers
     })
