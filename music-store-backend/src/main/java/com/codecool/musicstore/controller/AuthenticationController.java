@@ -20,6 +20,8 @@ public class AuthenticationController {
             @RequestBody RegisterRequest request
     ){
         System.out.println("reguest " + request.getName());
+        System.out.println("reguest " + request.getName());
+        System.out.println("reguest " + request.getName());
         AuthenticationResponse responseEntity=service.register(request);
             return ResponseEntity.ok(responseEntity);
 

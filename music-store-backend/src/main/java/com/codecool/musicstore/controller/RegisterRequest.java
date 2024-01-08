@@ -17,4 +17,9 @@ public class RegisterRequest {
     private String email;
     private String password;
     private UUID id;
+    private String birthDate;
+    private String phoneNumber;
+    private int postCode;
+    private String city;
+    private String streetAndHouseNumber;
 }
