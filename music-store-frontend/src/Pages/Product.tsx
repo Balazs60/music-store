@@ -2,10 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Header from './Header';
 
-interface WantedProduct {
-  productId: string;
-  productQuantity: number;
-}
+
 
 interface Product {
   id: string;
@@ -59,56 +56,49 @@ function Product() {
   };
 
   const handleAddToCart = () => {
-    const token = localStorage.getItem("token");
-    const member = localStorage.getItem("username");
+    // const token = localStorage.getItem("token");
+    // const member = localStorage.getItem("username");
     const productid = selectedProduct?.id;
+    const product = selectedProduct;
 
     if (!productid) {
       console.error("Product ID is missing.");
       return;
     }
 
-    if (token) {
-      const headers: Record<string, string> = {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      };
+    // if (token) {
+    //   const headers: Record<string, string> = {
+    //     Authorization: `Bearer ${token}`,
+    //     'Content-Type': 'application/json',
+    //   };
 
-      fetch(`/api/cart/${member}/${productid}/${quantity}`, {
-        method: 'POST',
-        headers: headers,
-      })
-        .then(response => {
-          if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-          }
-          console.log('Product added to cart successfully!');
-          navigate(`/cart`);
-        })
-        .catch(error => {
-          console.error('Error adding product to cart:', error);
-        });
-    } else {
-      const wantedProduct: WantedProduct = {
-        productId: productid,
-        productQuantity: quantity,
-      };
-  
-      const storedWantedProducts = localStorage.getItem("wantedProducts");
-      const wantedProducts: WantedProduct[] = storedWantedProducts ? JSON.parse(storedWantedProducts) : [];
-      
-      const existingProductIndex = wantedProducts.findIndex(item => item.productId === productid);
-  
-      if (existingProductIndex !== -1) {
-        wantedProducts[existingProductIndex].productQuantity += quantity;
-      } else {
-        wantedProducts.push(wantedProduct);
-      }
+    //   fetch(`/api/cart/${member}/${productid}/${quantity}`, {
+    //     method: 'POST',
+    //     headers: headers,
+    //   })
+    //     .then(response => {
+    //       if (!response.ok) {
+    //         throw new Error(`HTTP error! Status: ${response.status}`);
+    //       }
+    //       console.log('Product added to cart successfully!');
+    //       navigate(`/cart`);
+    //     })
+    //     .catch(error => {
+    //       console.error('Error adding product to cart:', error);
+    //     });
+    // }
+    const wantedProduct: Product = product!; // We are sure that product is not null here
+
+  const storedWantedProducts = localStorage.getItem("wantedProducts");
+  const wantedProducts: Product[] = storedWantedProducts ? JSON.parse(storedWantedProducts) : [];
+
+  for (let i = 0; i < quantity; i++) {
+    wantedProducts.push(wantedProduct);
+  }
   
       localStorage.setItem("wantedProducts", JSON.stringify(wantedProducts));
-      console.log("wantedproductLength " + wantedProducts.length)
-      console.log("wandtedproducts 1 quantity " + wantedProducts[0].productQuantity)
-  }
+      console.log("wantedproductLength " + wantedProducts[0].id)
+          navigate(`/cart`);
   };
 
   const handleIncreaseQuantity = () => {

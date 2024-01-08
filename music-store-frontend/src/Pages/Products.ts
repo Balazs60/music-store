@@ -13,6 +13,7 @@ export interface Product {
     diameter: number;
     image: string;
     discount:number;
+    quantity: number
     getDiscountPrice(): number;
   }
   export const getDiscountPrice = (product: Product): number => {
