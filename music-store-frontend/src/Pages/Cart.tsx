@@ -1,6 +1,5 @@
 
 import GuestCart from './GuestCart';
-import UserCart from './UserCart';
 
 
 /*interface CartItem {
@@ -25,11 +24,10 @@ import UserCart from './UserCart';
 
 const Cart: React.FC = () => {
 
- const token = localStorage.getItem("token");
 
   return (
     <div className="app-container">
-      {token ? <UserCart /> : <GuestCart />}
+       <GuestCart />
     </div>
   );
 };

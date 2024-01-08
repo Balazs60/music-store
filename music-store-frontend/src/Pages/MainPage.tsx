@@ -25,10 +25,10 @@ import DiscountedProducts from './DiscountedProduct'
   getDiscountPrice(): number;
 }*/
 
-interface WantedProduct {
-  productId: string;
-  productQuantity: number;
-}
+// interface WantedProduct {
+//   productId: string;
+//   productQuantity: number;
+// }
 
 
 const MainPage: React.FC = () => {
@@ -36,6 +36,7 @@ const MainPage: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const navigate = useNavigate();
 
 
@@ -155,89 +156,110 @@ if (splitToken[1]) {
     navigate('/cart');
   };
 
-  const handleAddToCart = (productId: string) => {
-    const token = localStorage.getItem("token");
-    const member = localStorage.getItem("username");
+  // const handleAddToCart = (productId: string) => {
+  //   const token = localStorage.getItem("token");
+  //   const member = localStorage.getItem("username");
   
-    // if (!token || !member || !productid) {
-    //   console.error('Invalid token, member, or productid');
-    //   // Handle the error or notify the user
-    //   return;
-    // }
+  //   // if (!token || !member || !productid) {
+  //   //   console.error('Invalid token, member, or productid');
+  //   //   // Handle the error or notify the user
+  //   //   return;
+  //   // }
   
-    const headers = {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    };
-   if(token){
+  //   const headers = {
+  //     Authorization: `Bearer ${token}`,
+  //     'Content-Type': 'application/json',
+  //   };
+  //  if(token){
   
-    fetch(`/api/cart/${member}/${productId}/${"1"}`, {
-      method: 'POST',
-      headers: headers,
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        // No need to return response.json(), as there's no expected data
-        // Perform any additional logic after successfully adding to the cart
-        console.log('Product added to cart successfully!');
-      })
-      .catch(error => {
-        console.error('Error adding product to cart:', error);
-        // Handle errors during the fetch or non-successful response
-        // You can show an error message to the user if needed
-      });
-    }
-  };
+  //   fetch(`/api/cart/${member}/${productId}/${"1"}`, {
+  //     method: 'POST',
+  //     headers: headers,
+  //   })
+  //     .then(response => {
+  //       if (!response.ok) {
+  //         throw new Error(`HTTP error! Status: ${response.status}`);
+  //       }
+  //       // No need to return response.json(), as there's no expected data
+  //       // Perform any additional logic after successfully adding to the cart
+  //       console.log('Product added to cart successfully!');
+  //     })
+  //     .catch(error => {
+  //       console.error('Error adding product to cart:', error);
+  //       // Handle errors during the fetch or non-successful response
+  //       // You can show an error message to the user if needed
+  //     });
+  //   }
+  // };
 
-  const handleAddToCartButtonClick = (productId: string) => {
-    if(token){
-    handleAddToCart(productId);
-    }  else {
-      const wantedProduct: WantedProduct = {
-        productId: productId,
-        productQuantity: 1,
-      };
+  const fetchProductById = async (productId: string): Promise<Product | null> => {
+    try {
+      const token = localStorage.getItem("token");
+      const headers: Record<string, string> = token
+        ? { Authorization: `Bearer ${token}` }
+        : {};
   
-      const storedWantedProducts = localStorage.getItem("wantedProducts");
-      const wantedProducts: WantedProduct[] = storedWantedProducts ? JSON.parse(storedWantedProducts) : [];
-      
-      const existingProductIndex = wantedProducts.findIndex(item => item.productId === productId);
+      const response = await fetch(`/api/product/${productId}`, { method: 'GET', headers: headers });
   
-      if (existingProductIndex !== -1) {
-        wantedProducts[existingProductIndex].productQuantity += 1;
-      } else {
-        wantedProducts.push(wantedProduct);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
       }
   
-      localStorage.setItem("wantedProducts", JSON.stringify(wantedProducts));
-      console.log("wantedproductLength " + wantedProducts.length)
-      console.log("wandtedproducts 1 quantity " + wantedProducts[0].productQuantity)
+      const data = await response.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.error('Error fetching product details:', error);
+      return null;
     }
-    confirmAlert({
-      title: 'Product added to the cart',
-      message: 'Move to the cart or continue shopping?',
-      buttons: [
-        {
-          label: 'Cart',
-          onClick: () => navigate("/cart"),
-        },
-        {
-          label: 'Shopping',
-        },
-      ],
-      customUI: ({ onClose }) => (
-        <div className="custom-ui">
-          <h1>Product added to the cart</h1>
-          <p>Move to the cart or continue shopping?</p>
-          <button onClick={() => { onClose(); navigate("/cart"); }}>Cart</button>
-          <button onClick={onClose}>Shopping</button>
-        </div>
-      ),
-    });
- 
   };
+  
+
+  const handleAddToCartButtonClick = async (productId: string) => {
+    try {
+      const product = await fetchProductById(productId);
+  
+      if (!product) {
+        console.error("Product not found.");
+        return;
+      }
+  
+      const wantedProduct: Product = product;
+  
+      const storedWantedProducts = localStorage.getItem("wantedProducts");
+      const wantedProducts: Product[] = storedWantedProducts ? JSON.parse(storedWantedProducts) : [];
+  
+      wantedProducts.push(wantedProduct);
+  
+      localStorage.setItem("wantedProducts", JSON.stringify(wantedProducts));
+      console.log("wantedproductLength " + wantedProducts[0].id);
+  
+      confirmAlert({
+        title: 'Product added to the cart',
+        message: 'Move to the cart or continue shopping?',
+        buttons: [
+          {
+            label: 'Cart',
+            onClick: () => navigate("/cart"),
+          },
+          {
+            label: 'Shopping',
+          },
+        ],
+        customUI: ({ onClose }) => (
+          <div className="custom-ui">
+            <h1>Product added to the cart</h1>
+            <p>Move to the cart or continue shopping?</p>
+            <button onClick={() => { onClose(); navigate("/cart"); }}>Cart</button>
+            <button onClick={onClose}>Shopping</button>
+          </div>
+        ),
+      });
+    } catch (error) {
+      console.error("Error fetching product details:", error);
+    }
+  };
+  
 
 
   return (
