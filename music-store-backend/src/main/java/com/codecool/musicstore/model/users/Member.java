@@ -29,6 +29,11 @@ public class Member {
     private String name;
     private String password;
     private String email;
+    private String birthDate;
+    private String phoneNumber;
+    private int postCode;
+    private String city;
+    private String streetAndHouseNumber;
 
     @Enumerated(EnumType.STRING)
     private Role role;
