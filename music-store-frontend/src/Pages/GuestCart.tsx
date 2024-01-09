@@ -2,9 +2,13 @@ import React, { useState, useEffect } from 'react';
 
 import Header from './Header';
 import Product from './Product';
+import { useNavigate } from 'react-router-dom';
 
-const GuestCart: React.FC = () => {
+
+const GuestCart: React.FC = () => { 
   const [cart, setCart] = useState<Product[]>([]);
+  const navigate=useNavigate();
+  
   //const [filteredCart, setFilteredCart] = useState<Product[]>([]);
 
   //console.log(filteredCart)
@@ -69,6 +73,16 @@ const GuestCart: React.FC = () => {
     }
   }, []);
 
+  function handlePayment() {
+    console.log("username status : " + localStorage.getItem("username"))
+    if (localStorage.getItem("username")) {
+      console.log("have a user")
+    } else {
+
+      navigate(`/filloutform`);
+    }
+  }
+
   return (
     <div className="cart-container">
       <Header />
@@ -95,6 +109,9 @@ const GuestCart: React.FC = () => {
             ))}
           </ul>
           <div className="cart-summary">{/* Add any summary information here */}</div>
+          <button className="pay-button" onClick={handlePayment}>
+            Pay Now
+          </button>
         </div>
       )}
     </div>
