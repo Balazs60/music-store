@@ -40,6 +40,7 @@ public class SecurityConfiguration {
                     req.requestMatchers("/api/category/{category}/subcategories").permitAll();
                     req.requestMatchers("/api/category/{category}/subcategory/{subCategoryId}/products").permitAll();
                     req.requestMatchers("/api/cart/**").permitAll();
+                    req.requestMatchers("/api/order/**").permitAll();
                     req.requestMatchers("/api/products/{productId}/productdiscount/{productSale}")
                             .hasRole(Role.ADMIN.name())
                             .anyRequest().authenticated();

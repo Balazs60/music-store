@@ -1,10 +1,8 @@
 package com.codecool.musicstore.model.order;
 
 import com.codecool.musicstore.model.product.Product;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,7 +17,8 @@ import java.util.UUID;
 @AllArgsConstructor
 @Getter
 @Setter
-@Table(name = "order")
+@Table(name = "customer_order")
+
 public class Order {
     @Id
     private UUID id=UUID.randomUUID();
@@ -30,20 +29,14 @@ public class Order {
     private int postCode ;
     private String city ;
     private String streetAndHoseNumber;
-    @OneToMany
-    private List <Product> products=new ArrayList<>();
+
+
+@JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "order_id")
+    private List<Product> products = new ArrayList<>();
     private boolean isPaid;
 
 
-    public Order(UUID id, String customerName, String email, String birthDate, String phoneNumber, int postCode, String city, String streetAndHoseNumber, List<Product> products) {
-        this.id = id;
-        this.customerName = customerName;
-        this.email = email;
-        this.birthDate = birthDate;
-        this.phoneNumber = phoneNumber;
-        this.postCode = postCode;
-        this.city = city;
-        this.streetAndHoseNumber = streetAndHoseNumber;
-        this.products = products;
-    }
+
 }
