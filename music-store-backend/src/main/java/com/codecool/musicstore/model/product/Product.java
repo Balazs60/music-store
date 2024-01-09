@@ -20,6 +20,7 @@ public abstract class Product {
     private String Brand;
     private UUID subCategoryId;
     private String name;
+    private boolean isReserved=false;
 
 
 
