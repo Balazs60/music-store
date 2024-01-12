@@ -69,6 +69,7 @@ const FillOutForm: React.FC = () => {
       products, 
       isPaid: false, 
     };
+    console.log(order.products)
     fetchOrder(order);
    
 

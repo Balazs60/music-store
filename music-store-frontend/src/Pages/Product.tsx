@@ -13,7 +13,7 @@ interface Product {
   dtype: string;
   subCategoryId: string;
   numberOfStrings: number;
-  numberOfSoundLayers: number;
+  numberOfSoundLayers?: number;
   numberOfKeys: number;
   diameter: number;
   image: string;

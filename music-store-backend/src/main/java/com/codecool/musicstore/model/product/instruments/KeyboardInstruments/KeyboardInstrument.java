@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import jakarta.persistence.*;
+
 
 @Entity
 @NoArgsConstructor
@@ -17,4 +19,5 @@ public class KeyboardInstrument extends Product {
 
     private Integer numberOfKeys;
     private Integer numberOfSoundLayers;
+
 }

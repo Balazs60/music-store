@@ -24,6 +24,8 @@ public class OrderController {
     public void createOrder(@RequestBody Order order) {
         System.out.println(order.getCustomerName());
         System.out.println(order.getId());
+        System.out.println("order first product id " + order.getProducts().get(0).getId());
+        System.out.println("order first product name" + order.getProducts().get(0).getName());
         orderService.createOrder(order);
     }
 
