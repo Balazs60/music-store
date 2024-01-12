@@ -10,6 +10,7 @@ import Cart from "./Pages/Cart"
 import Contact from "./Pages/Contact"
 import About from "./Pages/About"
 import Discounter from "./Pages/Discounter"
+import FillOutForm from "./Pages/FillOutForm"
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
       <Route path="/contact" element={<Contact/>}/>
       <Route path="/about" element={<About />}/>
       <Route path="/discount" element={<Discounter/>} />
+      <Route path="/filloutform" element={<FillOutForm />}/>
 
 
 
