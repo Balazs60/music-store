@@ -63,10 +63,17 @@ const MainPage: React.FC = () => {
     }
   }
 
-
+  const updateNumberOfCartItems = () => {
+    const localStorageCart = localStorage.getItem('wantedProducts');
+    if (localStorageCart) {
+      const parsedCart = JSON.parse(localStorageCart);
+      setNumberOfCartItems(parsedCart.length);
+    }
+  };
 
   useEffect(() => {
     fetchInstruments();
+    updateNumberOfCartItems(); 
   }, []);
   const handleLogout = () => {
 
@@ -235,6 +242,9 @@ const MainPage: React.FC = () => {
 
       localStorage.setItem("wantedProducts", JSON.stringify(wantedProducts));
       console.log("wantedproductLength " + wantedProducts[0].id);
+
+      updateNumberOfCartItems();
+
 
       confirmAlert({
         title: 'Product added to the cart',
