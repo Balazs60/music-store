@@ -61,6 +61,7 @@ function Header() {
   // useEffect(() => {
   //   fetchCartData();
   // }, []);
+  
 
   useEffect(() => {
     fetchInstruments();
@@ -68,7 +69,7 @@ function Header() {
 
   useEffect(() => {
     filterUniqueProductsInLocaleStorage()
-  }, []);
+  }, [numberOfCartItem]);
 
  function filterUniqueProductsInLocaleStorage(){
   const localStorageCart = localStorage.getItem('wantedProducts');

@@ -28,7 +28,7 @@ public class OrderService {
 
     public boolean createOrder(Order order){
 
-
+        System.out.println("0");
             List<Product> allProducts = productDao.getAllProduct();
 
             for (Product orderProduct : order.getProducts()) {
@@ -39,11 +39,18 @@ public class OrderService {
                         .orElse(null);
 
                 if (productToReserve != null) {
+                    System.out.println("1");
                     productToReserve.setReserved(true);
                     productDao.saveProduct(productToReserve);
+                    System.out.println("2");
+
                 }
             }
-            orderDao.saveOrder(order);
+        System.out.println("order product dtype from service " + order.getProducts().get(0).getDtype());
+        System.out.println("order product brand from service " + order.getProducts().get(0).getBrand());
+        System.out.println("order product name from service " + order.getProducts().get(0).getName());
+
+        orderDao.saveOrder(order);
 
             return true;
         }

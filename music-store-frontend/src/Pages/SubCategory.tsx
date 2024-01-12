@@ -3,6 +3,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Slider from 'react-slider';
 import '../musicStore.css'
 import Header from './Header';
+import { confirmAlert } from 'react-confirm-alert';
+
 
 
 interface Product {
@@ -130,6 +132,75 @@ setValues([parseFloat(e.target.value),values[1]])
         navigate(`/product/${id}`);
     };
 
+    const fetchProductById = async (productId: string): Promise<Product | null> => {
+      try {
+        const token = localStorage.getItem("token");
+        const headers: Record<string, string> = token
+          ? { Authorization: `Bearer ${token}` }
+          : {};
+  
+        const response = await fetch(`/api/product/${productId}`, { method: 'GET', headers: headers });
+  
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+  
+        const data = await response.json();
+        console.log(data);
+        return data;
+      } catch (error) {
+        console.error('Error fetching product details:', error);
+        return null;
+      }
+    };
+
+    
+  const handleAddToCartButtonClick = async (productId: string) => {
+    try {
+      const product = await fetchProductById(productId);
+
+      if (!product) {
+        console.error("Product not found.");
+        return;
+      }
+
+      const wantedProduct: Product = product;
+
+      const storedWantedProducts = localStorage.getItem("wantedProducts");
+      const wantedProducts: Product[] = storedWantedProducts ? JSON.parse(storedWantedProducts) : [];
+
+      wantedProducts.push(wantedProduct);
+
+      localStorage.setItem("wantedProducts", JSON.stringify(wantedProducts));
+      console.log("wantedproductLength " + wantedProducts[0].id);
+
+
+      confirmAlert({
+        title: 'Product added to the cart',
+        message: 'Move to the cart or continue shopping?',
+        buttons: [
+          {
+            label: 'Cart',
+            onClick: () => navigate("/cart"),
+          },
+          {
+            label: 'Shopping',
+          },
+        ],
+        customUI: ({ onClose }) => (
+          <div className="custom-ui">
+            <h1>Product added to the cart</h1>
+            <p>Move to the cart or continue shopping?</p>
+            <button onClick={() => { onClose(); navigate("/cart"); }}>Cart</button>
+            <button onClick={onClose}>Shopping</button>
+          </div>
+        ),
+      });
+    } catch (error) {
+      console.error("Error fetching product details:", error);
+    }
+  };
+
 
     return (
         <div>
@@ -198,9 +269,7 @@ setValues([parseFloat(e.target.value),values[1]])
                   </div>
                   <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
                     <div className="text-center">
-                      <a className="btn btn-outline-dark mt-auto" href="#">
-                        Add to cart
-                      </a>
+                    <button className="btn btn-outline-dark mt-auto" type="button" onClick={() => handleAddToCartButtonClick(product.id)}>Add to cart</button>
                     </div>
                   </div>
                 </div>

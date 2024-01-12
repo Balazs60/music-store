@@ -31,9 +31,12 @@ public class Order {
     private String streetAndHoseNumber;
 
 
-@JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "order_id")
+//@JsonIgnore
+    @OneToMany
+    @JoinTable(name = "order_product",
+    joinColumns = @JoinColumn(name ="order_Id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id")
+    )
     private List<Product> products = new ArrayList<>();
     private boolean isPaid;
 
