@@ -30,7 +30,7 @@ function Header() {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
- // const [cart, setCart] = useState<CartItem[]>([]);
+  // const [cart, setCart] = useState<CartItem[]>([]);
   const [numberOfCartItem, setNumberOfCartItems] = useState(0)
   const navigate = useNavigate();
 
@@ -61,7 +61,7 @@ function Header() {
   // useEffect(() => {
   //   fetchCartData();
   // }, []);
-  
+
 
   useEffect(() => {
     fetchInstruments();
@@ -71,8 +71,8 @@ function Header() {
     filterUniqueProductsInLocaleStorage()
   }, [numberOfCartItem]);
 
- function filterUniqueProductsInLocaleStorage(){
-  const localStorageCart = localStorage.getItem('wantedProducts');
+  function filterUniqueProductsInLocaleStorage() {
+    const localStorageCart = localStorage.getItem('wantedProducts');
     if (localStorageCart) {
       const parsedCart = JSON.parse(localStorageCart);
       console.log("parsed " + parsedCart[0])
@@ -88,14 +88,14 @@ function Header() {
 
       setNumberOfCartItems(updatedCart.length);
     }
- }
+  }
 
   const fetchInstruments = () => {
     const token = localStorage.getItem("token");
 
     const headers: Record<string, string> = token
-    ? { Authorization: `Bearer ${token}` }
-    : {};
+      ? { Authorization: `Bearer ${token}` }
+      : {};
 
     fetch('/api/mainpage/products', {
       method: 'GET',
@@ -113,7 +113,7 @@ function Header() {
       .catch(error => {
         console.error('Error fetching instruments:', error);
       });
-    
+
   };
 
   const handleCategoryChange = (category: string) => {
@@ -140,17 +140,24 @@ function Header() {
     navigate('/cart');
   };
 
+  const handeleHomeButtonClick = () => {
+    navigate('/')
+  }
+
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container px-4 px-lg-5">
-          <a className="navbar-brand" href="#!">Music Shop</a>
-          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <button className="btn btn-link nav-link" onClick={handeleHomeButtonClick}>
+            Music Shop
+          </button>          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-              <li className="nav-item"><a className="nav-link active" aria-current="page" href="#!">Home</a></li>
+              <button className="btn btn-link nav-link active" aria-current="page" onClick={handeleHomeButtonClick}>
+                Home
+              </button>
               <li className="nav-item"><a className="nav-link" href="/about">About</a></li>
               <li className="nav-item"><a className="nav-link" href="/contact">Contact</a></li>
               <li className="nav-item"><a className="nav-link" href="/discount">Discount</a></li>
