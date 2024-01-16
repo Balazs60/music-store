@@ -58,6 +58,7 @@ public abstract class Product {
     private byte[] image;
     @ManyToOne
     private Order order;
+    private  int quantity;
 
     public Product() {
         // default constructor
