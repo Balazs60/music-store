@@ -7,6 +7,8 @@ align-items: center;
 background: #cdd9ed;
 }
 
+
+
 .custom-ui {
   position: fixed;
   top: 50%;
@@ -18,6 +20,31 @@ background: #cdd9ed;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
+.cart-item-box {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 20px; /* Increased margin for more spacing between items */
+  display: flex;
+}
+
+.cart-item-image {
+  max-width: 100px;
+  height: auto;
+  margin-right: 120px; /* Increased margin for more spacing between image and details */
+}
+
+.cart-item-details {
+  display: flex;
+  align-items: center;
+}
+
+.detail {
+  margin-right: 120px; /* Increased margin for more spacing between details */
+}
+
+.pay-button {
+  margin-top: 20px;
+}
 
 
 .filter-section {

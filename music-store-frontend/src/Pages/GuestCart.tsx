@@ -1,70 +1,25 @@
 import React, { useState, useEffect } from 'react';
-
 import Header from './Header';
 import Product from './Product';
 import { useNavigate } from 'react-router-dom';
+import { confirmAlert } from 'react-confirm-alert';
 
 
-const GuestCart: React.FC = () => { 
+
+const GuestCart: React.FC = () => {
   const [cart, setCart] = useState<Product[]>([]);
-  const navigate=useNavigate();
-  
-  //const [filteredCart, setFilteredCart] = useState<Product[]>([]);
-
-  //console.log(filteredCart)
-  console.log("lacaleStorage" + localStorage.getItem("wantedProducts"))
-
-  // const fetchCartData = () => {
-  //   const guestChart = JSON.parse(localStorage.getItem('wantedProducts') || '[]');
-
-  //   setCart([]);
-
-  //   fetch(`/api/guestcart/guest`, {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify({ guestChart }),
-  //   })
-  //     .then(response => {
-  //       if (!response.ok) {
-  //         throw new Error(`HTTP error! Status: ${response.status}`);
-  //       }
-  //       return response.json();
-  //     })
-  //     .then(data => {
-  //       // Group products by name and calculate total quantity
-  //       const groupedCart: Record<string, Product> = {};
-  //       data.forEach((product: Product) => {
-  //         if (!groupedCart[product.id]) {
-  //           groupedCart[product.id] = { ...product, quantity: 1 };
-  //         } else {
-  //           groupedCart[product.id].quantity += 1;
-  //         }
-  //       });
-
-  //       const updatedCart: Product[] = Object.values(groupedCart);
-
-  //       setCart(updatedCart);
-  //       setFilteredCart(updatedCart);
-  //     })
-  //     .catch(error => {
-  //       console.error('Error fetching cart data:', error);
-  //       // Handle errors, set an error state, or display an error message to the user
-  //     });
-  // };
+  const navigate = useNavigate();
 
   useEffect(() => {
     const localStorageCart = localStorage.getItem('wantedProducts');
     if (localStorageCart) {
       const parsedCart = JSON.parse(localStorageCart);
-      console.log("parsed " + parsedCart[0])
       const groupedCart: Record<string, Product> = {};
       parsedCart.forEach((product: Product) => {
         if (!groupedCart[product.id]) {
           groupedCart[product.id] = { ...product };
         }
-      })
+      });
       const updatedCart: Product[] = Object.values(groupedCart);
 
       setCart(updatedCart);
@@ -76,10 +31,88 @@ const GuestCart: React.FC = () => {
     if (localStorage.getItem("username")) {
       console.log("have a user")
     } else {
-
       navigate(`/filloutform`);
     }
   }
+
+ 
+
+  
+  const handleDelete = (itemId: string) => {
+
+    const localStorageCart = localStorage.getItem('wantedProducts');
+    
+    if (localStorageCart) {
+      const parsedCart = JSON.parse(localStorageCart);
+  
+      const updatedCart = parsedCart.filter((product: Product) => product.id !== itemId);
+  
+      localStorage.setItem('wantedProducts', JSON.stringify(updatedCart));
+  
+      setCart(updatedCart);
+    }
+  };
+  
+
+  const submitDelete = (itemId : string) => {
+
+    confirmAlert({
+        title: 'Confirm to delete',
+        message: 'Are you sure to delete this item?',
+        buttons: [
+            {
+                label: 'Yes',
+                onClick: () => handleDelete(itemId),
+            },
+            {
+                label: 'No',
+            },
+        ],
+        customUI: ({ onClose }) => (
+          <div className="custom-ui">
+            <h1>Confirm delete</h1>
+            <p>Are you sure to delete this item?</p>
+            <button onClick={() => { onClose(); handleDelete(itemId); }}>Yes</button>
+            <button onClick={onClose}>No</button>
+          </div>
+        ),
+    });
+};
+
+
+
+
+const handleIncreaseQuantity = (itemId: string) => {
+  const updatedCart = cart.map(item => {
+    if (item.id === itemId) {
+      const newQuantity = item.quantity + 1;
+     // updateWantedProducts(itemId, newQuantity);
+      return {
+        ...item,
+        quantity: newQuantity,
+      };
+    }
+    return item;
+  });
+
+  setCart(updatedCart);
+};
+
+const handleDecreaseQuantity = (itemId: string) => {
+  const updatedCart = cart.map(item => {
+    if (item.id === itemId && item.quantity > 1) {
+      const newQuantity = item.quantity - 1;
+     // updateQuantityOnBackend(itemId, newQuantity);
+      return {
+        ...item,
+        quantity: newQuantity,
+      };
+    }
+    return item;
+  });
+
+  setCart(updatedCart);
+};
 
   return (
     <div className="cart-container">
@@ -89,23 +122,36 @@ const GuestCart: React.FC = () => {
         <p>Your cart is empty</p>
       ) : (
         <div>
-          <ul className="cart-list">
-            {cart.map(item => (
-              <li key={item.id} className="cart-item">
-                <div className="cart-item-details">
-                  <strong>{item.name}</strong>
-                  <p>Brand: {item.brand}</p>
-                  <p>Price: ${item.price}</p>
-                  <p>Quantity: {item.quantity}</p>
-                  <img
-                    src={`data:image/png;base64,${item.image}`}
-                    alt={item.name}
-                    style={{ maxWidth: '100%', height: 'auto' }}
-                  />
+          {cart.map(item => (
+            <div key={item.id} className="cart-item-box">
+              <img
+                src={`data:image/png;base64,${item.image}`}
+                alt={item.name}
+                className="cart-item-image"
+              />
+              <div className="cart-item-details">
+                <div className="detail">
+                  <div>Name:</div>
+                  <div><strong>{item.name}</strong></div>
                 </div>
-              </li>
-            ))}
-          </ul>
+                <div className="detail">
+                  <div>Brand:</div>
+                  <div>{item.brand}</div>
+                </div>
+                <div className="detail">
+                  <div>Price:</div>
+                  <div>${item.price}</div>
+                </div>
+                <div className="detail">
+                  <div>Quantity:</div>
+                  <div>{item.quantity}</div>
+                  <button onClick={() => handleIncreaseQuantity(item.id)}>+</button>
+                  <button onClick={() => handleDecreaseQuantity(item.id)}>-</button>
+                </div>
+              </div>
+              <button onClick={() => submitDelete(item.id)}>Delete</button>
+            </div>
+          ))}
           <div className="cart-summary">{/* Add any summary information here */}</div>
           <button className="pay-button" onClick={handlePayment}>
             Pay Now
@@ -117,3 +163,5 @@ const GuestCart: React.FC = () => {
 };
 
 export default GuestCart;
+
+
