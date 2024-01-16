@@ -1,5 +1,6 @@
 
-import { Product } from "./Products";
+import { WantedProduct } from "./WantedProduct";
+
   
 
 export interface Order {
@@ -11,7 +12,7 @@ export interface Order {
     postCode: number;
     city: string;
     streetAndHouseNumber: string;
-    products: Product[];
+    wantedProducts: WantedProduct[];
     isPaid: boolean;
   }
 
