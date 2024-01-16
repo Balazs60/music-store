@@ -17,9 +17,7 @@ const GuestCart: React.FC = () => {
       const groupedCart: Record<string, Product> = {};
       parsedCart.forEach((product: Product) => {
         if (!groupedCart[product.id]) {
-          groupedCart[product.id] = { ...product, quantity: 1 };
-        } else {
-          groupedCart[product.id].quantity += 1;
+          groupedCart[product.id] = { ...product };
         }
       });
       const updatedCart: Product[] = Object.values(groupedCart);

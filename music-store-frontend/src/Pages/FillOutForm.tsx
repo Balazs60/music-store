@@ -9,6 +9,10 @@ import { Link } from 'react-router-dom';
 import { Product } from './Products';
 import { Order } from './Order'; 
 import { v4 as uuidv4 } from 'uuid';
+import { useNavigate } from 'react-router-dom';
+
+
+
 const FillOutForm: React.FC = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -18,6 +22,7 @@ const FillOutForm: React.FC = () => {
   const [city, setCity] = useState('');
   const [streetAndHouseNumber, setStreetAndHouseNumber] = useState('');
 
+  const navigate=useNavigate();
   function fetchOrder(order: Order){
     fetch('/api/order/neworder', {
         method: 'POST',
@@ -71,6 +76,7 @@ const FillOutForm: React.FC = () => {
     };
     console.log(order.products)
     fetchOrder(order);
+    navigate(`order/${order.id}`)
    
 
   };
@@ -181,6 +187,7 @@ const FillOutForm: React.FC = () => {
                 />
                 <Button type="submit" variant="contained" color="primary" style={{ marginTop: '16px' }}>
                   Place Order
+             
                 </Button>
               </form>
             </Paper>
