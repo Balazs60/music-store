@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import { confirmAlert } from 'react-confirm-alert';
 
 
-// ... (previous imports)
 
 const GuestCart: React.FC = () => {
   const [cart, setCart] = useState<Product[]>([]);
@@ -37,6 +36,8 @@ const GuestCart: React.FC = () => {
       navigate(`/filloutform`);
     }
   }
+
+ 
 
   
   const handleDelete = (itemId: string) => {
