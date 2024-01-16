@@ -24,6 +24,12 @@ public class CartItem {
     @GeneratedValue
     private Long id;
 
+    //@JsonIgnore
+    @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
+    @JsonIdentityReference(alwaysAsId=true)
+    @ManyToOne
+    private Member member;
+
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
