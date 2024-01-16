@@ -29,6 +29,10 @@ function Product() {
     if (id) {
       fetchProductById(id);
     }
+    const storedWantedProducts = localStorage.getItem('wantedProducts');
+    if (storedWantedProducts) {
+      setWantedProducts(JSON.parse(storedWantedProducts));
+    }
   }, [id]);
 
   const fetchProductById = (productId: string) => {
@@ -68,9 +72,17 @@ function Product() {
   };
 
   const handleAddToCart = () => {
+
+    console.log("wanted " + wantedProducts[1])
+    
     if (selectedProduct) {
       const updatedWantedProducts = [...wantedProducts, selectedProduct];
+      console.log("updateddproduct length " + updatedWantedProducts.length)
+      for(let i = 0; i < updatedWantedProducts.length; i++){
+        console.log("updated " + updatedWantedProducts[i])
+      }
       setWantedProducts(updatedWantedProducts);
+
       localStorage.setItem("wantedProducts", JSON.stringify(updatedWantedProducts));
       navigate(`/cart`);
     } else {
