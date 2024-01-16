@@ -5,12 +5,10 @@ import com.codecool.musicstore.model.product.Product;
 import com.codecool.musicstore.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/order/")
@@ -22,9 +20,17 @@ public class OrderController {
     }
     @PostMapping("/neworder")
     public void createOrder(@RequestBody Order order) {
-      ;
+
 
         orderService.createOrder(order);
+    }
+
+    @GetMapping("/{orderId}")
+    public Order getOrderById(@PathVariable String orderId){
+        System.out.println("------------------------");
+        System.out.println("order id "+orderId);
+        System.out.println("------------------------");
+        return orderService.getOrderById(UUID.fromString(orderId));
     }
 
 }

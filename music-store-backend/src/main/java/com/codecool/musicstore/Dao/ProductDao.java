@@ -9,6 +9,7 @@ import java.util.UUID;
 public interface ProductDao {
 
     public void saveProduct(Product product);
+
     public Product getProductById(UUID id);
     public List<Product> getAllProduct();
     public void  saveProducts(List<Product> products);
