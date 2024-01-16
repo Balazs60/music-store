@@ -1,6 +1,7 @@
 package com.codecool.musicstore.model.order;
 
 import com.codecool.musicstore.model.product.Product;
+import com.codecool.musicstore.model.wantedProduct.WantedProduct;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -33,11 +34,11 @@ public class Order {
 
 //@JsonIgnore
     @OneToMany
-    @JoinTable(name = "order_product",
+    @JoinTable(name = "order_wantedproduct",
     joinColumns = @JoinColumn(name ="order_Id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id")
+            inverseJoinColumns = @JoinColumn(name = "wantedproduct_id")
     )
-    private List<Product> products = new ArrayList<>();
+    private List<WantedProduct> wantedProducts= new ArrayList<>();
     private boolean isPaid;
 
 

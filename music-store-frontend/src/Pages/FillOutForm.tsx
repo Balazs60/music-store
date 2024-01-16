@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -6,12 +6,10 @@ import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
 import { Link } from 'react-router-dom';
-import { Product } from './Products';
+import { WantedProduct } from './WantedProduct';
 import { Order } from './Order'; 
 import { v4 as uuidv4 } from 'uuid';
 import { useNavigate } from 'react-router-dom';
-
-
 
 const FillOutForm: React.FC = () => {
   const [name, setName] = useState('');
@@ -22,65 +20,69 @@ const FillOutForm: React.FC = () => {
   const [city, setCity] = useState('');
   const [streetAndHouseNumber, setStreetAndHouseNumber] = useState('');
 
-  const navigate=useNavigate();
-  function fetchOrder(order: Order){
+  const navigate = useNavigate();
+
+  function fetchOrder(order: Order) {
     fetch('/api/order/neworder', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(order),
-      })
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(order),
+    })
       .then(response => {
         if (response.ok) {
           console.log('Order submitted successfully');
-          
         } else {
           console.error('Failed to submit order');
-
         }
       })
       .catch(error => {
         console.error('Error sending order:', error);
-       
-      });}
-    
+      });
+  }
 
-
-  const  handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const localStorageCart = localStorage.getItem('wantedProducts');
-    let products: Product[] = [];
-    const id: string = uuidv4();
+    const localStorageCart = JSON.parse(localStorage.getItem('wantedProducts') || 'null');
+
     if (localStorageCart) {
-      try {
-        
-        products = JSON.parse(localStorageCart);
-      } catch (error) {
-        console.error('Error parsing localStorageCart:', error);
+      const WantedProductList: WantedProduct[] = [];
+
+      for (let i = 0; i < localStorageCart.length; i++) {
+        const id: string = uuidv4();
+        const WantedProduct: WantedProduct = {
+          id,
+          orderId: '',
+          productId: localStorageCart[i].id,
+          produtPriceByPiece: localStorageCart[i].price,
+          productQuantity: localStorageCart[i].quantity,
+        };
+        WantedProductList.push(WantedProduct);
       }
 
+      const id: string = uuidv4();
+      const order: Order = {
+        id,
+        customerName: name,
+        email,
+        birthDate,
+        phoneNumber,
+        postCode: parseInt(postCode), 
+        city,
+        streetAndHouseNumber,
+        wantedProducts: WantedProductList.map(wantedProduct => {
+          wantedProduct.orderId = id; 
+          return wantedProduct;
+        }),
+        isPaid: false, 
+      };
+    
+      console.log(order)
+      fetchOrder(order);
+      navigate(`order/${order.id}`);
     }
-
-    const order: Order = {
-      id, 
-      customerName: name,
-      email,
-      birthDate,
-      phoneNumber,
-      postCode: parseInt(postCode), 
-      city,
-      streetAndHouseNumber,
-      products, 
-      isPaid: false, 
-    };
-    console.log(order.products)
-    fetchOrder(order);
-    navigate(`order/${order.id}`)
-   
-
   };
-
 
   return (
     <Container
@@ -112,8 +114,8 @@ const FillOutForm: React.FC = () => {
                 <Link to={`/`} style={{ color: '#007BFF', textDecoration: 'none' }}>
                   Log In
                 </Link>
-                </Typography>
-                <form onSubmit={handleSubmit} style={{ width: '300px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              </Typography>
+              <form onSubmit={handleSubmit} style={{ width: '300px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 <TextField
                   label="Name"
                   variant="outlined"
@@ -124,7 +126,6 @@ const FillOutForm: React.FC = () => {
                   onChange={(e) => setName(e.target.value)}
                   required
                 />
-             
                 <TextField
                   label="Email"
                   variant="outlined"
@@ -187,7 +188,6 @@ const FillOutForm: React.FC = () => {
                 />
                 <Button type="submit" variant="contained" color="primary" style={{ marginTop: '16px' }}>
                   Place Order
-             
                 </Button>
               </form>
             </Paper>
