@@ -24,12 +24,22 @@ function Product() {
 
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [wantedProducts, setWantedProducts] = useState<Product[]>([]);
+  const [product, setProduct] = useState<Product | null>(null);
+  const [maxQuantityReached, setMaxQuantityReached] = useState(false);
+
 
   useEffect(() => {
     if (id) {
       fetchProductById(id);
     }
+    const storedWantedProducts = localStorage.getItem('wantedProducts');
+    if (storedWantedProducts) {
+      setWantedProducts(JSON.parse(storedWantedProducts));
+    }
+    
   }, [id]);
+
+ 
 
   const fetchProductById = (productId: string) => {
     const token = localStorage.getItem("token");
@@ -46,31 +56,56 @@ function Product() {
       })
       .then(data => {
         console.log(data);
+        setProduct(data)
         setSelectedProduct(data);
+        setSelectedProduct((prevProduct) => ({
+          ...prevProduct!,
+          quantity: 1,
+        }));
       })
       .catch(error => {
         console.error('Error fetching product details:', error);
       });
   };
 
-  const handleIncreaseQuantity = () => {
-    setSelectedProduct(prevProduct => ({
-      ...prevProduct!,
-      quantity: (prevProduct!.quantity || 0) + 1
-    }));
+ 
+
+ const handleIncreaseQuantity = () => {
+    setSelectedProduct((prevProduct) => {
+      if (!prevProduct) return prevProduct;
+
+      const maxQuantity = product?.quantity || 1; // set a default if product is null
+      const updatedQuantity = Math.min((prevProduct.quantity || 0) + 1, maxQuantity);
+
+      setMaxQuantityReached(updatedQuantity === maxQuantity);
+
+      return {
+        ...prevProduct,
+        quantity: updatedQuantity,
+      };
+    });
   };
 
   const handleDecreaseQuantity = () => {
-    setSelectedProduct(prevProduct => ({
+    setSelectedProduct((prevProduct) => ({
       ...prevProduct!,
-      quantity: Math.max((prevProduct!.quantity || 0) - 1, 1)
+      quantity: Math.max((prevProduct?.quantity || 0) - 1, 1),
     }));
+    setMaxQuantityReached(false);
   };
 
   const handleAddToCart = () => {
+
+    console.log("wanted " + wantedProducts[1])
+    
     if (selectedProduct) {
       const updatedWantedProducts = [...wantedProducts, selectedProduct];
+      console.log("updateddproduct length " + updatedWantedProducts.length)
+      for(let i = 0; i < updatedWantedProducts.length; i++){
+        console.log("updated " + updatedWantedProducts[i])
+      }
       setWantedProducts(updatedWantedProducts);
+
       localStorage.setItem("wantedProducts", JSON.stringify(updatedWantedProducts));
       navigate(`/cart`);
     } else {
@@ -97,7 +132,8 @@ function Product() {
             <p>Number of Strings: {selectedProduct.numberOfStrings}</p>
           )}
           <div>
-            <button onClick={handleIncreaseQuantity}>+</button>
+          {maxQuantityReached && <p style={{ color: 'red' }}>No more products in stock</p>}
+            <button onClick={handleIncreaseQuantity} disabled={maxQuantityReached}>+</button>
             <p>{selectedProduct.quantity}</p>
             <button onClick={handleDecreaseQuantity}>-</button>
             <button onClick={handleAddToCart}>Add to Cart</button>
