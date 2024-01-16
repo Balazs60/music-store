@@ -153,6 +153,7 @@ public class ProductGeneratorImpl implements ProductGenerator {
             acousticGuitar.setName(guitarBrands[random.nextInt(guitarNames.length)]);
             acousticGuitar.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
             acousticGuitar.setPrice(random.nextInt(200));
+            acousticGuitar.setQuantity(random.nextInt(97) + 4);
             acousticGuitar.setSubCategoryId(acousticGuitarSubCategory.getId());
 
             setPictureOfInstrument(acousticGuitar , "Guitars/akuszt_k.jpg");
@@ -166,6 +167,7 @@ public class ProductGeneratorImpl implements ProductGenerator {
             electricGuitar.setName(guitarBrands[random.nextInt(guitarNames.length)]);
             electricGuitar.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
             electricGuitar.setPrice(random.nextInt(200));
+            electricGuitar.setQuantity(random.nextInt(97) + 4);
             electricGuitar.setSubCategoryId(electricGuitarSubCategory.getId());
             setPictureOfInstrument(electricGuitar , "Guitars/Elektromos_git___4d8b2663d4c79_k.jpg");
             products.add(electricGuitar);
@@ -176,6 +178,7 @@ public class ProductGeneratorImpl implements ProductGenerator {
             banjo.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
             banjo.setPrice(random.nextInt(200));
             banjo.setSubCategoryId(banjoSubCategory.getId());
+            banjo.setQuantity(random.nextInt(97) + 4);
             setPictureOfInstrument(banjo , "Guitars/Benjo_4d8b38c5edb1b_k.jpg");
             products.add(banjo);
 
@@ -184,6 +187,7 @@ public class ProductGeneratorImpl implements ProductGenerator {
             mandolin.setName(guitarBrands[random.nextInt(guitarNames.length)]);
             mandolin.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
             mandolin.setPrice(random.nextInt(200));
+            mandolin.setQuantity(random.nextInt(97) + 4);
             mandolin.setSubCategoryId(mandolinSubcategory.getId());
             setPictureOfInstrument(mandolin , "Guitars/Mandolin_51e7fc30a26a7_k.jpg");
             products.add(mandolin);
@@ -194,6 +198,7 @@ public class ProductGeneratorImpl implements ProductGenerator {
             ukulele.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
             ukulele.setPrice(random.nextInt(200));
             ukulele.setSubCategoryId(ukuleleSubcategory.getId());
+            ukulele.setQuantity(random.nextInt(97) + 4);
             setPictureOfInstrument(ukulele , "Guitars/010165_k.jpg");
             products.add(ukulele);
 
@@ -203,6 +208,7 @@ public class ProductGeneratorImpl implements ProductGenerator {
             piano.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
             piano.setPrice(random.nextInt(200));
             piano.setSubCategoryId(pianoSubCategory.getId());
+            piano.setQuantity(random.nextInt(97) + 4);
             setPictureOfInstrument(piano , "KeyboardInstruments/casio-ap-270-bn.jpg");
             products.add(piano);
 
@@ -211,6 +217,7 @@ public class ProductGeneratorImpl implements ProductGenerator {
             midiKeyboard.setName(guitarBrands[random.nextInt(guitarNames.length)]);
             midiKeyboard.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
             midiKeyboard.setPrice(random.nextInt(200));
+            midiKeyboard.setQuantity(random.nextInt(97) + 4);
             midiKeyboard.setSubCategoryId(midiKeyboardSubCategory.getId());
             setPictureOfInstrument(midiKeyboard , "KeyboardInstruments/MIDI_billenty__z_4d8b44370f524_k.jpg");
             products.add(midiKeyboard);
@@ -220,6 +227,7 @@ public class ProductGeneratorImpl implements ProductGenerator {
             synthesizer.setName(guitarBrands[random.nextInt(guitarNames.length)]);
             synthesizer.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
             synthesizer.setPrice(random.nextInt(200));
+            synthesizer.setQuantity(random.nextInt(97) + 4);
             synthesizer.setSubCategoryId(synthesizerSubCategory.getId());
             setPictureOfInstrument(synthesizer , "KeyboardInstruments/Szintetiz__tor_4d8b43be9d01c_k.jpg");
             products.add(synthesizer);
@@ -229,6 +237,7 @@ public class ProductGeneratorImpl implements ProductGenerator {
             flute.setName(guitarBrands[random.nextInt(guitarNames.length)]);
             flute.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
             flute.setPrice(random.nextInt(200));
+            flute.setQuantity(random.nextInt(97) + 4);
             flute.setSubCategoryId(fluteSubCategory.getId());
             setPictureOfInstrument(flute , "WindInstruments/fuvolak_k.jpg");
             products.add(flute);
@@ -238,6 +247,7 @@ public class ProductGeneratorImpl implements ProductGenerator {
             saxophone.setName(guitarBrands[random.nextInt(guitarNames.length)]);
             saxophone.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
             saxophone.setPrice(random.nextInt(200));
+            saxophone.setQuantity(random.nextInt(97) + 4);
             saxophone.setSubCategoryId(saxophoneSubCategory.getId());
             setPictureOfInstrument(saxophone , "WindInstruments/sax_k.jpg");
             products.add(saxophone);
@@ -247,6 +257,7 @@ public class ProductGeneratorImpl implements ProductGenerator {
             trumpet.setName(guitarBrands[random.nextInt(guitarNames.length)]);
             trumpet.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
             trumpet.setPrice(random.nextInt(200));
+            trumpet.setQuantity(random.nextInt(97) + 4);
             trumpet.setSubCategoryId(trumpetSubCategory.getId());
             setPictureOfInstrument(trumpet , "WindInstruments/trombita_k.jpg");
             products.add(trumpet);
@@ -256,6 +267,7 @@ public class ProductGeneratorImpl implements ProductGenerator {
             electricBassGuitar.setName(guitarBrands[random.nextInt(guitarNames.length)]);
             electricBassGuitar.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
             electricBassGuitar.setPrice(random.nextInt(200));
+            electricBassGuitar.setQuantity(random.nextInt(97) + 4);
             electricBassGuitar.setSubCategoryId(electricBassGuitarSubCategory.getId());
             setPictureOfInstrument(electricBassGuitar , "Bass/el_bass_k.jpg");
             products.add(electricBassGuitar);
@@ -265,6 +277,7 @@ public class ProductGeneratorImpl implements ProductGenerator {
             acousticBassGuitar.setName(guitarBrands[random.nextInt(guitarNames.length)]);
             acousticBassGuitar.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
             acousticBassGuitar.setPrice(random.nextInt(200));
+            acousticBassGuitar.setQuantity(random.nextInt(97) + 4);
             acousticBassGuitar.setSubCategoryId(acousticBassGuitarSubCategory.getId());
             setPictureOfInstrument(acousticBassGuitar , "Bass/01011_k.jpg");
 
@@ -275,6 +288,7 @@ public class ProductGeneratorImpl implements ProductGenerator {
             fiveStringBassGuitar.setName(guitarBrands[random.nextInt(guitarNames.length)]);
             fiveStringBassGuitar.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
             fiveStringBassGuitar.setPrice(random.nextInt(200));
+            fiveStringBassGuitar.setQuantity(random.nextInt(97) + 4);
             fiveStringBassGuitar.setSubCategoryId(fiveStringBassGuitarSubCategory.getId());
             setPictureOfInstrument(fiveStringBassGuitar , "Bass/el_bass_lh_k.jpg");
 
@@ -283,6 +297,7 @@ public class ProductGeneratorImpl implements ProductGenerator {
             PercussionInstrument acousticDrum = new PercussionInstrument();
             acousticDrum.setBrand(guitarBrands[random.nextInt(guitarBrands.length)]);
             acousticDrum.setName(guitarBrands[random.nextInt(guitarNames.length)]);
+            acousticDrum.setQuantity(random.nextInt(97) + 4);
             acousticDrum.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
             acousticDrum.setPrice(random.nextInt(200));
             acousticDrum.setSubCategoryId(acousticDrumSubCategory.getId());
@@ -295,6 +310,7 @@ public class ProductGeneratorImpl implements ProductGenerator {
             electricDrum.setName(guitarBrands[random.nextInt(guitarNames.length)]);
             electricDrum.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
             electricDrum.setPrice(random.nextInt(200));
+            electricDrum.setQuantity(random.nextInt(97) + 4);
             electricDrum.setSubCategoryId(electricDrumSubCategory.getId());
             setPictureOfInstrument(electricDrum , "PercussionInstrument/electric-drum-sets-1006.png");
 
@@ -316,6 +332,7 @@ public class ProductGeneratorImpl implements ProductGenerator {
             tamDrum.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
             tamDrum.setPrice(random.nextInt(200));
             tamDrum.setSubCategoryId(tamSubCategory.getId());
+            tamDrum.setQuantity(random.nextInt(97) + 4);
             setPictureOfInstrument(tamDrum , "PercussionInstrument/handpan_k.jpg");
 
             products.add(tamDrum);
@@ -325,12 +342,14 @@ public class ProductGeneratorImpl implements ProductGenerator {
             hiHatCymbal.setName(guitarBrands[random.nextInt(guitarNames.length)]);
             hiHatCymbal.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
             hiHatCymbal.setPrice(random.nextInt(200));
+            hiHatCymbal.setQuantity(random.nextInt(97) + 4);
             hiHatCymbal.setSubCategoryId(hitHatCymbalSubCategory.getId());
             setPictureOfInstrument(hiHatCymbal , "PercussionInstrument/01087_k.jpg");
 
             products.add(hiHatCymbal);
 
             PercussionInstrument ride = new PercussionInstrument();
+            ride.setQuantity(random.nextInt(97) + 4);
             ride.setBrand(guitarBrands[random.nextInt(guitarBrands.length)]);
             ride.setName(guitarBrands[random.nextInt(guitarNames.length)]);
             ride.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
@@ -344,6 +363,7 @@ public class ProductGeneratorImpl implements ProductGenerator {
             mic.setBrand(guitarBrands[random.nextInt(guitarBrands.length)]);
             mic.setName(guitarBrands[random.nextInt(guitarNames.length)]);
             mic.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
+            mic.setQuantity(random.nextInt(97) + 4);
             mic.setPrice(random.nextInt(200));
             mic.setSubCategoryId(micSubCategory.getId());
             products.add(mic);
@@ -353,6 +373,7 @@ public class ProductGeneratorImpl implements ProductGenerator {
             stand.setName(guitarBrands[random.nextInt(guitarNames.length)]);
             stand.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
             stand.setPrice(random.nextInt(200));
+            stand.setQuantity(random.nextInt(97) + 4);
             stand.setSubCategoryId(standSubCategory.getId());
             products.add(stand);
 
@@ -361,6 +382,7 @@ public class ProductGeneratorImpl implements ProductGenerator {
             headSet.setName(guitarBrands[random.nextInt(guitarNames.length)]);
             headSet.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
             headSet.setPrice(random.nextInt(200));
+            headSet.setQuantity(random.nextInt(97) + 4);
             headSet.setSubCategoryId(headSetSubCategory.getId());
             products.add(headSet);
 
@@ -369,6 +391,7 @@ public class ProductGeneratorImpl implements ProductGenerator {
             tShirt.setName(guitarBrands[random.nextInt(guitarNames.length)]);
             tShirt.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
             tShirt.setPrice(random.nextInt(200));
+            tShirt.setQuantity(random.nextInt(97) + 4);
             tShirt.setSubCategoryId(tShirtSubCategory.getId());
             products.add(tShirt);
 
@@ -377,6 +400,7 @@ public class ProductGeneratorImpl implements ProductGenerator {
             gift.setName(guitarBrands[random.nextInt(guitarNames.length)]);
             gift.setColor(guitarBrands[random.nextInt(guitarColors.length)]);
             gift.setPrice(random.nextInt(200));
+            gift.setQuantity(random.nextInt(97) + 4);
             gift.setSubCategoryId(giftSubCategory.getId());
             products.add(gift);
         }
