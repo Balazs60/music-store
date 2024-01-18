@@ -3,12 +3,18 @@ import Header from './Header';
 import Product from './Product';
 import { useNavigate } from 'react-router-dom';
 import { confirmAlert } from 'react-confirm-alert';
+import { useLocation } from 'react-router-dom';
+
 
 
 
 const GuestCart: React.FC = () => {
   const [cart, setCart] = useState<Product[]>([]);
   const navigate = useNavigate();
+  const location = useLocation();
+  const productOriginalPrice = location.state?.productOriginalPrice || null;
+
+console.log("original" + productOriginalPrice)
 
   useEffect(() => {
     const localStorageCart = localStorage.getItem('wantedProducts');
@@ -26,7 +32,9 @@ const GuestCart: React.FC = () => {
     }
   }, []);
 
+
   function handlePayment() {
+    console.log("1quantity" + cart[0].quantity)
     console.log("username status : " + localStorage.getItem("username"))
     if (localStorage.getItem("username")) {
       console.log("have a user")
@@ -86,10 +94,24 @@ const handleIncreaseQuantity = (itemId: string) => {
   const updatedCart = cart.map(item => {
     if (item.id === itemId) {
       const newQuantity = item.quantity + 1;
-     // updateWantedProducts(itemId, newQuantity);
+      const newPrice = item.price + productOriginalPrice
+      const localStorageCart = localStorage.getItem('wantedProducts')
+      if(localStorageCart){
+      const wantedProducts = JSON.parse(localStorageCart)
+      for(const product of wantedProducts){
+        if(product.id === itemId){
+         
+product.quantity = newQuantity
+product.price += productOriginalPrice
+        }
+      }
+              localStorage.setItem('wantedProducts', JSON.stringify(wantedProducts));
+
+      }
       return {
         ...item,
         quantity: newQuantity,
+        price: newPrice,
       };
     }
     return item;
@@ -102,10 +124,23 @@ const handleDecreaseQuantity = (itemId: string) => {
   const updatedCart = cart.map(item => {
     if (item.id === itemId && item.quantity > 1) {
       const newQuantity = item.quantity - 1;
-     // updateQuantityOnBackend(itemId, newQuantity);
-      return {
+      const newPrice = item.price - productOriginalPrice
+      const localStorageCart = localStorage.getItem('wantedProducts')
+      if(localStorageCart){
+      const wantedProducts = JSON.parse(localStorageCart)
+      for(const product of wantedProducts){
+        if(product.id === itemId){
+         
+product.quantity = newQuantity
+product.price -= productOriginalPrice
+        }
+      }
+              localStorage.setItem('wantedProducts', JSON.stringify(wantedProducts));
+
+      }      return {
         ...item,
         quantity: newQuantity,
+        price: newPrice,
       };
     }
     return item;

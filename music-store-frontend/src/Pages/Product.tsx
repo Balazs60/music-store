@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Header from './Header';
 
+
 interface Product {
   id: string;
   name: string;
@@ -27,6 +28,9 @@ function Product() {
   const [product, setProduct] = useState<Product | null>(null);
   const [maxQuantityReached, setMaxQuantityReached] = useState(false);
   const [quantity, setQuantity] = useState(1)
+  const productOriginalPrice = product?.price
+
+
 
 
   useEffect(() => {
@@ -74,7 +78,11 @@ function Product() {
 
   const handleIncreaseQuantity = () => {
 
+    
     const maxQuantity = product?.quantity || 1
+    if(selectedProduct && product){
+    selectedProduct.price += product?.price
+    }
     setQuantity((prevQuantity) => prevQuantity + 1);
     setMaxQuantityReached(quantity === maxQuantity);
 
@@ -117,7 +125,8 @@ selectedProduct.quantity = quantity
       setWantedProducts(updatedWantedProducts);
 
       localStorage.setItem("wantedProducts", JSON.stringify(updatedWantedProducts));
-      navigate(`/cart`);
+      navigate(`/cart`, { state: { productOriginalPrice } });
+
 
     } else {
       console.error("Product is not selected.");
@@ -127,20 +136,20 @@ selectedProduct.quantity = quantity
   return (
     <div>
       <Header />
-      {selectedProduct ? (
+      {product ? (
         <div>
-          <h1>{selectedProduct.name}</h1>
-          <p>Brand: {selectedProduct.brand}</p>
-          <p>Price: {selectedProduct.price}</p>
-          <p>Color: {selectedProduct.color}</p>
+          <h1>{product.name}</h1>
+          <p>Brand: {product.brand}</p>
+          <p>Price: {product.price}</p>
+          <p>Color: {product.color}</p>
           <p>Picture:</p>
           <img
-            src={`data:image/png;base64,${selectedProduct.image}`}
-            alt={selectedProduct.name}
+            src={`data:image/png;base64,${product.image}`}
+            alt={product.name}
             style={{ maxWidth: '100%', height: 'auto' }}
           />
-          {selectedProduct.numberOfStrings && (
-            <p>Number of Strings: {selectedProduct.numberOfStrings}</p>
+          {product.numberOfStrings && (
+            <p>Number of Strings: {product.numberOfStrings}</p>
           )}
           <div>
             {maxQuantityReached && <p style={{ color: 'red' }}>No more products in stock</p>}
