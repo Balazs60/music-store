@@ -19,6 +19,8 @@ const FillOutForm: React.FC = () => {
   const [postCode, setPostcode] = useState('');
   const [city, setCity] = useState('');
   const [streetAndHouseNumber, setStreetAndHouseNumber] = useState('');
+  
+
 
   const navigate = useNavigate();
 
@@ -33,6 +35,7 @@ const FillOutForm: React.FC = () => {
       .then(response => {
         if (response.ok) {
           console.log('Order submitted successfully');
+          localStorage.removeItem('wantedProducts');
         } else {
           console.error('Failed to submit order');
         }
@@ -50,6 +53,7 @@ const FillOutForm: React.FC = () => {
       const WantedProductList: WantedProduct[] = [];
 
       for (let i = 0; i < localStorageCart.length; i++) {
+        console.log("quantity " + localStorageCart[i].quantity)
         const id: string = uuidv4();
         const WantedProduct: WantedProduct = {
           id,
@@ -60,6 +64,8 @@ const FillOutForm: React.FC = () => {
         };
         WantedProductList.push(WantedProduct);
       }
+
+      console.log("1quantity" + WantedProductList[0].productQuantity)
 
       const id: string = uuidv4();
       const order: Order = {
@@ -77,7 +83,7 @@ const FillOutForm: React.FC = () => {
         }),
         isPaid: false, 
       };
-    
+    console.log("first product quantity of order" + order.wantedProducts[0].productQuantity)
       console.log(order)
       fetchOrder(order);
       navigate(`order/${order.id}`);
