@@ -80,9 +80,9 @@ function Product() {
 
     
     const maxQuantity = product?.quantity || 1
-    if(selectedProduct && product){
-    selectedProduct.price += product?.price
-    }
+    // if(selectedProduct && product){
+    // selectedProduct.price += product?.price
+    // }
     setQuantity((prevQuantity) => prevQuantity + 1);
     setMaxQuantityReached(quantity === maxQuantity);
 
@@ -96,15 +96,28 @@ function Product() {
     setMaxQuantityReached(false);
   };
   
+  function isProductInTheCart(productId: string) {
+    const storedWantedProducts = localStorage.getItem("wantedProducts");
+    const wantedProducts: Product[] = storedWantedProducts ? JSON.parse(storedWantedProducts) : [];
   
+    for (let i = 0; i < wantedProducts.length; i++) {
+      console.log(wantedProducts[i].name);
+      if (wantedProducts[i].id === productId) {
+        return true;
+      }
+    }
+  
+    // If the loop completes and no match is found, return false
+    return false;
+  }
 
 
   function increaseQuantityIfProductIsAlreadyInTheCart(quantity:number) {
     if (selectedProduct && product) {
       for (const instrument of wantedProducts) {
         if (instrument.id === selectedProduct.id) {
+          console.log("product price " + product.price)
           instrument.quantity += quantity
-          instrument.price += product?.price * quantity
         }
       }
     }
@@ -114,16 +127,25 @@ function Product() {
 
     console.log("wanted " + wantedProducts[1])
 
-    if (selectedProduct) {
+    let updatedWantedProducts;
 
-      increaseQuantityIfProductIsAlreadyInTheCart(quantity)
+    if (selectedProduct && product) {
+
+      if(isProductInTheCart(selectedProduct.id)){
+        console.log("benne van")
+     updatedWantedProducts = wantedProducts.map(product =>
+          product.id === selectedProduct.id ? { ...product, quantity: product.quantity + quantity } : product)
+      } else {
+
+     // increaseQuantityIfProductIsAlreadyInTheCart(quantity)
 selectedProduct.quantity = quantity
 
-      const updatedWantedProducts = [...wantedProducts, selectedProduct];
+       updatedWantedProducts = [...wantedProducts, selectedProduct];
       console.log("updateddproduct length " + updatedWantedProducts.length)
 
       setWantedProducts(updatedWantedProducts);
 
+      }
       localStorage.setItem("wantedProducts", JSON.stringify(updatedWantedProducts));
       navigate(`/cart`, { state: { productOriginalPrice } });
 
