@@ -4,23 +4,24 @@ import Slider from 'react-slider';
 import '../musicStore.css'
 import Header from './Header';
 import { confirmAlert } from 'react-confirm-alert';
+import Product from './Product';
 
 
 
-interface Product {
-    id: string;
-    name: string;
-    color: string;
-    price: number;
-    brand: string;
-    dtype: string;
-    subCategoryId: string;
-    numberOfStrings: number;
-    numberOfSoundLayers: number;
-    numberOfKeys: number;
-    diameter: number;
-    image:string
-}
+// interface Product {
+//     id: string;
+//     name: string;
+//     color: string;
+//     price: number;
+//     brand: string;
+//     dtype: string;
+//     subCategoryId: string;
+//     numberOfStrings: number;
+//     numberOfSoundLayers: number;
+//     numberOfKeys: number;
+//     diameter: number;
+//     image:string
+// }
 
 
 function SubCategory() {
@@ -154,6 +155,22 @@ setValues([parseFloat(e.target.value),values[1]])
       }
     };
 
+   
+
+    function isProductInTheCart(productId: string) {
+      const storedWantedProducts = localStorage.getItem("wantedProducts");
+      const wantedProducts: Product[] = storedWantedProducts ? JSON.parse(storedWantedProducts) : [];
+    
+      for (let i = 0; i < wantedProducts.length; i++) {
+        console.log(wantedProducts[i].name);
+        if (wantedProducts[i].id === productId) {
+          return true;
+        }
+      }
+
+        // If the loop completes and no match is found, return false
+    return false;
+  }
     
   const handleAddToCartButtonClick = async (productId: string) => {
     try {
@@ -163,13 +180,26 @@ setValues([parseFloat(e.target.value),values[1]])
         console.error("Product not found.");
         return;
       }
-
       const wantedProduct: Product = product;
+      wantedProduct.quantity = 1
+
+
 
       const storedWantedProducts = localStorage.getItem("wantedProducts");
       const wantedProducts: Product[] = storedWantedProducts ? JSON.parse(storedWantedProducts) : [];
 
+      if(isProductInTheCart(productId)){
+        console.log("benne van")
+      for (let i = 0; i < wantedProducts.length; i++) {
+        if (wantedProducts[i].id === productId) {
+          wantedProducts[i].quantity += 1
+         // wantedProducts[i].price += product.price
+        }
+      }
+    } else {
+      console.log("nincs benne")
       wantedProducts.push(wantedProduct);
+    }
 
       localStorage.setItem("wantedProducts", JSON.stringify(wantedProducts));
       console.log("wantedproductLength " + wantedProducts[0].id);
