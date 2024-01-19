@@ -16,6 +16,8 @@ const GuestCart: React.FC = () => {
 
 console.log("original" + productOriginalPrice)
 
+console.log("cart length " + cart.length)
+
   useEffect(() => {
     const localStorageCart = localStorage.getItem('wantedProducts');
     if (localStorageCart) {
@@ -39,6 +41,13 @@ console.log("original" + productOriginalPrice)
     if (localStorage.getItem("username")) {
       console.log("have a user")
     } else {
+      const localStorageCart = localStorage.getItem('wantedProducts');
+      if(localStorageCart){
+      const parsedCart = JSON.parse(localStorageCart);
+      for(let i = 0; i < parsedCart.length; i++){
+        console.log("parsed name" + parsedCart.name)
+      }
+    }
       navigate(`/filloutform`);
     }
   }
@@ -94,7 +103,7 @@ const handleIncreaseQuantity = (itemId: string) => {
   const updatedCart = cart.map(item => {
     if (item.id === itemId) {
       const newQuantity = item.quantity + 1;
-      const newPrice = item.price + productOriginalPrice
+     // const newPrice = item.price + productOriginalPrice
       const localStorageCart = localStorage.getItem('wantedProducts')
       if(localStorageCart){
       const wantedProducts = JSON.parse(localStorageCart)
@@ -102,7 +111,7 @@ const handleIncreaseQuantity = (itemId: string) => {
         if(product.id === itemId){
          
 product.quantity = newQuantity
-product.price += productOriginalPrice
+//product.price += productOriginalPrice
         }
       }
               localStorage.setItem('wantedProducts', JSON.stringify(wantedProducts));
@@ -111,7 +120,7 @@ product.price += productOriginalPrice
       return {
         ...item,
         quantity: newQuantity,
-        price: newPrice,
+     //   price: newPrice,
       };
     }
     return item;
@@ -124,7 +133,7 @@ const handleDecreaseQuantity = (itemId: string) => {
   const updatedCart = cart.map(item => {
     if (item.id === itemId && item.quantity > 1) {
       const newQuantity = item.quantity - 1;
-      const newPrice = item.price - productOriginalPrice
+     // const newPrice = item.price - productOriginalPrice
       const localStorageCart = localStorage.getItem('wantedProducts')
       if(localStorageCart){
       const wantedProducts = JSON.parse(localStorageCart)
@@ -132,7 +141,7 @@ const handleDecreaseQuantity = (itemId: string) => {
         if(product.id === itemId){
          
 product.quantity = newQuantity
-product.price -= productOriginalPrice
+//product.price -= productOriginalPrice
         }
       }
               localStorage.setItem('wantedProducts', JSON.stringify(wantedProducts));
@@ -140,7 +149,7 @@ product.price -= productOriginalPrice
       }      return {
         ...item,
         quantity: newQuantity,
-        price: newPrice,
+     //   price: newPrice,
       };
     }
     return item;
@@ -175,7 +184,7 @@ product.price -= productOriginalPrice
                 </div>
                 <div className="detail">
                   <div>Price:</div>
-                  <div>${item.price}</div>
+                  <div>${item.price * item.quantity}</div>
                 </div>
                 <div className="detail">
                   <div>Quantity:</div>
