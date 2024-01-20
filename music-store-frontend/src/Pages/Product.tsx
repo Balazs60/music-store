@@ -112,16 +112,16 @@ function Product() {
   }
 
 
-  function increaseQuantityIfProductIsAlreadyInTheCart(quantity:number) {
-    if (selectedProduct && product) {
-      for (const instrument of wantedProducts) {
-        if (instrument.id === selectedProduct.id) {
-          console.log("product price " + product.price)
-          instrument.quantity += quantity
-        }
-      }
-    }
-  }
+  // function increaseQuantityIfProductIsAlreadyInTheCart(quantity:number) {
+  //   if (selectedProduct && product) {
+  //     for (const instrument of wantedProducts) {
+  //       if (instrument.id === selectedProduct.id) {
+  //         console.log("product price " + product.price)
+  //         instrument.quantity += quantity
+  //       }
+  //     }
+  //   }
+  // }
 
   const handleAddToCart = () => {
 

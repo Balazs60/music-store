@@ -13,10 +13,12 @@ const GuestCart: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const productOriginalPrice = location.state?.productOriginalPrice || null;
+  const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
-console.log("original" + productOriginalPrice)
 
-console.log("cart length " + cart.length)
+  console.log("original" + productOriginalPrice)
+
+  console.log("cart length " + cart.length)
 
   useEffect(() => {
     const localStorageCart = localStorage.getItem('wantedProducts');
@@ -42,121 +44,121 @@ console.log("cart length " + cart.length)
       console.log("have a user")
     } else {
       const localStorageCart = localStorage.getItem('wantedProducts');
-      if(localStorageCart){
-      const parsedCart = JSON.parse(localStorageCart);
-      for(let i = 0; i < parsedCart.length; i++){
-        console.log("parsed name" + parsedCart.name)
+      if (localStorageCart) {
+        const parsedCart = JSON.parse(localStorageCart);
+        for (let i = 0; i < parsedCart.length; i++) {
+          console.log("parsed name" + parsedCart.name)
+        }
       }
-    }
       navigate(`/filloutform`);
     }
   }
 
- 
 
-  
+
+
   const handleDelete = (itemId: string) => {
 
     const localStorageCart = localStorage.getItem('wantedProducts');
-    
+
     if (localStorageCart) {
       const parsedCart = JSON.parse(localStorageCart);
-  
+
       const updatedCart = parsedCart.filter((product: Product) => product.id !== itemId);
-  
+
       localStorage.setItem('wantedProducts', JSON.stringify(updatedCart));
-  
+
       setCart(updatedCart);
     }
   };
-  
 
-  const submitDelete = (itemId : string) => {
+
+  const submitDelete = (itemId: string) => {
 
     confirmAlert({
-        title: 'Confirm to delete',
-        message: 'Are you sure to delete this item?',
-        buttons: [
-            {
-                label: 'Yes',
-                onClick: () => handleDelete(itemId),
-            },
-            {
-                label: 'No',
-            },
-        ],
-        customUI: ({ onClose }) => (
-          <div className="custom-ui">
-            <h1>Confirm delete</h1>
-            <p>Are you sure to delete this item?</p>
-            <button onClick={() => { onClose(); handleDelete(itemId); }}>Yes</button>
-            <button onClick={onClose}>No</button>
-          </div>
-        ),
+      title: 'Confirm to delete',
+      message: 'Are you sure to delete this item?',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: () => handleDelete(itemId),
+        },
+        {
+          label: 'No',
+        },
+      ],
+      customUI: ({ onClose }) => (
+        <div className="custom-ui">
+          <h1>Confirm delete</h1>
+          <p>Are you sure to delete this item?</p>
+          <button onClick={() => { onClose(); handleDelete(itemId); }}>Yes</button>
+          <button onClick={onClose}>No</button>
+        </div>
+      ),
     });
-};
+  };
 
 
 
 
-const handleIncreaseQuantity = (itemId: string) => {
-  const updatedCart = cart.map(item => {
-    if (item.id === itemId) {
-      const newQuantity = item.quantity + 1;
-     // const newPrice = item.price + productOriginalPrice
-      const localStorageCart = localStorage.getItem('wantedProducts')
-      if(localStorageCart){
-      const wantedProducts = JSON.parse(localStorageCart)
-      for(const product of wantedProducts){
-        if(product.id === itemId){
-         
-product.quantity = newQuantity
-//product.price += productOriginalPrice
+  const handleIncreaseQuantity = (itemId: string) => {
+    const updatedCart = cart.map(item => {
+      if (item.id === itemId) {
+        const newQuantity = item.quantity + 1;
+        // const newPrice = item.price + productOriginalPrice
+        const localStorageCart = localStorage.getItem('wantedProducts')
+        if (localStorageCart) {
+          const wantedProducts = JSON.parse(localStorageCart)
+          for (const product of wantedProducts) {
+            if (product.id === itemId) {
+
+              product.quantity = newQuantity
+              //product.price += productOriginalPrice
+            }
+          }
+          localStorage.setItem('wantedProducts', JSON.stringify(wantedProducts));
+
         }
+        return {
+          ...item,
+          quantity: newQuantity,
+          //   price: newPrice,
+        };
       }
-              localStorage.setItem('wantedProducts', JSON.stringify(wantedProducts));
+      return item;
+    });
 
+    setCart(updatedCart);
+  };
+
+  const handleDecreaseQuantity = (itemId: string) => {
+    const updatedCart = cart.map(item => {
+      if (item.id === itemId && item.quantity > 1) {
+        const newQuantity = item.quantity - 1;
+        // const newPrice = item.price - productOriginalPrice
+        const localStorageCart = localStorage.getItem('wantedProducts')
+        if (localStorageCart) {
+          const wantedProducts = JSON.parse(localStorageCart)
+          for (const product of wantedProducts) {
+            if (product.id === itemId) {
+
+              product.quantity = newQuantity
+              //product.price -= productOriginalPrice
+            }
+          }
+          localStorage.setItem('wantedProducts', JSON.stringify(wantedProducts));
+
+        } return {
+          ...item,
+          quantity: newQuantity,
+          //   price: newPrice,
+        };
       }
-      return {
-        ...item,
-        quantity: newQuantity,
-     //   price: newPrice,
-      };
-    }
-    return item;
-  });
+      return item;
+    });
 
-  setCart(updatedCart);
-};
-
-const handleDecreaseQuantity = (itemId: string) => {
-  const updatedCart = cart.map(item => {
-    if (item.id === itemId && item.quantity > 1) {
-      const newQuantity = item.quantity - 1;
-     // const newPrice = item.price - productOriginalPrice
-      const localStorageCart = localStorage.getItem('wantedProducts')
-      if(localStorageCart){
-      const wantedProducts = JSON.parse(localStorageCart)
-      for(const product of wantedProducts){
-        if(product.id === itemId){
-         
-product.quantity = newQuantity
-//product.price -= productOriginalPrice
-        }
-      }
-              localStorage.setItem('wantedProducts', JSON.stringify(wantedProducts));
-
-      }      return {
-        ...item,
-        quantity: newQuantity,
-     //   price: newPrice,
-      };
-    }
-    return item;
-  });
-
-  setCart(updatedCart);
-};
+    setCart(updatedCart);
+  };
 
   return (
     <div className="cart-container">
@@ -196,7 +198,9 @@ product.quantity = newQuantity
               <button onClick={() => submitDelete(item.id)}>Delete</button>
             </div>
           ))}
-          <div className="cart-summary">{/* Add any summary information here */}</div>
+          <div className="cart-summary">
+            <strong>Total Price: ${total}</strong>
+          </div>
           <button className="pay-button" onClick={handlePayment}>
             Pay Now
           </button>
