@@ -1,10 +1,17 @@
-import React from 'react';
 import StripeCheckout from 'react-stripe-checkout';
 import { useParams } from 'react-router-dom';
-const PaymentForm: React.FC = () => {
+import { Order } from './Order';
+import { useState, useEffect } from 'react';
+
+const PaymentForm = () => {
+
+  const [order, setOrder] = useState<Order | null>(null);
+const [fullPrice, setFullPrice] = useState(0);
+
   const { orderId } = useParams();
-  console.log(orderId+" orderid")
-  const handleToken = async (token: any) => {
+
+  const handleToken = async (token: {id: string, amount:number}) => {
+    console.log("fullPrice " + fullPrice)
     console.log("token " + token.id)
     try {
       const response = await fetch('/api/payment/process', {
@@ -12,7 +19,7 @@ const PaymentForm: React.FC = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ token: token.id, amount: 1000 , orderId:orderId }), 
+        body: JSON.stringify({ token: token.id, amount: fullPrice , orderId:orderId }), 
       });
 
       if (response.ok) {
@@ -25,16 +32,45 @@ const PaymentForm: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    const fetchOrder = async () => {
+      try {
+        const response = await fetch(`/api/order/${orderId}`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch order');
+        }
+
+        const orderData = await response.json();
+        setOrder(orderData);
+      } catch (error) {
+        console.error('Error fetching order:');
+      } 
+    };
+
+    fetchOrder();
+  }, [orderId]);
+
+
+  useEffect(() => {
+    if (order) {
+      let totalPrice = 0;
+      for (const wantedProduct of order.wantedProducts) {
+        totalPrice += wantedProduct.produtPriceByPiece * wantedProduct.productQuantity;
+      }
+      totalPrice *= 100
+      setFullPrice(totalPrice);
+    }
+  }, [order]); 
   return (
     <div>
       <StripeCheckout
-       const  stripeKey="pk_test_51OaEV6CrCBDEIb4OSm45sChsKsWqyHBSp4QFSIGuE3jln2zhlBPo6qfsnnBrBjKr511gp4YWgpmjUgPq7yWTBOm1001deX3C2G"
+       const  stripeKey="pk_test_51ObJ8dGilE1or8vMZDVTt2gozAi1rRrpr1C1AgksSbt720nmat7GpnViTquDg0CWLCBRIZCfXUzOfx366b9m8Jb000CD1zhhtc"
         token={handleToken}
-        amount={1000} 
+        amount={fullPrice} 
         orderId={orderId}
         currency="USD"
       >
-        <button>Pay</button>
+        <button>Payyyyy</button>
       </StripeCheckout>
     </div>
   );

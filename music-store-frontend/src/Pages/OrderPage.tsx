@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Order } from './Order';
 import { WantedProduct } from './WantedProduct';
@@ -16,6 +16,8 @@ const OrderPage = () => {
     }
     
   }
+
+
   useEffect(() => {
     const fetchOrder = async () => {
       try {
@@ -44,6 +46,8 @@ const OrderPage = () => {
     return <p>Error loading order</p>;
   }
 
+
+
   return (
     <div>
       <h2>Order Page</h2>
@@ -71,7 +75,6 @@ const OrderPage = () => {
         </tbody>
       </table>
       <button onClick={handleNavigatToPay}>Navigate to Payment</button>
-        
       
     </div>
   );
