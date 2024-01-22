@@ -1,4 +1,3 @@
-// PaymentForm.tsx
 import React, { useState } from 'react';
 import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
 
@@ -27,7 +26,7 @@ const PaymentForm: React.FC = () => {
       });
 
       if (error) {
-        console.error(error.message); // Log the error message
+        console.error(error.message);
         setPaymentResult(`Error: ${error.message}`);
       } else {
         // Send the paymentMethod to your backend for processing
