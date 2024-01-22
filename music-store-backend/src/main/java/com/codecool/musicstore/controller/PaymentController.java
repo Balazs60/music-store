@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/payment")
 public class PaymentController {
@@ -19,6 +21,12 @@ public class PaymentController {
     @PostMapping("/process")
     public ResponseEntity<String> processPayment(@RequestBody PaymentRequest paymentRequest) {
         String result = paymentService.processPayment(paymentRequest.getToken(), paymentRequest.getAmount());
+        System.out.println("payment token " + paymentRequest.getToken());
         return ResponseEntity.ok(result);
+    }
+    @PostMapping("/create-checkout-session")
+    public ResponseEntity<Map<String, Object>> createCheckoutSession(@RequestBody PaymentRequest paymentRequest) {
+        Map<String, Object> response = paymentService.createCheckoutSession(paymentRequest.getAmount());
+        return ResponseEntity.ok(response);
     }
 }

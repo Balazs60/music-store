@@ -1,61 +1,38 @@
-import React, { useState } from 'react';
-import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
+import React from 'react';
+import StripeCheckout from 'react-stripe-checkout';
 
 const PaymentForm: React.FC = () => {
-  const stripe = useStripe();
-  const elements = useElements();
-  const [paymentResult, setPaymentResult] = useState<string | null>(null);
-
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
-
-    if (!stripe || !elements) {
-      return;
-    }
-
-    const cardElement = elements.getElement(CardElement);
-
-    if (!cardElement) {
-      return;
-    }
-
+  const handleToken = async (token: any) => {
+    console.log("token " + token.id)
     try {
-      const { paymentMethod, error } = await stripe.createPaymentMethod({
-        type: 'card',
-        card: cardElement,
+      const response = await fetch('/api/payment/process', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ token: token.id, amount: 1000 }), 
       });
 
-      if (error) {
-        console.error(error.message);
-        setPaymentResult(`Error: ${error.message}`);
+      if (response.ok) {
+        console.log('Payment successful on the server side');
       } else {
-        // Send the paymentMethod to your backend for processing
-        const response = await fetch('/api/payment/process', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ paymentMethodId: paymentMethod?.id, amount: 1000 }),
-        });
-
-        const result = await response.text();
-        setPaymentResult(result);
+        console.error('Payment failed on the server side');
       }
     } catch (error) {
-      console.error('Error creating PaymentMethod:', error);
+      console.error('Error sending token to server:', error);
     }
   };
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Card details
-          <CardElement options={{ style: { base: { fontSize: '16px' } } }} />
-        </label>
-        <button type="submit">Pay</button>
-      </form>
-      {paymentResult && <div>{paymentResult}</div>}
+      <StripeCheckout
+        stripeKey="pk_test_51ObJ8dGilE1or8vMZDVTt2gozAi1rRrpr1C1AgksSbt720nmat7GpnViTquDg0CWLCBRIZCfXUzOfx366b9m8Jb000CD1zhhtc"
+        token={handleToken}
+        amount={1000} // Amount in cents
+        currency="USD"
+      >
+        <button>Pay</button>
+      </StripeCheckout>
     </div>
   );
 };
