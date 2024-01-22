@@ -5,8 +5,16 @@ public class PaymentRequest {
 
     private String token;
     private int amount;
+    private String orderId;
 
-    // Getters and setters
+    public String getOrderId() {
+      return orderId;
+    }
+
+    public void setOrderid(String orderid) {
+        this.orderId = orderid;
+    }
+// Getters and setters
 
     public String getToken() {
         return token;

@@ -20,7 +20,8 @@ public class PaymentController {
 
     @PostMapping("/process")
     public ResponseEntity<String> processPayment(@RequestBody PaymentRequest paymentRequest) {
-        String result = paymentService.processPayment(paymentRequest.getToken(), paymentRequest.getAmount());
+        System.out.println(paymentRequest.getOrderId()+" order id a req ben");
+        String result = paymentService.processPayment(paymentRequest.getToken(), paymentRequest.getAmount() , paymentRequest.getOrderId() );
         System.out.println("payment token " + paymentRequest.getToken());
         return ResponseEntity.ok(result);
     }
