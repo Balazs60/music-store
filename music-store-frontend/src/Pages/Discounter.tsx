@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Row, Col } from 'react-bootstrap';
 import '../musicStore.css';
-import { Product } from './Products';// Import statements
+import {Product} from './Products';
 import ProductList from './ProductList';
 
 const Discounter: React.FC = () => {
@@ -14,25 +13,26 @@ const Discounter: React.FC = () => {
   }, []);
 
   const fetchInstruments = () => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
 
     const headers = {
       Authorization: `Bearer ${token}`,
     };
+
     fetch('/api/mainpage/products', {
       method: 'GET',
-      headers: headers
+      headers: headers,
     })
-      .then(response => {
+      .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
         return response.json();
       })
-      .then(data => {
+      .then((data) => {
         setProducts(data);
       })
-      .catch(error => {
+      .catch((error) => {
         console.error('Error fetching instruments:', error);
       });
   };
@@ -51,7 +51,7 @@ const Discounter: React.FC = () => {
       </Row>
 
       {/* Correct usage of ProductList */}
-      <ProductList products={products} onProductClick={handleProductClick}  />
+      <ProductList products={products} onProductClick={handleProductClick} />
     </div>
   );
 };

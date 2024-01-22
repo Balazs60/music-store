@@ -2,12 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Order } from './Order';
 import { WantedProduct } from './WantedProduct';
+import { useNavigate } from 'react-router-dom';
 
 const OrderPage = () => {
   const [order, setOrder] = useState<Order | null>(null);
   const [loading, setLoading] = useState(true);
   const { orderId } = useParams();
 
+  const navigate = useNavigate();
+  function handleNavigatToPay(){
+    if(order){
+               navigate(`/payment/${order.id}`);
+    }
+    
+  }
   useEffect(() => {
     const fetchOrder = async () => {
       try {
@@ -62,6 +70,9 @@ const OrderPage = () => {
           ))}
         </tbody>
       </table>
+      <button onClick={handleNavigatToPay}>Navigate to Payment</button>
+        
+      
     </div>
   );
 };
