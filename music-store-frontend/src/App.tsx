@@ -1,48 +1,43 @@
-import "bootstrap/dist/css/bootstrap.min.css"
-import {BrowserRouter as Router, Routes, Route} from "react-router-dom"
-import MainPage from "./Pages/MainPage"
-import SubCategory from "./Pages/SubCategory"
-import Category from "./Pages/Category"
-import SelectedGuitarPage from "./Pages/Product"
-import Registration from "./Pages/Registration"
-import Login from "./Pages/Login"
-import Cart from "./Pages/Cart"
-import Contact from "./Pages/Contact"
-import About from "./Pages/About"
-import Discounter from "./Pages/DiscountedProduct"
-import FillOutForm from "./Pages/FillOutForm"
-import OrderPage from "./Pages/OrderPage"
-import PaymentForm from "./Pages/PaymentForm"
+import React from 'react';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import MainPage from './Pages/MainPage';
+import SubCategory from './Pages/SubCategory';
+import Category from './Pages/Category';
+import SelectedGuitarPage from './Pages/Product';
+import Registration from './Pages/Registration';
+import Login from './Pages/Login';
+import Cart from './Pages/Cart';
+import Contact from './Pages/Contact';
+import About from './Pages/About';
+import Discounter from './Pages/DiscountedProduct';
+import FillOutForm from './Pages/FillOutForm';
+import OrderPage from './Pages/OrderPage';
+import PaymentForm from './Pages/PaymentForm';
 
+const stripePromise = loadStripe('pk_test_51ObJ8dGilE1or8vMZDVTt2gozAi1rRrpr1C1AgksSbt720nmat7GpnViTquDg0CWLCBRIZCfXUzOfx366b9m8Jb000CD1zhhtc');
 
 function App() {
-  return(
+  return (
     <Router>
-    <Routes>
-      <Route path="/" element={<MainPage/>}/>
-      <Route path="/category/:category" element={<Category/>}/>
-      <Route path="/category/:category/subcategory/:subcategoryid" element={<SubCategory/>}/>
-      <Route path="/product/:id" element={<SelectedGuitarPage/>}/>
-      <Route path="/register" element={<Registration/>}/>
-      <Route path="/login" element={<Login/>}/>
-      <Route path="/cart" element={<Cart/>}/>
-      <Route path="/contact" element={<Contact/>}/>
-      <Route path="/about" element={<About />}/>
-      <Route path="/discount" element={<Discounter/>} />
-      <Route path="/filloutform" element={<FillOutForm />}/>
-      <Route path="/filloutform/order/:orderId" element={<OrderPage/>} />
-      <Route path="/payment/:orderId" element={<PaymentForm/>} />
-
-      
-
-
-
-
-
-    </Routes>
+      <Routes>
+        <Route path="/" element={<MainPage />} />
+        <Route path="/category/:category" element={<Category />} />
+        <Route path="/category/:category/subcategory/:subcategoryid" element={<SubCategory />} />
+        <Route path="/product/:id" element={<SelectedGuitarPage />} />
+        <Route path="/register" element={<Registration />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/discount" element={<Discounter />} />
+        <Route path="/filloutform" element={<Elements stripe={stripePromise}><FillOutForm /></Elements>} />
+        <Route path="/filloutform/order/:orderId" element={<OrderPage />} />
+        <Route path="/payment/:orderId" element={<Elements stripe={stripePromise}><PaymentForm /></Elements>} />
+      </Routes>
     </Router>
-  )
-
+  );
 }
 
-export default App
+export default App;
