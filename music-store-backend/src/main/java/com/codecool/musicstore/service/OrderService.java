@@ -108,5 +108,8 @@ public class OrderService {
 
 
     }
+    public void saveOrder(Order order){
+        orderDao.saveOrder(order);
+    }
 
 }

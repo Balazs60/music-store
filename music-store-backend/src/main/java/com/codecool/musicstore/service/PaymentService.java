@@ -1,23 +1,31 @@
 package com.codecool.musicstore.service;// PaymentService.java
 
+import com.codecool.musicstore.model.order.Order;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.Charge;
 import com.stripe.model.billingportal.Session;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @Service
 public class PaymentService {
 
     @Value("${stripe.secretKey}")
     private String stripeSecretKey;
+    private OrderService orderService;
+@Autowired
+    public PaymentService(OrderService orderService) {
+        this.orderService = orderService;
+    }
 
-    public String processPayment(String token, int amount) {
+    public String processPayment(String token, int amount , String orderId) {
         Stripe.apiKey = stripeSecretKey;
 
         Map<String, Object> params = new HashMap<>();
@@ -25,10 +33,18 @@ public class PaymentService {
         params.put("currency", "usd");
         params.put("source", token);
 
+
+
         try {
             Charge charge = Charge.create(params);
-            // Save the charge ID and update payment status in your database (if applicable)
-            // You can also handle webhooks to update the payment status asynchronously
+            System.out.println("status "+charge.getStatus());
+            if(charge.getStatus().equals("succeeded")){
+                System.out.println(orderId+"orderid");
+                Order order =orderService.getOrderById(UUID.fromString(orderId));
+                order.setPaid(true);
+                orderService.saveOrder(order);
+            }
+
             return "Payment successful. Charge ID: " + charge.getId();
         } catch (StripeException e) {
             return "Payment failed: " + e.getMessage();
@@ -51,6 +67,7 @@ public class PaymentService {
         )));
         params.put("mode", "payment");
         params.put("success_url", "http://your-website.com/success"); // Replace with your success URL
+        System.out.println("sikeres");
         params.put("cancel_url", "http://your-website.com/cancel"); // Replace with your cancel URL
 
         try {
