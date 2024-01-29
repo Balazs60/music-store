@@ -159,26 +159,36 @@ selectedProduct.quantity = quantity
     <div>
       <Header />
       {product ? (
-        <div>
-          <h1>{product.name}</h1>
-          <p>Brand: {product.brand}</p>
-          <p>Price: {product.price}</p>
-          <p>Color: {product.color}</p>
-          <p>Picture:</p>
-          <img
-            src={`data:image/png;base64,${product.image}`}
-            alt={product.name}
-            style={{ maxWidth: '100%', height: 'auto' }}
-          />
-          {product.numberOfStrings && (
-            <p>Number of Strings: {product.numberOfStrings}</p>
-          )}
-          <div>
-            {maxQuantityReached && <p style={{ color: 'red' }}>No more products in stock</p>}
-            <button onClick={handleIncreaseQuantity} disabled={maxQuantityReached}>+</button>
-            <p>{quantity}</p>
-            <button onClick={handleDecreaseQuantity}>-</button>
-            <button onClick={handleAddToCart}>Add to Cart</button>
+        <div className="container mt-4">
+          <div className="row">
+            <div className="col-md-6">
+              {/* Product Image */}
+              <img
+                src={`data:image/png;base64,${product.image}`}
+                alt={product.name}
+                style={{ maxWidth: '100%', height: 'auto', width: '60%' }}
+              />
+            </div>
+            <div className="col-md-6">
+              {/* Product Details */}
+              <h1>{product.name}</h1>
+              <p>Brand: {product.brand}</p>
+              <p>Price: {product.price}</p>
+
+              {/* Quantity Controls */}
+              <div className="d-flex align-items-center">
+                <button className="btn btn-outline-dark me-2" onClick={handleDecreaseQuantity}>-</button>
+                <p>{quantity}</p>
+                <button className="btn btn-outline-dark ms-2" onClick={handleIncreaseQuantity}>+</button>
+              </div>
+
+              {/* Add to Cart Button */}
+              <button className="btn btn-dark mt-3" onClick={handleAddToCart}>
+                Add to Cart
+              </button>
+
+              {maxQuantityReached && <p style={{ color: 'red' }}>No more products in stock</p>}
+            </div>
           </div>
         </div>
       ) : (

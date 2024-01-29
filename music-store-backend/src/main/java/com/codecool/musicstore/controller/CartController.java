@@ -2,6 +2,7 @@ package com.codecool.musicstore.controller;
 
 import com.codecool.musicstore.model.cart.CartItem;
 import com.codecool.musicstore.model.product.Product;
+import com.codecool.musicstore.model.users.Member;
 import com.codecool.musicstore.service.CartItemService;
 import com.codecool.musicstore.service.MemberService;
 import jakarta.transaction.Transactional;
@@ -113,5 +114,10 @@ public ResponseEntity<List<Product>> createGuestOrder(@RequestBody GuestCartRequ
     ) {
         ResponseEntity<String> response = cartItemService.deleteCartItemById(Long.valueOf(cartItemId));
         return response;
+    }
+    @GetMapping("/{userName}")
+    public Member getMember(@PathVariable String userName){
+        System.out.println("userName " + userName);
+        return memberService.getMemberByName(userName);
     }
 }

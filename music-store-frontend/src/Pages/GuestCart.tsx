@@ -4,6 +4,10 @@ import Product from './Product';
 import { useNavigate } from 'react-router-dom';
 import { confirmAlert } from 'react-confirm-alert';
 import { useLocation } from 'react-router-dom';
+import { Order } from './Order';
+import { v4 as uuidv4 } from 'uuid';
+import { WantedProduct } from './WantedProduct';
+import { Member } from './Member';
 
 
 
@@ -14,6 +18,8 @@ const GuestCart: React.FC = () => {
   const location = useLocation();
   const productOriginalPrice = location.state?.productOriginalPrice || null;
   const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const [member, setMember] = useState<Member | null>()
+  let orderId:string = "";
 
 
   console.log("original" + productOriginalPrice)
@@ -34,14 +40,111 @@ const GuestCart: React.FC = () => {
 
       setCart(updatedCart);
     }
+    fetchMemberByName()
   }, []);
+
+  function fetchOrder(order: Order) {
+    fetch('/api/order/neworder', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(order),
+    })
+      .then(response => {
+        if (response.ok) {
+          console.log('Order submitted successfully');
+          localStorage.removeItem('wantedProducts');
+        } else {
+          console.error('Failed to submit order');
+        }
+      })
+      .catch(error => {
+        console.error('Error sending order:', error);
+      });
+  }
+
+  const fetchMemberByName = () => {
+    const token = localStorage.getItem("token")
+    const headers: Record<string,string> = token
+    ? {Authorization: `Bearer ${token}`}
+    :{};
+
+    const userName = localStorage.getItem("username")
+    fetch(`/api/cart/${userName}`,
+    {
+      method: 'GET',
+      headers: headers,
+    }).then(response => {
+      if(!response.ok){
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log("Member " + data)
+      setMember(data)
+    })
+  }
+
+  const createOrder = () => {
+    const localStorageCart = JSON.parse(localStorage.getItem('wantedProducts') || 'null');
+
+
+    console.log("member name " + member?.name)
+
+    if (localStorageCart) {
+      const WantedProductList: WantedProduct[] = [];
+
+      for (let i = 0; i < localStorageCart.length; i++) {
+        console.log("quantity " + localStorageCart[i].quantity)
+        const id: string = uuidv4();
+        const WantedProduct: WantedProduct = {
+          id,
+          orderId: '',
+          productId: localStorageCart[i].id,
+          produtPriceByPiece: localStorageCart[i].price,
+          productQuantity: localStorageCart[i].quantity,
+        };
+        WantedProductList.push(WantedProduct);
+      }
+
+      console.log("1quantity" + WantedProductList[0].productQuantity)
+      orderId = uuidv4();
+
+      if(member){
+      const order: Order = {
+        id: orderId,
+        customerName: member.name,
+        email: member.email,
+        birthDate: member.birthDate,
+        phoneNumber: member.phoneNumber,
+        postCode: member.postCode,
+        city: member.city,
+        streetAndHouseNumber: member.streetAndHouseNumber,
+        wantedProducts: WantedProductList.map(wantedProduct => {
+          wantedProduct.orderId = orderId; 
+          return wantedProduct;
+        }),
+        isPaid: false, 
+      };
+    
+    console.log("first product quantity of order" + order.wantedProducts[0].productQuantity)
+      console.log(order)
+      fetchOrder(order);
+     // navigate(`order/${order.id}`);
+      }}
+  };
 
 
   function handlePayment() {
     console.log("1quantity" + cart[0].quantity)
     console.log("username status : " + localStorage.getItem("username"))
     if (localStorage.getItem("username")) {
+      createOrder()
       console.log("have a user")
+      navigate(`/filloutform/order/${orderId}`);
+
     } else {
       const localStorageCart = localStorage.getItem('wantedProducts');
       if (localStorageCart) {
