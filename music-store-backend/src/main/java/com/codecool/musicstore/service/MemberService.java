@@ -6,6 +6,7 @@ import com.codecool.musicstore.Dao.MemberDao;
 import com.codecool.musicstore.Dao.ProductDao;
 import com.codecool.musicstore.model.cart.CartItem;
 import com.codecool.musicstore.model.product.Product;
+import com.codecool.musicstore.model.users.Member;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -48,6 +49,10 @@ public class MemberService {
 
 
         return filteredCartItems;
+    }
+
+    public Member getMemberByName(String memberName){
+        return memberDao.findMemberByName(memberName);
     }
 
 

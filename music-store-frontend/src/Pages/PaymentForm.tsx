@@ -1,16 +1,17 @@
-import StripeCheckout from 'react-stripe-checkout';
 import { useParams } from 'react-router-dom';
 import { Order } from './Order';
 import { useState, useEffect } from 'react';
 
-const PaymentForm = () => {
+import StripeCheckout, { Token } from 'react-stripe-checkout'; // Make sure to import the Token type
 
+const PaymentForm = () => {
   const [order, setOrder] = useState<Order | null>(null);
-const [fullPrice, setFullPrice] = useState(0);
+  const [fullPrice, setFullPrice] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   const { orderId } = useParams();
 
-  const handleToken = async (token: {id: string, amount:number}) => {
+  const handleToken = async (token: Token) => {
     console.log("fullPrice " + fullPrice)
     console.log("token " + token.id)
     try {
@@ -19,7 +20,7 @@ const [fullPrice, setFullPrice] = useState(0);
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ token: token.id, amount: fullPrice , orderId:orderId }), 
+        body: JSON.stringify({ token: token.id, amount: fullPrice, orderId: orderId }),
       });
 
       if (response.ok) {
@@ -43,13 +44,14 @@ const [fullPrice, setFullPrice] = useState(0);
         const orderData = await response.json();
         setOrder(orderData);
       } catch (error) {
-        console.error('Error fetching order:');
-      } 
+        console.error('Error fetching order:', error.message);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchOrder();
   }, [orderId]);
-
 
   useEffect(() => {
     if (order) {
@@ -57,21 +59,21 @@ const [fullPrice, setFullPrice] = useState(0);
       for (const wantedProduct of order.wantedProducts) {
         totalPrice += wantedProduct.produtPriceByPiece * wantedProduct.productQuantity;
       }
-      totalPrice *= 100
-      setFullPrice(totalPrice);
+      setFullPrice(totalPrice * 100); // Adjust if needed
     }
-  }, [order]); 
+  }, [order]);
+
   return (
     <div>
-      <StripeCheckout
-       const  stripeKey="pk_test_51ObJ8dGilE1or8vMZDVTt2gozAi1rRrpr1C1AgksSbt720nmat7GpnViTquDg0CWLCBRIZCfXUzOfx366b9m8Jb000CD1zhhtc"
-        token={handleToken}
-        amount={fullPrice} 
-        orderId={orderId}
-        currency="USD"
-      >
-        <button>Payyyyy</button>
-      </StripeCheckout>
+      {loading && <p>Loading...</p>}
+      {!loading && order && (
+        <StripeCheckout
+          stripeKey="pk_test_51ObJ8dGilE1or8vMZDVTt2gozAi1rRrpr1C1AgksSbt720nmat7GpnViTquDg0CWLCBRIZCfXUzOfx366b9m8Jb000CD1zhhtc"
+          token={handleToken}
+          amount={fullPrice}
+          currency="USD"
+        />
+      )}
     </div>
   );
 };

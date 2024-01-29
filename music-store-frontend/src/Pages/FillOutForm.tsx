@@ -117,7 +117,7 @@ const FillOutForm: React.FC = () => {
               </Typography>
               <Typography variant="subtitle1" style={{ marginBottom: '30px', color: '#666' }}>
                 Sign In{' '}
-                <Link to={`/`} style={{ color: '#007BFF', textDecoration: 'none' }}>
+                <Link to={`/login`} style={{ color: '#007BFF', textDecoration: 'none' }}>
                   Log In
                 </Link>
               </Typography>

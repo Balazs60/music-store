@@ -21,7 +21,14 @@ const OrderPage = () => {
   useEffect(() => {
     const fetchOrder = async () => {
       try {
-        const response = await fetch(`/api/order/${orderId}`);
+        const token = localStorage.getItem("token");
+        const headers: Record<string, string> = token
+          ? { Authorization: `Bearer ${token}` }
+          : {};
+  
+        const response = await fetch(`/api/order/${orderId}`,
+        { method: 'GET', headers: headers }
+        );
         if (!response.ok) {
           throw new Error('Failed to fetch order');
         }
