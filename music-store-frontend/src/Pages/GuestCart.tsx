@@ -19,6 +19,12 @@ const GuestCart: React.FC = () => {
   const productOriginalPrice = location.state?.productOriginalPrice || null;
   const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
   const [member, setMember] = useState<Member | null>()
+  const [selectedDeliveryOption, setSelectedDeliveryOption] = useState<string | null>(null);
+  const [selectedPaymentOption, setSelectedPaymentOption] = useState<string | null>(null);
+  const [deliveryOptionError, setDeliveryOptionError] = useState<string | null>(null);
+  const [paymentOptionError, setPaymentOptionError] = useState<string | null>(null);
+
+
   let orderId:string = "";
 
 
@@ -42,6 +48,16 @@ const GuestCart: React.FC = () => {
     }
     fetchMemberByName()
   }, []);
+
+  const handleOptionChange = (option: string) => {
+    setSelectedDeliveryOption(option);
+    setDeliveryOptionError(null);
+  };
+
+  const handlePaymentChange = (paymentOption : string) => {
+    setSelectedPaymentOption(paymentOption)
+    setPaymentOptionError(null);
+  }
 
   function fetchOrder(order: Order) {
     fetch('/api/order/neworder', {
@@ -138,12 +154,28 @@ const GuestCart: React.FC = () => {
 
 
   function handlePayment() {
+
+    if (!selectedDeliveryOption) {
+      setDeliveryOptionError("Select a delivery option");
+      return;
+    }
+
+    if(!selectedPaymentOption){
+      setPaymentOptionError("Select a payment option")
+      return;
+    }
+
     console.log("1quantity" + cart[0].quantity)
     console.log("username status : " + localStorage.getItem("username"))
     if (localStorage.getItem("username")) {
       createOrder()
       console.log("have a user")
-      navigate(`/filloutform/order/${orderId}`);
+      if(selectedPaymentOption === "cash"){
+        navigate(`/successful-order`);
+      } else {
+        navigate(`/payment/${orderId}`);
+
+      }
 
     } else {
       const localStorageCart = localStorage.getItem('wantedProducts');
@@ -153,7 +185,12 @@ const GuestCart: React.FC = () => {
           console.log("parsed name" + parsedCart.name)
         }
       }
-      navigate(`/filloutform`);
+      navigate(`/filloutform`,{
+        state: {
+          selectedDeliveryOption,
+          selectedPaymentOption,
+        },
+      });
     }
   }
 
@@ -304,6 +341,77 @@ const GuestCart: React.FC = () => {
           <div className="cart-summary">
             <strong>Total Price: ${total}</strong>
           </div>
+          <div className="checkout-options">
+        <h3>Delivery Options</h3>
+        <div>
+        <label>
+          <input
+            type="radio"
+            value="delivery"
+            checked={selectedDeliveryOption === 'delivery'}
+            onChange={() => handleOptionChange('delivery')}
+          />
+          Delivery with GLS
+        </label>
+        </div>
+        <div>
+        <label>
+          <input
+            type="radio"
+            value="pickUpPoint"
+            checked={selectedDeliveryOption === 'pickUpPoint'}
+            onChange={() => handleOptionChange('pickUpPoint')}
+          />
+          Pick Up Point
+        </label>
+        </div>
+        <div>
+        <label>
+          <input
+            type="radio"
+            value="pickUpAtShop"
+            checked={selectedDeliveryOption === 'pickUpAtShop'}
+            onChange={() => handleOptionChange('pickUpAtShop')}
+          />
+          Pick Up at the Shop
+        </label>
+        </div>
+      </div>
+      <div className="checkout-options">
+        <h3>Select Payment</h3>
+        <div>
+        <label>
+          <input
+            type="radio"
+            value="cash"
+            checked={selectedPaymentOption === 'cash'}
+            onChange={() => handlePaymentChange('cash')}
+          />
+          Cash
+        </label>
+        </div>
+        <div>
+        <label>
+          <input
+            type="radio"
+            value="card"
+            checked={selectedPaymentOption === 'card'}
+            onChange={() => handlePaymentChange('card')}
+          />
+          Card
+        </label>
+        </div>
+        </div>
+        <div>
+        {deliveryOptionError && (
+        <p style={{ color: 'red', marginTop: '10px' }}>{deliveryOptionError}</p>
+      )}
+      </div>
+      <div>
+        {paymentOptionError && (
+        <p style={{ color: 'red', marginTop: '10px' }}>{paymentOptionError}</p>
+      )}
+      </div>
           <button className="pay-button" onClick={handlePayment}>
             Pay Now
           </button>

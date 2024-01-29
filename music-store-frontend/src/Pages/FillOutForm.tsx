@@ -10,6 +10,7 @@ import { WantedProduct } from './WantedProduct';
 import { Order } from './Order'; 
 import { v4 as uuidv4 } from 'uuid';
 import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 const FillOutForm: React.FC = () => {
   const [name, setName] = useState('');
@@ -19,6 +20,12 @@ const FillOutForm: React.FC = () => {
   const [postCode, setPostcode] = useState('');
   const [city, setCity] = useState('');
   const [streetAndHouseNumber, setStreetAndHouseNumber] = useState('');
+  const location = useLocation();
+  const { selectedDeliveryOption, selectedPaymentOption } = location.state || {};
+
+  console.log("delivery " + selectedDeliveryOption)
+  console.log("payment " + selectedPaymentOption)
+
   
 
 
@@ -86,7 +93,13 @@ const FillOutForm: React.FC = () => {
     console.log("first product quantity of order" + order.wantedProducts[0].productQuantity)
       console.log(order)
       fetchOrder(order);
-      navigate(`order/${order.id}`);
+      //  navigate(`order/${order.id}`);
+
+    if(selectedPaymentOption === "cash"){
+      navigate(`/successful-order`)
+    } else {
+      navigate(`/payment/${order.id}`)
+    }
     }
   };
 
