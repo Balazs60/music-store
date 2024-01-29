@@ -1,6 +1,8 @@
 import { useParams } from 'react-router-dom';
 import { Order } from './Order';
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 
 import StripeCheckout, { Token } from 'react-stripe-checkout'; // Make sure to import the Token type
 
@@ -8,6 +10,8 @@ const PaymentForm = () => {
   const [order, setOrder] = useState<Order | null>(null);
   const [fullPrice, setFullPrice] = useState(0);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+
 
   const { orderId } = useParams();
 
@@ -25,6 +29,8 @@ const PaymentForm = () => {
 
       if (response.ok) {
         console.log('Payment successful on the server side');
+        navigate(`/successful-order`);
+
       } else {
         console.error('Payment failed on the server side');
       }
