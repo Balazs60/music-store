@@ -2,22 +2,18 @@ import { useParams } from 'react-router-dom';
 import { Order } from './Order';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-
-import StripeCheckout, { Token } from 'react-stripe-checkout'; // Make sure to import the Token type
+import StripeCheckout, { Token } from 'react-stripe-checkout';
 
 const PaymentForm = () => {
   const [order, setOrder] = useState<Order | null>(null);
   const [fullPrice, setFullPrice] = useState(0);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-
-
   const { orderId } = useParams();
 
   const handleToken = async (token: Token) => {
-    console.log("fullPrice " + fullPrice)
-    console.log("token " + token.id)
+    console.log("fullPrice " + fullPrice);
+    console.log("token " + token.id);
     try {
       const response = await fetch('/api/payment/process', {
         method: 'POST',
@@ -30,7 +26,6 @@ const PaymentForm = () => {
       if (response.ok) {
         console.log('Payment successful on the server side');
         navigate(`/successful-order`);
-
       } else {
         console.error('Payment failed on the server side');
       }
@@ -42,6 +37,8 @@ const PaymentForm = () => {
   useEffect(() => {
     const fetchOrder = async () => {
       try {
+        await new Promise(resolve => setTimeout(resolve, 500));
+
         const response = await fetch(`/api/order/${orderId}`);
         if (!response.ok) {
           throw new Error('Failed to fetch order');
@@ -65,7 +62,7 @@ const PaymentForm = () => {
       for (const wantedProduct of order.wantedProducts) {
         totalPrice += wantedProduct.produtPriceByPiece * wantedProduct.productQuantity;
       }
-      setFullPrice(totalPrice * 100); // Adjust if needed
+      setFullPrice(totalPrice * 100); 
     }
   }, [order]);
 
