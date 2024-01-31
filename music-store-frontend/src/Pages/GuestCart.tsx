@@ -138,6 +138,7 @@ const GuestCart: React.FC = () => {
         postCode: member.postCode,
         city: member.city,
         streetAndHouseNumber: member.streetAndHouseNumber,
+        pickUpOption: selectedDeliveryOption,
         wantedProducts: WantedProductList.map(wantedProduct => {
           wantedProduct.orderId = orderId; 
           return wantedProduct;
@@ -307,118 +308,119 @@ const GuestCart: React.FC = () => {
       {cart.length === 0 ? (
         <p>Your cart is empty</p>
       ) : (
-        <div>
-          {cart.map(item => (
-            <div key={item.id} className="cart-item-box">
-              <img
-                src={`data:image/png;base64,${item.image}`}
-                alt={item.name}
-                className="cart-item-image"
-              />
-              <div className="cart-item-details">
-                <div className="detail">
-                  <div>Name:</div>
-                  <div><strong>{item.name}</strong></div>
+        <div className="cart-layout">
+          <div className="cart-items">
+            {cart.map(item => (
+              <div key={item.id} className="cart-item-box">
+                <img
+                  src={`data:image/png;base64,${item.image}`}
+                  alt={item.name}
+                  className="cart-item-image"
+                />
+                <div className="cart-item-details">
+                  <div className="detail">
+                    <div>Name:</div>
+                    <div><strong>{item.name}</strong></div>
+                  </div>
+                  <div className="detail">
+                    <div>Brand:</div>
+                    <div>{item.brand}</div>
+                  </div>
+                  <div className="detail">
+                    <div>Price:</div>
+                    <div>${item.price * item.quantity}</div>
+                  </div>
+                  <div className="detail">
+                    <div>Quantity:</div>
+                    <div>{item.quantity}</div>
+                    <button onClick={() => handleIncreaseQuantity(item.id)}>+</button>
+                    <button onClick={() => handleDecreaseQuantity(item.id)}>-</button>
+                  </div>
                 </div>
-                <div className="detail">
-                  <div>Brand:</div>
-                  <div>{item.brand}</div>
-                </div>
-                <div className="detail">
-                  <div>Price:</div>
-                  <div>${item.price * item.quantity}</div>
-                </div>
-                <div className="detail">
-                  <div>Quantity:</div>
-                  <div>{item.quantity}</div>
-                  <button onClick={() => handleIncreaseQuantity(item.id)}>+</button>
-                  <button onClick={() => handleDecreaseQuantity(item.id)}>-</button>
-                </div>
+                <button onClick={() => submitDelete(item.id)}>Delete</button>
               </div>
-              <button onClick={() => submitDelete(item.id)}>Delete</button>
+            ))}
+            <div className="cart-summary">
+              <strong>Total Price: ${total}</strong>
             </div>
-          ))}
-          <div className="cart-summary">
-            <strong>Total Price: ${total}</strong>
           </div>
-          <div className="checkout-options">
-        <h3>Delivery Options</h3>
-        <div>
-        <label>
-          <input
-            type="radio"
-            value="delivery"
-            checked={selectedDeliveryOption === 'delivery'}
-            onChange={() => handleOptionChange('delivery')}
-          />
-          Delivery with GLS
-        </label>
+          <div className="delivery-options">
+            <h3>Delivery Options</h3>
+            <div>
+              <label>
+                <input
+                  type="radio"
+                  value="delivery"
+                  checked={selectedDeliveryOption === 'delivery'}
+                  onChange={() => handleOptionChange('delivery')}
+                />
+                Delivery with GLS
+              </label>
+            </div>
+            <div>
+              <label>
+                <input
+                  type="radio"
+                  value="pickUpPoint"
+                  checked={selectedDeliveryOption === 'pickUpPoint'}
+                  onChange={() => handleOptionChange('pickUpPoint')}
+                />
+                Pick Up Point
+              </label>
+            </div>
+            <div>
+              <label>
+                <input
+                  type="radio"
+                  value="pickUpAtShop"
+                  checked={selectedDeliveryOption === 'pickUpAtShop'}
+                  onChange={() => handleOptionChange('pickUpAtShop')}
+                />
+                Pick Up at the Shop
+              </label>
+            </div>
+            {deliveryOptionError && (
+              <p style={{ color: 'red', marginTop: '10px' }}>{deliveryOptionError}</p>
+            )}
+          </div>
         </div>
-        <div>
-        <label>
-          <input
-            type="radio"
-            value="pickUpPoint"
-            checked={selectedDeliveryOption === 'pickUpPoint'}
-            onChange={() => handleOptionChange('pickUpPoint')}
-          />
-          Pick Up Point
-        </label>
-        </div>
-        <div>
-        <label>
-          <input
-            type="radio"
-            value="pickUpAtShop"
-            checked={selectedDeliveryOption === 'pickUpAtShop'}
-            onChange={() => handleOptionChange('pickUpAtShop')}
-          />
-          Pick Up at the Shop
-        </label>
-        </div>
-      </div>
+      )}
       <div className="checkout-options">
         <h3>Select Payment</h3>
         <div>
-        <label>
-          <input
-            type="radio"
-            value="cash"
-            checked={selectedPaymentOption === 'cash'}
-            onChange={() => handlePaymentChange('cash')}
-          />
-          Cash
-        </label>
+          <label>
+            <input
+              type="radio"
+              value="cash"
+              checked={selectedPaymentOption === 'cash'}
+              onChange={() => handlePaymentChange('cash')}
+            />
+            Cash
+          </label>
         </div>
         <div>
-        <label>
-          <input
-            type="radio"
-            value="card"
-            checked={selectedPaymentOption === 'card'}
-            onChange={() => handlePaymentChange('card')}
-          />
-          Card
-        </label>
+          <label>
+            <input
+              type="radio"
+              value="card"
+              checked={selectedPaymentOption === 'card'}
+              onChange={() => handlePaymentChange('card')}
+            />
+            Card
+          </label>
         </div>
-        </div>
-        <div>
-        {deliveryOptionError && (
-        <p style={{ color: 'red', marginTop: '10px' }}>{deliveryOptionError}</p>
-      )}
       </div>
       <div>
         {paymentOptionError && (
-        <p style={{ color: 'red', marginTop: '10px' }}>{paymentOptionError}</p>
-      )}
+          <p style={{ color: 'red', marginTop: '10px' }}>{paymentOptionError}</p>
+        )}
       </div>
-          <button className="pay-button" onClick={handlePayment}>
-            Pay Now
-          </button>
-        </div>
-      )}
+      <button className="pay-button" onClick={handlePayment}>
+        Pay Now
+      </button>
     </div>
   );
+  
 };
 
 export default GuestCart;

@@ -62,7 +62,7 @@ const PaymentForm = () => {
       for (const wantedProduct of order.wantedProducts) {
         totalPrice += wantedProduct.produtPriceByPiece * wantedProduct.productQuantity;
       }
-      setFullPrice(totalPrice * 100); 
+      setFullPrice(totalPrice * 100); // Adjust if needed
     }
   }, [order]);
 
