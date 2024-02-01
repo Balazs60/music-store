@@ -77,17 +77,22 @@ function Product() {
 
 
   const handleIncreaseQuantity = () => {
-
-    
-    const maxQuantity = product?.quantity || 1
-    // if(selectedProduct && product){
-    // selectedProduct.price += product?.price
-    // }
-    setQuantity((prevQuantity) => prevQuantity + 1);
-    setMaxQuantityReached(quantity === maxQuantity);
-
-   
+    if (maxQuantityReached) {
+      // If max quantity is reached, don't allow further increase
+      return;
+    }
+  
+    const maxQuantity = product?.quantity || 1;
+  
+    // Update the quantity if it's less than the max quantity
+    if (quantity < maxQuantity) {
+      setQuantity((prevQuantity) => prevQuantity + 1);
+    }
+  
+    // Check if the new quantity equals the max quantity
+    setMaxQuantityReached(quantity + 1 === maxQuantity);
   };
+  
 
   const handleDecreaseQuantity = () => {
 

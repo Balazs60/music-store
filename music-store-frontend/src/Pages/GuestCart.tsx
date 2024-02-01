@@ -23,6 +23,7 @@ const GuestCart: React.FC = () => {
   const [selectedPaymentOption, setSelectedPaymentOption] = useState<string | null>(null);
   const [deliveryOptionError, setDeliveryOptionError] = useState<string | null>(null);
   const [paymentOptionError, setPaymentOptionError] = useState<string | null>(null);
+  const [quantity, setQuantity] = useState(1)
 
 
   let orderId:string = "";
@@ -245,6 +246,7 @@ const GuestCart: React.FC = () => {
   const handleIncreaseQuantity = (itemId: string) => {
     const updatedCart = cart.map(item => {
       if (item.id === itemId) {
+        
         const newQuantity = item.quantity + 1;
         // const newPrice = item.price + productOriginalPrice
         const localStorageCart = localStorage.getItem('wantedProducts')

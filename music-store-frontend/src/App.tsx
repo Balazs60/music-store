@@ -1,4 +1,3 @@
-import React from 'react';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
