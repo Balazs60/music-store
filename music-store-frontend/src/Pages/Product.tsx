@@ -29,6 +29,7 @@ function Product() {
   const [maxQuantityReached, setMaxQuantityReached] = useState(false);
   const [quantity, setQuantity] = useState(1)
   const productOriginalPrice = product?.price
+  const [producitQuantityInTheShop, setProductQuantityInTheShop] = useState(0);
 
 
 
@@ -62,6 +63,7 @@ function Product() {
       .then(data => {
         console.log(data);
         setProduct(data)
+        setProductQuantityInTheShop(data.quantity)
         setSelectedProduct(data);
         setSelectedProduct((prevProduct) => ({
           ...prevProduct!,
@@ -181,16 +183,20 @@ selectedProduct.quantity = quantity
               <p>Price: {product.price}</p>
 
               {/* Quantity Controls */}
-              <div className="d-flex align-items-center">
+             { producitQuantityInTheShop > 0 && <div className="d-flex align-items-center">
                 <button className="btn btn-outline-dark me-2" onClick={handleDecreaseQuantity}>-</button>
                 <p>{quantity}</p>
                 <button className="btn btn-outline-dark ms-2" onClick={handleIncreaseQuantity}>+</button>
-              </div>
+              </div> }
+
+              {producitQuantityInTheShop === 0 && <div>
+                <p style={{ color: 'red' }}>No more products in stock</p>
+                </div>}
 
               {/* Add to Cart Button */}
-              <button className="btn btn-dark mt-3" onClick={handleAddToCart}>
+             {producitQuantityInTheShop > 0 && <button className="btn btn-dark mt-3" onClick={handleAddToCart}>
                 Add to Cart
-              </button>
+              </button>}
 
               {maxQuantityReached && <p style={{ color: 'red' }}>No more products in stock</p>}
             </div>
