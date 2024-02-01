@@ -84,6 +84,7 @@ const FillOutForm: React.FC = () => {
         postCode: parseInt(postCode), 
         city,
         streetAndHouseNumber,
+        pickUpOption:selectedDeliveryOption,
         wantedProducts: WantedProductList.map(wantedProduct => {
           wantedProduct.orderId = id; 
           return wantedProduct;

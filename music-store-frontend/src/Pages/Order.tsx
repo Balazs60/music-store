@@ -14,6 +14,7 @@ export interface Order {
     streetAndHouseNumber: string;
     wantedProducts: WantedProduct[];
     isPaid: boolean;
+    pickUpOption: string | null;
   }
 
   

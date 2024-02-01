@@ -30,6 +30,7 @@ public class Order {
     private int postCode ;
     private String city ;
     private String streetAndHoseNumber;
+    private String pickUpOption;
 
 
 //@JsonIgnore
