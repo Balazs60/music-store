@@ -29,7 +29,9 @@ function Product() {
   const [maxQuantityReached, setMaxQuantityReached] = useState(false);
   const [quantity, setQuantity] = useState(1)
   const productOriginalPrice = product?.price
+  //const producitQuantityInTheShop = product?.quantity
   const [producitQuantityInTheShop, setProductQuantityInTheShop] = useState(0);
+
 
 
 
@@ -154,7 +156,7 @@ selectedProduct.quantity = quantity
 
       }
       localStorage.setItem("wantedProducts", JSON.stringify(updatedWantedProducts));
-      navigate(`/cart`, { state: { productOriginalPrice } });
+      navigate(`/cart`, { state: { productOriginalPrice, producitQuantityInTheShop } });
 
 
     } else {

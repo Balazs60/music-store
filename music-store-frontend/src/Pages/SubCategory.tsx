@@ -299,7 +299,8 @@ setValues([parseFloat(e.target.value),values[1]])
                   </div>
                   <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
                     <div className="text-center">
-                    <button className="btn btn-outline-dark mt-auto" type="button" onClick={() => handleAddToCartButtonClick(product.id)}>Add to cart</button>
+                    {product.quantity > 0 && <button className="btn btn-outline-dark mt-auto" type="button" onClick={() => handleAddToCartButtonClick(product.id)}>Add to cart</button>}
+                    {product.quantity === 0 && <p style={{ color: 'red' }}>No more products in stock</p>}
                     </div>
                   </div>
                 </div>

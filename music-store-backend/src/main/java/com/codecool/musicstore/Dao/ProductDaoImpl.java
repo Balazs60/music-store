@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
@@ -64,6 +65,17 @@ public class ProductDaoImpl implements ProductDao {
         System.out.println("subCat " + subCategoryId);
 
         return productRepository.findProductsBySubCategory(category, subCategoryId);
+    }
+
+    @Override
+    public List<Product> getProductsFromTheCart(List<String> wantedProductsIds) {
+        List<Product> productsFromTheCart = new ArrayList<>();
+      for(String wantedProductId : wantedProductsIds){
+          Product product = getProductById(UUID.fromString(wantedProductId));
+          productsFromTheCart.add(product);
+
+      }
+        return productsFromTheCart;
     }
 
 }
