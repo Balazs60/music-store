@@ -58,7 +58,7 @@ const GuestCart: React.FC = () => {
     console.log("token most" + token);
   
     const wantedProducts = JSON.parse(localStorage.getItem('wantedProducts') || 'null');
-    const wantedProductsId = wantedProducts ? wantedProducts.map(product => product.id) : [];
+    const wantedProductsId = wantedProducts ? wantedProducts.map((product: Product )=> product.id) : [];
     const queryParams = wantedProductsId.length > 0 ? `wantedProducts=${wantedProductsId.join(',')}` : '';
     
     console.log("queryParams " + queryParams)
