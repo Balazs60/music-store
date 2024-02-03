@@ -55,21 +55,17 @@ const GuestCart: React.FC = () => {
 
   const fetchProductsWhatInTheCart = () => {
     const token = localStorage.getItem("token");
-    console.log("token most" + token);
-  
+    const headers: Record<string,string> = token
+    ? {Authorization: `Bearer ${token}`}
+    :{};
+
     const wantedProducts = JSON.parse(localStorage.getItem('wantedProducts') || 'null');
     const wantedProductsId = wantedProducts ? wantedProducts.map((product: Product )=> product.id) : [];
     const queryParams = wantedProductsId.length > 0 ? `wantedProducts=${wantedProductsId.join(',')}` : '';
     
-    console.log("queryParams " + queryParams)
-    const headers = {
-      Authorization: `Bearer ${token}`,
-    };
+ 
   
     const url = `/api/products-in-cart?${queryParams}`;
-  
-    if (token) {
-      console.log("nem kellene belemennie mainpage products");
   
       fetch(url, {
         method: 'GET',
@@ -87,23 +83,6 @@ const GuestCart: React.FC = () => {
       .catch(error => {
         console.error('Error fetching instruments:', error);
       });
-    } else {
-      fetch(url, {
-        method: 'GET'
-      })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then(data => {
-        setProducts(data);
-      })
-      .catch(error => {
-        console.error('Error fetching instruments:', error);
-      });
-    }
   };
   
 
