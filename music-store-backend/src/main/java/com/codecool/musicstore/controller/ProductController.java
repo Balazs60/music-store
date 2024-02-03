@@ -1,8 +1,10 @@
 package com.codecool.musicstore.controller;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.codecool.musicstore.model.product.Product;
 import com.codecool.musicstore.model.product.instruments.SubCategory;
 import com.codecool.musicstore.service.ProductService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +34,6 @@ public class ProductController {
                                                   @PathVariable String subCategoryId) {
         String categoryConverted = productService.convertCategoryToDtype(category);
         UUID convertedSubCategoryId = UUID.fromString(subCategoryId);
-        System.out.println("product " + productService.findProductsBySubCategory(category,convertedSubCategoryId));
         return productService.findProductsBySubCategory(category,convertedSubCategoryId);
     }
 
@@ -41,7 +42,6 @@ public class ProductController {
         System.out.println("id " + id);
         try {
             UUID productId = UUID.fromString(id);
-            System.out.println("product " + productService.getProductById(productId));
             Product product = productService.getProductById(productId);
             return new ResponseEntity<>(product, HttpStatus.OK);
         } catch (NoSuchElementException e) {
@@ -55,11 +55,22 @@ public class ProductController {
             @PathVariable Number productSale
 
     ) {
-        System.out.println("POST LE ------------------------------");
-        System.out.println("Put req Id Of Product" + productId);
-        System.out.println("Product discount " +productSale);
+
         productService.UpdateProductDiscountByID(productId, productSale.intValue());
         return new ResponseEntity<>( HttpStatus.OK);
     }
+
+
+    @GetMapping("/products-in-cart")
+    public List<Product> getProducts(@RequestParam(value = "wantedProducts", required = false) List<String> wantedProductsIds) {
+        System.out.println("wanteddd" + wantedProductsIds);
+      //  System.out.println("wanteed name " + productService.getProductsFromTheCart(wantedProductsIds).get(0).getName());
+        for(Product product : productService.getProductsFromTheCart(wantedProductsIds)){
+            System.out.println("products from the cart id " + product.getId());
+        }
+        return productService.getProductsFromTheCart(wantedProductsIds);
+    }
+
+
 
 }

@@ -68,7 +68,6 @@ public class ProductService {
 
     @Transactional
     public List<Product> findProductsBySubCategory(String category, UUID subCategory) {
-        System.out.println("subcategoryId " + subCategory);
         return productDao.findProductsBySubCategory(category, subCategory);
     }
 
@@ -78,7 +77,10 @@ public class ProductService {
 //    public void populateSubCategories() {
 //        productDao.seedSubCategories();
 //    }
-
+public List<Product> getProductsFromTheCart(List<String> wantedProductsIds){
+  ;
+        return productDao.getProductsFromTheCart(wantedProductsIds);
+}
 
 }
 

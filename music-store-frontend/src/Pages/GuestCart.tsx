@@ -17,14 +17,16 @@ const GuestCart: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const productOriginalPrice = location.state?.productOriginalPrice || null;
+ // const producitQuantityInTheShop = location.state?.producitQuantityInTheShop || null;
   const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
   const [member, setMember] = useState<Member | null>()
   const [selectedDeliveryOption, setSelectedDeliveryOption] = useState<string | null>(null);
   const [selectedPaymentOption, setSelectedPaymentOption] = useState<string | null>(null);
   const [deliveryOptionError, setDeliveryOptionError] = useState<string | null>(null);
   const [paymentOptionError, setPaymentOptionError] = useState<string | null>(null);
-  const [quantity, setQuantity] = useState(1)
+  const [products, setProducts] = useState<Product[]>([]);
 
+  console.log("products " + products)
 
   let orderId:string = "";
 
@@ -48,7 +50,41 @@ const GuestCart: React.FC = () => {
       setCart(updatedCart);
     }
     fetchMemberByName()
+    fetchProductsWhatInTheCart()
   }, []);
+
+  const fetchProductsWhatInTheCart = () => {
+    const token = localStorage.getItem("token");
+    const headers: Record<string,string> = token
+    ? {Authorization: `Bearer ${token}`}
+    :{};
+
+    const wantedProducts = JSON.parse(localStorage.getItem('wantedProducts') || 'null');
+    const wantedProductsId = wantedProducts ? wantedProducts.map((product: Product )=> product.id) : [];
+    const queryParams = wantedProductsId.length > 0 ? `wantedProducts=${wantedProductsId.join(',')}` : '';
+    
+ 
+  
+    const url = `/api/products-in-cart?${queryParams}`;
+  
+      fetch(url, {
+        method: 'GET',
+        headers: headers
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        setProducts(data);
+      })
+      .catch(error => {
+        console.error('Error fetching instruments:', error);
+      });
+  };
+  
 
   const handleOptionChange = (option: string) => {
     setSelectedDeliveryOption(option);
@@ -114,7 +150,6 @@ const GuestCart: React.FC = () => {
       const WantedProductList: WantedProduct[] = [];
 
       for (let i = 0; i < localStorageCart.length; i++) {
-        console.log("quantity " + localStorageCart[i].quantity)
         const id: string = uuidv4();
         const WantedProduct: WantedProduct = {
           id,
@@ -147,7 +182,6 @@ const GuestCart: React.FC = () => {
         isPaid: false, 
       };
     
-    console.log("first product quantity of order" + order.wantedProducts[0].productQuantity)
       console.log(order)
       fetchOrder(order);
      // navigate(`order/${order.id}`);
@@ -167,8 +201,7 @@ const GuestCart: React.FC = () => {
       return;
     }
 
-    console.log("1quantity" + cart[0].quantity)
-    console.log("username status : " + localStorage.getItem("username"))
+  
     if (localStorage.getItem("username")) {
       createOrder()
       console.log("have a user")
@@ -240,21 +273,33 @@ const GuestCart: React.FC = () => {
     });
   };
 
-
+function checkProductQuantityInTheShop(itemId: string){
+  let maxQuantity = 0;
+for(const product of products){
+  if(product.id === itemId){
+    maxQuantity = product.quantity
+  }
+}
+return maxQuantity;
+}
 
 
   const handleIncreaseQuantity = (itemId: string) => {
+
+    const maxQuantity = checkProductQuantityInTheShop(itemId);
+    
     const updatedCart = cart.map(item => {
       if (item.id === itemId) {
         
         const newQuantity = item.quantity + 1;
+        let cartItemNewQuantity = item.quantity;
         // const newPrice = item.price + productOriginalPrice
         const localStorageCart = localStorage.getItem('wantedProducts')
         if (localStorageCart) {
           const wantedProducts = JSON.parse(localStorageCart)
           for (const product of wantedProducts) {
-            if (product.id === itemId) {
-
+            if (product.id === itemId && newQuantity <= maxQuantity) {
+cartItemNewQuantity = newQuantity
               product.quantity = newQuantity
               //product.price += productOriginalPrice
             }
@@ -264,7 +309,7 @@ const GuestCart: React.FC = () => {
         }
         return {
           ...item,
-          quantity: newQuantity,
+          quantity: cartItemNewQuantity,
           //   price: newPrice,
         };
       }
