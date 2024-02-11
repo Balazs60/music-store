@@ -60,6 +60,7 @@ public abstract class Product {
     private Order order;
     private  int quantity;
 
+
     public Product() {
         // default constructor
     }

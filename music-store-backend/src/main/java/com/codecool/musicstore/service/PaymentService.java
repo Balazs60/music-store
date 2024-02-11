@@ -38,7 +38,7 @@ public class PaymentService {
         try {
             Charge charge = Charge.create(params);
             System.out.println("status "+charge.getStatus());
-            if(charge.getStatus().equals("succeeded")){
+            if(charge.getStatus().equals("ullsucceeded")){
                 System.out.println(orderId+"orderid");
                 Order order =orderService.getOrderById(UUID.fromString(orderId));
                 order.setPaid(true);

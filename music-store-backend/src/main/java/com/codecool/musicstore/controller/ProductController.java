@@ -49,6 +49,14 @@ public class ProductController {
         }
     }
 
+    @PostMapping("/product/newproduct")
+    public ResponseEntity<String> addNewProduct(@RequestBody Product product){
+        System.out.println("le erkezö product azt hiszem"+product.getName());
+
+        productService.saveProduct(product);
+
+        return null;
+    }
     @PostMapping ("/products/{productId}/productdiscount/{productSale}")
     public ResponseEntity<Product> setProductDiscountById(
             @PathVariable String productId,
