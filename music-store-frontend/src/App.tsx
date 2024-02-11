@@ -10,7 +10,7 @@ import Login from './Pages/Login';
 import Cart from './Pages/Cart';
 import Contact from './Pages/Contact';
 import About from './Pages/About';
-import Discounter from './Pages/DiscountedProduct';
+import Discounter from './Pages/Discounter';
 import FillOutForm from './Pages/FillOutForm';
 import OrderPage from './Pages/OrderPage';
 import PaymentForm from './Pages/PaymentForm';
