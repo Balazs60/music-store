@@ -29,6 +29,9 @@ function Product() {
   const [maxQuantityReached, setMaxQuantityReached] = useState(false);
   const [quantity, setQuantity] = useState(1)
   const productOriginalPrice = product?.price
+  //const producitQuantityInTheShop = product?.quantity
+  const [producitQuantityInTheShop, setProductQuantityInTheShop] = useState(0);
+
 
 
 
@@ -62,6 +65,7 @@ function Product() {
       .then(data => {
         console.log(data);
         setProduct(data)
+        setProductQuantityInTheShop(data.quantity)
         setSelectedProduct(data);
         setSelectedProduct((prevProduct) => ({
           ...prevProduct!,
@@ -77,17 +81,22 @@ function Product() {
 
 
   const handleIncreaseQuantity = () => {
-
-    
-    const maxQuantity = product?.quantity || 1
-    // if(selectedProduct && product){
-    // selectedProduct.price += product?.price
-    // }
-    setQuantity((prevQuantity) => prevQuantity + 1);
-    setMaxQuantityReached(quantity === maxQuantity);
-
-   
+    if (maxQuantityReached) {
+      // If max quantity is reached, don't allow further increase
+      return;
+    }
+  
+    const maxQuantity = product?.quantity || 1;
+  
+    // Update the quantity if it's less than the max quantity
+    if (quantity < maxQuantity) {
+      setQuantity((prevQuantity) => prevQuantity + 1);
+    }
+  
+    // Check if the new quantity equals the max quantity
+    setMaxQuantityReached(quantity + 1 === maxQuantity);
   };
+  
 
   const handleDecreaseQuantity = () => {
 
@@ -147,7 +156,7 @@ selectedProduct.quantity = quantity
 
       }
       localStorage.setItem("wantedProducts", JSON.stringify(updatedWantedProducts));
-      navigate(`/cart`, { state: { productOriginalPrice } });
+      navigate(`/cart`, { state: { productOriginalPrice, producitQuantityInTheShop } });
 
 
     } else {
@@ -176,16 +185,20 @@ selectedProduct.quantity = quantity
               <p>Price: {product.price}</p>
 
               {/* Quantity Controls */}
-              <div className="d-flex align-items-center">
+             { producitQuantityInTheShop > 0 && <div className="d-flex align-items-center">
                 <button className="btn btn-outline-dark me-2" onClick={handleDecreaseQuantity}>-</button>
                 <p>{quantity}</p>
                 <button className="btn btn-outline-dark ms-2" onClick={handleIncreaseQuantity}>+</button>
-              </div>
+              </div> }
+
+              {producitQuantityInTheShop === 0 && <div>
+                <p style={{ color: 'red' }}>No more products in stock</p>
+                </div>}
 
               {/* Add to Cart Button */}
-              <button className="btn btn-dark mt-3" onClick={handleAddToCart}>
+             {producitQuantityInTheShop > 0 && <button className="btn btn-dark mt-3" onClick={handleAddToCart}>
                 Add to Cart
-              </button>
+              </button>}
 
               {maxQuantityReached && <p style={{ color: 'red' }}>No more products in stock</p>}
             </div>

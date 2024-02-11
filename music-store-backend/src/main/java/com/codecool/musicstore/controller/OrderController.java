@@ -27,9 +27,7 @@ public class OrderController {
 
     @GetMapping("/{orderId}")
     public Order getOrderById(@PathVariable String orderId){
-        System.out.println("------------------------");
-        System.out.println("order id "+orderId);
-        System.out.println("------------------------");
+
         return orderService.getOrderById(UUID.fromString(orderId));
     }
 

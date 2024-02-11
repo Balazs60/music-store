@@ -75,7 +75,7 @@ public class OrderService {
         for (WantedProduct wantedProduct : order.getWantedProducts()) {
             for (Product product : allProducts) {
                 if (product.getId().equals(wantedProduct.getProductId()) && product.getQuantity() >= wantedProduct.getProductQuantity()) {
-
+                    System.out.println("wantedProductQuantity " + wantedProduct.getProductQuantity());
                     int newQuantity = product.getQuantity() - wantedProduct.getProductQuantity();
                     product.setQuantity(newQuantity);
                     productDao.saveProduct(product);

@@ -17,13 +17,16 @@ const GuestCart: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const productOriginalPrice = location.state?.productOriginalPrice || null;
+ // const producitQuantityInTheShop = location.state?.producitQuantityInTheShop || null;
   const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
   const [member, setMember] = useState<Member | null>()
   const [selectedDeliveryOption, setSelectedDeliveryOption] = useState<string | null>(null);
   const [selectedPaymentOption, setSelectedPaymentOption] = useState<string | null>(null);
   const [deliveryOptionError, setDeliveryOptionError] = useState<string | null>(null);
   const [paymentOptionError, setPaymentOptionError] = useState<string | null>(null);
+  const [products, setProducts] = useState<Product[]>([]);
 
+  console.log("products " + products)
 
   let orderId:string = "";
 
@@ -47,7 +50,41 @@ const GuestCart: React.FC = () => {
       setCart(updatedCart);
     }
     fetchMemberByName()
+    fetchProductsWhatInTheCart()
   }, []);
+
+  const fetchProductsWhatInTheCart = () => {
+    const token = localStorage.getItem("token");
+    const headers: Record<string,string> = token
+    ? {Authorization: `Bearer ${token}`}
+    :{};
+
+    const wantedProducts = JSON.parse(localStorage.getItem('wantedProducts') || 'null');
+    const wantedProductsId = wantedProducts ? wantedProducts.map((product: Product )=> product.id) : [];
+    const queryParams = wantedProductsId.length > 0 ? `wantedProducts=${wantedProductsId.join(',')}` : '';
+    
+ 
+  
+    const url = `/api/products-in-cart?${queryParams}`;
+  
+      fetch(url, {
+        method: 'GET',
+        headers: headers
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        setProducts(data);
+      })
+      .catch(error => {
+        console.error('Error fetching instruments:', error);
+      });
+  };
+  
 
   const handleOptionChange = (option: string) => {
     setSelectedDeliveryOption(option);
@@ -113,7 +150,6 @@ const GuestCart: React.FC = () => {
       const WantedProductList: WantedProduct[] = [];
 
       for (let i = 0; i < localStorageCart.length; i++) {
-        console.log("quantity " + localStorageCart[i].quantity)
         const id: string = uuidv4();
         const WantedProduct: WantedProduct = {
           id,
@@ -138,6 +174,7 @@ const GuestCart: React.FC = () => {
         postCode: member.postCode,
         city: member.city,
         streetAndHouseNumber: member.streetAndHouseNumber,
+        pickUpOption: selectedDeliveryOption,
         wantedProducts: WantedProductList.map(wantedProduct => {
           wantedProduct.orderId = orderId; 
           return wantedProduct;
@@ -145,7 +182,6 @@ const GuestCart: React.FC = () => {
         isPaid: false, 
       };
     
-    console.log("first product quantity of order" + order.wantedProducts[0].productQuantity)
       console.log(order)
       fetchOrder(order);
      // navigate(`order/${order.id}`);
@@ -165,8 +201,7 @@ const GuestCart: React.FC = () => {
       return;
     }
 
-    console.log("1quantity" + cart[0].quantity)
-    console.log("username status : " + localStorage.getItem("username"))
+  
     if (localStorage.getItem("username")) {
       createOrder()
       console.log("have a user")
@@ -238,20 +273,33 @@ const GuestCart: React.FC = () => {
     });
   };
 
-
+function checkProductQuantityInTheShop(itemId: string){
+  let maxQuantity = 0;
+for(const product of products){
+  if(product.id === itemId){
+    maxQuantity = product.quantity
+  }
+}
+return maxQuantity;
+}
 
 
   const handleIncreaseQuantity = (itemId: string) => {
+
+    const maxQuantity = checkProductQuantityInTheShop(itemId);
+    
     const updatedCart = cart.map(item => {
       if (item.id === itemId) {
+        
         const newQuantity = item.quantity + 1;
+        let cartItemNewQuantity = item.quantity;
         // const newPrice = item.price + productOriginalPrice
         const localStorageCart = localStorage.getItem('wantedProducts')
         if (localStorageCart) {
           const wantedProducts = JSON.parse(localStorageCart)
           for (const product of wantedProducts) {
-            if (product.id === itemId) {
-
+            if (product.id === itemId && newQuantity <= maxQuantity) {
+cartItemNewQuantity = newQuantity
               product.quantity = newQuantity
               //product.price += productOriginalPrice
             }
@@ -261,7 +309,7 @@ const GuestCart: React.FC = () => {
         }
         return {
           ...item,
-          quantity: newQuantity,
+          quantity: cartItemNewQuantity,
           //   price: newPrice,
         };
       }
@@ -307,118 +355,119 @@ const GuestCart: React.FC = () => {
       {cart.length === 0 ? (
         <p>Your cart is empty</p>
       ) : (
-        <div>
-          {cart.map(item => (
-            <div key={item.id} className="cart-item-box">
-              <img
-                src={`data:image/png;base64,${item.image}`}
-                alt={item.name}
-                className="cart-item-image"
-              />
-              <div className="cart-item-details">
-                <div className="detail">
-                  <div>Name:</div>
-                  <div><strong>{item.name}</strong></div>
+        <div className="cart-layout">
+          <div className="cart-items">
+            {cart.map(item => (
+              <div key={item.id} className="cart-item-box">
+                <img
+                  src={`data:image/png;base64,${item.image}`}
+                  alt={item.name}
+                  className="cart-item-image"
+                />
+                <div className="cart-item-details">
+                  <div className="detail">
+                    <div>Name:</div>
+                    <div><strong>{item.name}</strong></div>
+                  </div>
+                  <div className="detail">
+                    <div>Brand:</div>
+                    <div>{item.brand}</div>
+                  </div>
+                  <div className="detail">
+                    <div>Price:</div>
+                    <div>${item.price * item.quantity}</div>
+                  </div>
+                  <div className="detail">
+                    <div>Quantity:</div>
+                    <div>{item.quantity}</div>
+                    <button onClick={() => handleIncreaseQuantity(item.id)}>+</button>
+                    <button onClick={() => handleDecreaseQuantity(item.id)}>-</button>
+                  </div>
                 </div>
-                <div className="detail">
-                  <div>Brand:</div>
-                  <div>{item.brand}</div>
-                </div>
-                <div className="detail">
-                  <div>Price:</div>
-                  <div>${item.price * item.quantity}</div>
-                </div>
-                <div className="detail">
-                  <div>Quantity:</div>
-                  <div>{item.quantity}</div>
-                  <button onClick={() => handleIncreaseQuantity(item.id)}>+</button>
-                  <button onClick={() => handleDecreaseQuantity(item.id)}>-</button>
-                </div>
+                <button onClick={() => submitDelete(item.id)}>Delete</button>
               </div>
-              <button onClick={() => submitDelete(item.id)}>Delete</button>
+            ))}
+            <div className="cart-summary">
+              <strong>Total Price: ${total}</strong>
             </div>
-          ))}
-          <div className="cart-summary">
-            <strong>Total Price: ${total}</strong>
           </div>
-          <div className="checkout-options">
-        <h3>Delivery Options</h3>
-        <div>
-        <label>
-          <input
-            type="radio"
-            value="delivery"
-            checked={selectedDeliveryOption === 'delivery'}
-            onChange={() => handleOptionChange('delivery')}
-          />
-          Delivery with GLS
-        </label>
+          <div className="delivery-options">
+            <h3>Delivery Options</h3>
+            <div>
+              <label>
+                <input
+                  type="radio"
+                  value="delivery"
+                  checked={selectedDeliveryOption === 'delivery'}
+                  onChange={() => handleOptionChange('delivery')}
+                />
+                Delivery with GLS
+              </label>
+            </div>
+            <div>
+              <label>
+                <input
+                  type="radio"
+                  value="pickUpPoint"
+                  checked={selectedDeliveryOption === 'pickUpPoint'}
+                  onChange={() => handleOptionChange('pickUpPoint')}
+                />
+                Pick Up Point
+              </label>
+            </div>
+            <div>
+              <label>
+                <input
+                  type="radio"
+                  value="pickUpAtShop"
+                  checked={selectedDeliveryOption === 'pickUpAtShop'}
+                  onChange={() => handleOptionChange('pickUpAtShop')}
+                />
+                Pick Up at the Shop
+              </label>
+            </div>
+            {deliveryOptionError && (
+              <p style={{ color: 'red', marginTop: '10px' }}>{deliveryOptionError}</p>
+            )}
+          </div>
         </div>
-        <div>
-        <label>
-          <input
-            type="radio"
-            value="pickUpPoint"
-            checked={selectedDeliveryOption === 'pickUpPoint'}
-            onChange={() => handleOptionChange('pickUpPoint')}
-          />
-          Pick Up Point
-        </label>
-        </div>
-        <div>
-        <label>
-          <input
-            type="radio"
-            value="pickUpAtShop"
-            checked={selectedDeliveryOption === 'pickUpAtShop'}
-            onChange={() => handleOptionChange('pickUpAtShop')}
-          />
-          Pick Up at the Shop
-        </label>
-        </div>
-      </div>
+      )}
       <div className="checkout-options">
         <h3>Select Payment</h3>
         <div>
-        <label>
-          <input
-            type="radio"
-            value="cash"
-            checked={selectedPaymentOption === 'cash'}
-            onChange={() => handlePaymentChange('cash')}
-          />
-          Cash
-        </label>
+          <label>
+            <input
+              type="radio"
+              value="cash"
+              checked={selectedPaymentOption === 'cash'}
+              onChange={() => handlePaymentChange('cash')}
+            />
+            Cash
+          </label>
         </div>
         <div>
-        <label>
-          <input
-            type="radio"
-            value="card"
-            checked={selectedPaymentOption === 'card'}
-            onChange={() => handlePaymentChange('card')}
-          />
-          Card
-        </label>
+          <label>
+            <input
+              type="radio"
+              value="card"
+              checked={selectedPaymentOption === 'card'}
+              onChange={() => handlePaymentChange('card')}
+            />
+            Card
+          </label>
         </div>
-        </div>
-        <div>
-        {deliveryOptionError && (
-        <p style={{ color: 'red', marginTop: '10px' }}>{deliveryOptionError}</p>
-      )}
       </div>
       <div>
         {paymentOptionError && (
-        <p style={{ color: 'red', marginTop: '10px' }}>{paymentOptionError}</p>
-      )}
+          <p style={{ color: 'red', marginTop: '10px' }}>{paymentOptionError}</p>
+        )}
       </div>
-          <button className="pay-button" onClick={handlePayment}>
-            Pay Now
-          </button>
-        </div>
-      )}
+      <button className="pay-button" onClick={handlePayment}>
+        Pay Now
+      </button>
     </div>
   );
+  
 };
 
 export default GuestCart;

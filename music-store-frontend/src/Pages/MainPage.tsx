@@ -238,6 +238,7 @@ const MainPage: React.FC = () => {
   }
 
     const handleAddToCartButtonClick = async (productId: string) => {
+
       try {
         const product = await fetchProductById(productId);
 
@@ -479,7 +480,8 @@ const MainPage: React.FC = () => {
                             {/* <a className="btn btn-outline-dark mt-auto" href="#">
                         Add to cart
                       </a> */}
-                            <button className="btn btn-outline-dark mt-auto" type="button" onClick={() => handleAddToCartButtonClick(product.id)}>Add to cart</button>
+                           {product.quantity > 0 && <button className="btn btn-outline-dark mt-auto" type="button" onClick={() => handleAddToCartButtonClick(product.id)}>Add to cart</button> }
+                           {product.quantity === 0 && <p style={{ color: 'red' }}>No more products in stock</p>}
                           </div>
                         </div>
                       </div>

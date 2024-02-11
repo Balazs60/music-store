@@ -20,4 +20,6 @@ public interface ProductDao {
     public List<SubCategory> findSubCategories(String category);
 
     public List<Product> findProductsBySubCategory(String category, UUID subCategory);
+
+    public List<Product> getProductsFromTheCart(List<String> wantedProductsIds);
 }

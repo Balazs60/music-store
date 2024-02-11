@@ -43,14 +43,8 @@ public class  CartController {
 
 @PostMapping("/guest")
 public ResponseEntity<List<Product>> createGuestOrder(@RequestBody GuestCartRequest guestCartRequest) {
-    System.out.println("----------------wated product guest chart----------------------------");
     List<WantedProduct> guestChart = guestCartRequest.guestChart;
-    System.out.println("----------------wated product guest chart----------------------------");
-    for (WantedProduct wantedProduct:guestChart){
 
-        System.out.println(wantedProduct.productId);
-        System.out.println(wantedProduct.productQuantity);
-    }
 
 
 
@@ -61,9 +55,7 @@ public ResponseEntity<List<Product>> createGuestOrder(@RequestBody GuestCartRequ
                                           @PathVariable String productId,
                                           @PathVariable String quantity) {
         try {
-            System.out.println("membername  "+memberName);
-            System.out.println("productid"+productId);
-            System.out.println("quantity " + quantity);
+
             cartItemService.addCartItemToMembersCartItems(productId, memberName, Integer.parseInt(quantity));
             return ResponseEntity.ok().build();
         } catch (Exception e) {
@@ -77,8 +69,7 @@ public ResponseEntity<List<Product>> createGuestOrder(@RequestBody GuestCartRequ
                                           @PathVariable String newQuantity
                                           ) {
         try {
-            System.out.println("itemId " + itemId);
-            System.out.println("newQuantity " + newQuantity);
+
             cartItemService.updateQuantity(Long.valueOf(itemId), newQuantity);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
@@ -93,7 +84,6 @@ public ResponseEntity<List<Product>> createGuestOrder(@RequestBody GuestCartRequ
         try {
 
             List<CartItem> cartItemList = memberService.getMembersChartByName(memberName);
-            System.out.println("cartitems" + memberService.getMembersChartByName(memberName));
 
             if (cartItemList != null && !cartItemList.isEmpty()) {
                 List<CartItem> cartItem = cartItemList;
@@ -117,7 +107,6 @@ public ResponseEntity<List<Product>> createGuestOrder(@RequestBody GuestCartRequ
     }
     @GetMapping("/{userName}")
     public Member getMember(@PathVariable String userName){
-        System.out.println("userName " + userName);
         return memberService.getMemberByName(userName);
     }
 }
