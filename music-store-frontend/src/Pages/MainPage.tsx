@@ -362,6 +362,12 @@ const MainPage: React.FC = () => {
 
                     </>
                   )}
+                  {roles && roles.includes("ROLE_ADMIN") && (
+                    <>
+                      <li className="nav-item"><a className="nav-link" href="/upload">Upload new product</a></li>
+
+                    </>
+                  )}
                 </ul>
                 <form className="d-flex">
                   <button className="btn btn-outline-dark" type="button" onClick={handleCartButtonClick}>
