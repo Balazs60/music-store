@@ -52,6 +52,8 @@ public class ProductController {
     @PostMapping("/product/newproduct")
     public ResponseEntity<String> addNewProduct(@RequestBody Product product){
         System.out.println("le erkezö product azt hiszem"+product.getName());
+        System.out.println("le erkezö product getdtype"+product.getDtype());
+        System.out.println("le erkezö product get sub cat id"+product.getSubCategoryId());
 
         productService.saveProduct(product);
 
