@@ -19,10 +19,9 @@ public class OrderController {
         this.orderService = orderService;
     }
     @PostMapping("/neworder")
-    public void createOrder(@RequestBody Order order) {
+    public boolean createOrder(@RequestBody Order order) {
 
-
-        orderService.createOrder(order);
+        return orderService.createOrder(order);
     }
 
     @GetMapping("/{orderId}")
