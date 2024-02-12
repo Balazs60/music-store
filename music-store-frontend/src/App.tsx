@@ -15,6 +15,7 @@ import FillOutForm from './Pages/FillOutForm';
 import OrderPage from './Pages/OrderPage';
 import PaymentForm from './Pages/PaymentForm';
 import Upload from './Pages/Upload';
+import SuccessfulOrderPage from './Pages/SuccessfulOrderPage';
 //import SuccessfulOrderPage from './Pages/SuccessfulOrderPage';
 
 const stripePromise = loadStripe('pk_test_51OaEV6CrCBDEIb4OSm45sChsKsWqyHBSp4QFSIGuE3jln2zhlBPo6qfsnnBrBjKr511gp4YWgpmjUgPq7yWTBOm1001deX3C2G');
@@ -35,6 +36,7 @@ function App() {
         <Route path="/discount" element={<Discounter />} />
         <Route path="/filloutform" element={<Elements stripe={stripePromise}><FillOutForm /></Elements>} />
         <Route path="/filloutform/order/:orderId" element={<OrderPage />} />
+        <Route path="/successful-order" element={<SuccessfulOrderPage />} />
         <Route path="/payment/:orderId" element={<Elements stripe={stripePromise}><PaymentForm /></Elements>} />
       <Route path="/upload" element={<Upload/>}></Route>
       </Routes>

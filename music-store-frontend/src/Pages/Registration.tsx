@@ -94,8 +94,6 @@ function Registration() {
       handleRegistration(e)
     }
 
-
-
   }
 
   return (

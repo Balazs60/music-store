@@ -7,7 +7,7 @@ import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
 import { Link } from 'react-router-dom';
 import { WantedProduct } from './WantedProduct';
-import { Order } from './Order'; 
+import { Order } from './Order';
 import { v4 as uuidv4 } from 'uuid';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
@@ -20,13 +20,14 @@ const FillOutForm: React.FC = () => {
   const [postCode, setPostcode] = useState('');
   const [city, setCity] = useState('');
   const [streetAndHouseNumber, setStreetAndHouseNumber] = useState('');
+  const [birthDayError, setBirthDayError] = useState("");
   const location = useLocation();
   const { selectedDeliveryOption, selectedPaymentOption } = location.state || {};
 
-  console.log("delivery " + selectedDeliveryOption)
-  console.log("payment " + selectedPaymentOption)
+  console.log("birthdate" + birthDate)
 
-  
+
+
 
 
   const navigate = useNavigate();
@@ -81,28 +82,51 @@ const FillOutForm: React.FC = () => {
         email,
         birthDate,
         phoneNumber,
-        postCode: parseInt(postCode), 
+        postCode: parseInt(postCode),
         city,
         streetAndHouseNumber,
-        pickUpOption:selectedDeliveryOption,
+        pickUpOption: selectedDeliveryOption,
         wantedProducts: WantedProductList.map(wantedProduct => {
-          wantedProduct.orderId = id; 
+          wantedProduct.orderId = id;
           return wantedProduct;
         }),
-        isPaid: false, 
+        isPaid: false,
       };
-    console.log("first product quantity of order" + order.wantedProducts[0].productQuantity)
+      console.log("first product quantity of order" + order.wantedProducts[0].productQuantity)
       console.log(order)
       fetchOrder(order);
       //  navigate(`order/${order.id}`);
 
-    if(selectedPaymentOption === "cash"){
-      navigate(`/successful-order`)
-    } else {
-      navigate(`/payment/${order.id}`)
-    }
+      if (selectedPaymentOption === "cash") {
+        navigate(`/successful-order`)
+      } else {
+        navigate(`/payment/${order.id}`)
+      }
     }
   };
+
+  function checkBirthDateIsValid(e: React.FormEvent<HTMLFormElement>) {
+
+    e.preventDefault()
+
+    let isBirthDateFormatValid = false;
+    const currentDate = new Date();
+    const birthDateInDateFormat = new Date(birthDate);
+
+    if (birthDate[4] === "-" && birthDate[7] === "-" && birthDate.length === 10) {
+      isBirthDateFormatValid = true
+    }
+
+
+    if (isBirthDateFormatValid === false) {
+      setBirthDayError(("The birth date format will be: yyyy-mm-dd"))
+    } else if (birthDateInDateFormat >= currentDate) {
+      setBirthDayError("Invalid birth date!")
+    } else {
+      setBirthDayError("")
+      handleSubmit(e)
+    }
+  }
 
   return (
     <Container
@@ -135,7 +159,7 @@ const FillOutForm: React.FC = () => {
                   Log In
                 </Link>
               </Typography>
-              <form onSubmit={handleSubmit} style={{ width: '300px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <form onSubmit={checkBirthDateIsValid} style={{ width: '300px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 <TextField
                   label="Name"
                   variant="outlined"
@@ -159,7 +183,7 @@ const FillOutForm: React.FC = () => {
                 <TextField
                   label="Birth date"
                   variant="outlined"
-                  type="date" 
+                  type="date"
                   id="birthDate"
                   name=""
                   value={birthDate}
@@ -169,7 +193,7 @@ const FillOutForm: React.FC = () => {
                 <TextField
                   label="Phone number"
                   variant="outlined"
-                  type="tel" 
+                  type="tel"
                   id="phoneNumber"
                   name="phoneNumber"
                   value={phoneNumber}
@@ -206,9 +230,12 @@ const FillOutForm: React.FC = () => {
                   onChange={(e) => setStreetAndHouseNumber(e.target.value)}
                   required
                 />
+                <div>
+                {birthDayError.length > 0  && <p style={{ color: 'red' }}>{birthDayError}</p>}
                 <Button type="submit" variant="contained" color="primary" style={{ marginTop: '16px' }}>
                   Place Order
                 </Button>
+                </div>
               </form>
             </Paper>
           </Grid>
