@@ -23,6 +23,7 @@ const FillOutForm: React.FC = () => {
   const [birthDayError, setBirthDayError] = useState("");
   const location = useLocation();
   const { selectedDeliveryOption, selectedPaymentOption } = location.state || {};
+  const [orderError, setOrderError] = useState("");
 
   console.log("birthdate" + birthDate)
 
@@ -41,11 +42,23 @@ const FillOutForm: React.FC = () => {
       body: JSON.stringify(order),
     })
       .then(response => {
-        if (response.ok) {
-          console.log('Order submitted successfully');
-          localStorage.removeItem('wantedProducts');
+        if (response.ok ) {
+       return response.json()
         } else {
           console.error('Failed to submit order');
+        }
+      }).then(data => {
+        if (data === true) {
+          console.log('Order submitted successfully');
+          localStorage.removeItem('wantedProducts');
+          if (selectedPaymentOption === "cash") {
+            navigate(`/successful-order`);
+          } else {
+            navigate(`/payment/${order.id}`);
+          }
+        } else {
+          console.error('Failed to submit order: No more product left in the shop!');
+          setOrderError("No more product left in the shop!");
         }
       })
       .catch(error => {
@@ -97,11 +110,11 @@ const FillOutForm: React.FC = () => {
       fetchOrder(order);
       //  navigate(`order/${order.id}`);
 
-      if (selectedPaymentOption === "cash") {
-        navigate(`/successful-order`)
-      } else {
-        navigate(`/payment/${order.id}`)
-      }
+      // if (selectedPaymentOption === "cash") {
+      //   navigate(`/successful-order`)
+      // } else {
+      //   navigate(`/payment/${order.id}`)
+      // }
     }
   };
 
@@ -231,6 +244,7 @@ const FillOutForm: React.FC = () => {
                   required
                 />
                 <div>
+                {orderError.length > 0  && <p style={{ color: 'red' }}>{orderError}</p>}
                 {birthDayError.length > 0  && <p style={{ color: 'red' }}>{birthDayError}</p>}
                 <Button type="submit" variant="contained" color="primary" style={{ marginTop: '16px' }}>
                   Place Order
