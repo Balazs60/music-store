@@ -7,6 +7,9 @@ align-items: center;
 background: #cdd9ed;
 }
 
+.product-card {
+  min-width: 200px; /* Adjust this value as needed */
+}
 
 
 .custom-ui {
