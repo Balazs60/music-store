@@ -1,0 +1,31 @@
+/* Cart.css */
+
+.delivery-options-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .delivery-options,
+  .checkout-options {
+    flex-basis: 45%;
+  }
+  
+  .option {
+    margin-bottom: 10px;
+  }
+  
+  .option label {
+    display: flex;
+    align-items: center;
+  }
+  
+  .option input[type="radio"] {
+    margin-right: 10px;
+  }
+  
+  .error-message {
+    color: red;
+    margin-top: 10px;
+  }
+      
