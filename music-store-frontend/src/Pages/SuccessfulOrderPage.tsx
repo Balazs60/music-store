@@ -30,20 +30,20 @@ const styles = {
   },
   box: {
     padding: '20px',
-    border: '2px solid #4CAF50', // Green border color
+    border: '2px solid #2196F3', // Blue border color
     borderRadius: '10px',
     backgroundColor: '#f8f8f8', // Light gray background color
     textAlign: 'center' as TextAlign, // Use TextAlign without undefined
   },
   message: {
-    color: '#4CAF50', // Green text color
+    color: '#2196F3', // Blue text color
     fontWeight: 'bold',
     fontSize: '18px',
   },
   button: {
     marginTop: '20px',
     padding: '10px',
-    backgroundColor: '#4CAF50', // Green button color
+    backgroundColor: '#2196F3', // Blue button color
     color: '#fff', // White text color
     border: 'none',
     borderRadius: '5px',

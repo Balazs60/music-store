@@ -11,6 +11,21 @@ background: #cdd9ed;
   min-width: 200px; /* Adjust this value as needed */
 }
 
+.payment-form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Ensure the container takes up the full viewport height */
+}
+
+.payment-form-box {
+  padding: 60px;
+  border: 2px solid #2196F3;
+  border-radius: 10px;
+  background-color: #f8f8f8;
+  text-align: center;
+}
+
 
 .custom-ui {
   position: fixed;
