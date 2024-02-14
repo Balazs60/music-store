@@ -3,6 +3,8 @@ import { Order } from './Order';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import StripeCheckout, { Token } from 'react-stripe-checkout';
+import '../musicStore.css';
+
 
 const PaymentForm = () => {
   const [order, setOrder] = useState<Order | null>(null);
@@ -67,7 +69,8 @@ const PaymentForm = () => {
   }, [order]);
 
   return (
-    <div>
+    <div className="payment-form-container">
+      <div className='payment-form-box'>
       {loading && <p>Loading...</p>}
       {!loading && order && (
         <StripeCheckout
@@ -77,6 +80,7 @@ const PaymentForm = () => {
           currency="USD"
         />
       )}
+      </div>
     </div>
   );
 };
