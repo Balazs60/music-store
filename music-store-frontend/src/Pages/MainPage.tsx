@@ -437,15 +437,15 @@ const MainPage: React.FC = () => {
                 </div>
               </Col>
             </Row>
-
-            <header className="bg-dark py-5">
+            <header style={{backgroundImage: "url('src/assets/mainpage music store.jpg')", backgroundSize: 'cover', backgroundPosition: 'center', height: '400px'}}>
               <div className="container px-4 px-lg-5 my-5">
                 <div className="text-center text-white">
-                  <h1 className="display-4 fw-bolder">Music Shop</h1>
-                  <p className="lead fw-normal text-white-50 mb-0">Hangszerek széles választéka</p>
+                  <h1 className="display-4 fw-bolder"  style={{textShadow:"-moz-initial"}}>Music Shop</h1>
+                  <p className="lead fw-normal text-white ">Hangszerek széles választéka</p>
                 </div>
               </div>
               <div lang='en'>
+              
                 {/* ... (your existing JSX) */}
 
                 <section className="py-5">

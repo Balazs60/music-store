@@ -8,8 +8,7 @@ import { Order } from './Order';
 import { v4 as uuidv4 } from 'uuid';
 import { WantedProduct } from './WantedProduct';
 import { Member } from './Member';
-
-
+import css from './Cart.css'
 
 
 const GuestCart: React.FC = () => {
@@ -347,7 +346,6 @@ cartItemNewQuantity = newQuantity
 
     setCart(updatedCart);
   };
-
   return (
     <div className="cart-container">
       <Header />
@@ -391,44 +389,48 @@ cartItemNewQuantity = newQuantity
               <strong>Total Price: ${total}</strong>
             </div>
           </div>
-          <div className="delivery-options">
-            <h3>Delivery Options</h3>
-            <div>
-              <label>
-                <input
-                  type="radio"
-                  value="delivery"
-                  checked={selectedDeliveryOption === 'delivery'}
-                  onChange={() => handleOptionChange('delivery')}
-                />
-                Delivery with GLS
-              </label>
-            </div>
-            <div>
-              <label>
-                <input
-                  type="radio"
-                  value="pickUpPoint"
-                  checked={selectedDeliveryOption === 'pickUpPoint'}
-                  onChange={() => handleOptionChange('pickUpPoint')}
-                />
-                Pick Up Point
-              </label>
-            </div>
-            <div>
-              <label>
-                <input
-                  type="radio"
-                  value="pickUpAtShop"
-                  checked={selectedDeliveryOption === 'pickUpAtShop'}
-                  onChange={() => handleOptionChange('pickUpAtShop')}
-                />
-                Pick Up at the Shop
-              </label>
-            </div>
-            {deliveryOptionError && (
-              <p style={{ color: 'red', marginTop: '10px' }}>{deliveryOptionError}</p>
-            )}
+          <div className="cica"></div>
+            <div className="delivery-options-container">
+            <div className="delivery-options">
+  <h3>Delivery Options</h3>
+  <div className="option">
+    <label>
+      <input
+        type="radio"
+        value="delivery"
+        checked={selectedDeliveryOption === 'delivery'}
+        onChange={() => handleOptionChange('delivery')}
+      />
+      <span>Delivery with GLS</span>
+    </label>
+  </div>
+  <div className="option">
+    <label>
+      <input
+        type="radio"
+        value="pickUpPoint"
+        checked={selectedDeliveryOption === 'pickUpPoint'}
+        onChange={() => handleOptionChange('pickUpPoint')}
+      />
+      <span>Pick Up Point</span>
+    </label>
+  </div>
+  <div className="option">
+    <label>
+      <input
+        type="radio"
+        value="pickUpAtShop"
+        checked={selectedDeliveryOption === 'pickUpAtShop'}
+        onChange={() => handleOptionChange('pickUpAtShop')}
+      />
+      <span>Pick Up at the Shop</span>
+    </label>
+  </div>
+  {deliveryOptionError && (
+    <p className="error-message">{deliveryOptionError}</p>
+  )}
+</div>
+
           </div>
         </div>
       )}
@@ -467,9 +469,6 @@ cartItemNewQuantity = newQuantity
       </button>
     </div>
   );
-  
 };
 
 export default GuestCart;
-
-
