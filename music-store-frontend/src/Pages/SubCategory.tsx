@@ -1,10 +1,12 @@
-import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Slider from 'react-slider';
 import '../musicStore.css'
 import Header from './Header';
 import { confirmAlert } from 'react-confirm-alert';
 import Product from './Product';
+import React, { useState, useEffect } from 'react';
+import './src/output.css'
+
 
 
 
