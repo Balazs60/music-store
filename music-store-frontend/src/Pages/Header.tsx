@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Dropdown, ButtonGroup, Row, Col } from 'react-bootstrap';
 import '../musicStore.css';
 import { Product } from './Products';
+import '../output.css'
 
 // interface CartItem {
 //   id: string;
