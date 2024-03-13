@@ -244,7 +244,8 @@ function SubCategory() {
     <div>
     <Header />
     <div className='m-4 grid grid-cols-3 gap-4'>
-      <div className="bg-gray-100 p-4 rounded-lg mb-4 col-span-1">
+      <div className='col-span-1'>
+      <div className="bg-gray-100 p-4 rounded-lg mb-4 ">
         {/* Brand filter checkboxes */}
         <h4 className="text-lg font-semibold mb-2">Filter by Brand:</h4>
         {products.length > 0 && (
@@ -300,6 +301,7 @@ function SubCategory() {
 
           <button className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handleSearch}>Search</button>
         </div>
+      </div>
       </div>
       {/* Product listings */}
       <div className='col-span-2 gap-4'>
