@@ -299,8 +299,12 @@ function SubCategory() {
               </div>
             </div>
 
-          <button className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handleSearch}>Search</button>
-        </div>
+            <button 
+  className="mt-4 bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded" 
+  onClick={handleSearch}
+>
+  Search
+</button>        </div>
       </div>
       </div>
       {/* Product listings */}
@@ -311,7 +315,7 @@ function SubCategory() {
               <img onClick={() => handleProductClick(product.id)} src={product.image ? `data:image/jpeg;base64,${product.image}` : 'default-image-url'} alt="..." />
               <h3 className="text-lg font-semibold mb-2" onClick={() => handleProductClick(product.id)}>{product.name}</h3>
               <p className="text-gray-700">${product.price}$</p>
-              {product.quantity > 0 && <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4" type="button" onClick={() => handleAddToCartButtonClick(product.id)}>Add to Cart</button>}
+              {product.quantity > 0 && <button className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded mt-4" type="button" onClick={() => handleAddToCartButtonClick(product.id)}>Add to Cart</button>}
               {product.quantity === 0 && <p className='text-red-500'>No more products in stock</p>}
             </div>
           ))}
