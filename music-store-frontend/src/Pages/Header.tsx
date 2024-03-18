@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Dropdown, ButtonGroup, Row, Col } from 'react-bootstrap';
 import '../musicStore.css';
 import { Product } from './Products';
+import '../output.css'
 
 // interface CartItem {
 //   id: string;
@@ -145,48 +146,41 @@ function Header() {
   }
 
   return (
-    <div>
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <div className="container px-4 px-lg-5">
-          <button className="btn btn-link nav-link" onClick={handeleHomeButtonClick}>
-            Music Shop
-          </button>          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-              <button className="btn btn-link nav-link active" aria-current="page" onClick={handeleHomeButtonClick}>
-                Home
-              </button>
-              <li className="nav-item"><a className="nav-link" href="/about">About</a></li>
-              <li className="nav-item"><a className="nav-link" href="/contact">Contact</a></li>
-              <li className="nav-item"><a className="nav-link" href="/discount">Discount</a></li>
-            </ul>
-            <form className="d-flex">
-              <button className="btn btn-outline-dark" type="button" onClick={handleCartButtonClick}>
-                <i className="bi-cart-fill me-1"></i>
-                Cart
-                <span className="badge bg-dark text-white ms-1 rounded-pill">{numberOfCartItem}</span>
-              </button>
-            </form>
-          </div>
+   <nav className="bg-white shadow-lg">
+      <div className="bg-gray-100 container mx-auto px-4 lg:px-5 flex justify-between items-center">
+        {/* First Row */}
+        <div className='mt-4 mb-4'>
+          <ul className="flex items-center space-x-8">
+            <li><button className="mr-5 text-gray-800 focus:outline-none" onClick={handeleHomeButtonClick}>Home</button></li>
+            <li><a className="mr-5 text-gray-800 focus:outline-none" href="/about">About</a></li>
+            <li><a className="mr-5 text-gray-800 focus:outline-none" href="/contact">Contact</a></li>
+            <li><a className="mr-5 text-gray-800 focus:outline-none" href="/discount">Discount</a></li>
+          </ul>
         </div>
-      </nav>
-      <div className="container mt-4">
-        <Row>
-          <Col md={3}>
+        <div>
+          <button className="flex items-center bg-white text-gray-800 rounded-full focus:outline-none" type="button" onClick={handleCartButtonClick}>
+            <i className="bi-cart-fill"></i>
+            Cart
+            <span className="bg-gray-800 text-white px-2 py-1 ml-1 rounded-full">{numberOfCartItem}</span>
+          </button>
+        </div>
+      </div>
+      {/* Second Row */}
+      <div className="container mt-4 mx-auto px-4 lg:px-5">
+        <div className="flex flex-wrap -mx-4">
+          <div className="w-full lg:w-1/4 px-4">
             <Dropdown as={ButtonGroup}>
               <Dropdown.Toggle variant="outline-secondary" id="categoryDropdown">
                 Select Category
               </Dropdown.Toggle>
               <Dropdown.Menu>
                 {[['Guitar', 'Gitár'],
-                ['PercussionInstrument', 'Ütős'],
-                ['KeyboardInstrument', 'Billentyűs'],
-                ['WindInstrument', 'Fúvós'],
-                ['Bass', "Basszusgitár"],
-                ['SoundTechnic', "Hangtechnika"],
-                ['Merch', "Merch"]
+                  ['PercussionInstrument', 'Ütős'],
+                  ['KeyboardInstrument', 'Billentyűs'],
+                  ['WindInstrument', 'Fúvós'],
+                  ['Bass', "Basszusgitár"],
+                  ['SoundTechnic', "Hangtechnika"],
+                  ['Merch', "Merch"]
                 ].map((category, index) => (
                   <Dropdown.Item
                     key={index}
@@ -198,9 +192,9 @@ function Header() {
                 ))}
               </Dropdown.Menu>
             </Dropdown>
-          </Col>
-          <Col md={9}>
-            <div className="input-group">
+          </div>
+          <div className="w-full lg:w-3/4 px-4">
+            <div className="relative">
               {filteredProducts.length > 0 && (
                 <Dropdown show={true}>
                   <Dropdown.Toggle variant="outline-secondary" id="dropdown-basic">
@@ -221,16 +215,17 @@ function Header() {
               <input
                 list="filteredProducts"
                 type="text"
-                className="form-control"
+                className="block w-full h-9 py-3 px-4 leading-tight focus:outline-none bg-gray-200 border-2 border-gray-300 border-solid focus:border-blue-500  mb-4"
                 placeholder="Search..."
                 value={searchTerm}
                 onChange={handleSearchChange}
               />
             </div>
-          </Col>
-        </Row>
+          </div>
+        </div>
       </div>
-    </div>
+    </nav>
+
   );
 }
 

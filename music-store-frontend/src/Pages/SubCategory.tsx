@@ -1,10 +1,15 @@
-import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Slider from 'react-slider';
-import '../musicStore.css'
+//import '../musicStore.css'
 import Header from './Header';
 import { confirmAlert } from 'react-confirm-alert';
 import Product from './Product';
+import React, { useState, useEffect } from 'react';
+import '../output.css'
+
+
+import { Divider } from '@mui/material';
+
 
 
 
@@ -212,20 +217,23 @@ function SubCategory() {
           {
             label: 'Cart',
             onClick: () => navigate("/cart"),
+            className: 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2', // Add Tailwind classes for styling
           },
           {
             label: 'Shopping',
+            className: 'bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded', // Add Tailwind classes for styling
           },
         ],
         customUI: ({ onClose }) => (
           <div className="custom-ui">
-            <h1>Product added to the cart</h1>
-            <p>Move to the cart or continue shopping?</p>
-            <button onClick={() => { onClose(); navigate("/cart"); }}>Cart</button>
-            <button onClick={onClose}>Shopping</button>
+            <h1 className="text-xl font-bold mb-4">Product added to the cart</h1> {/* Style the title text */}
+            <p className="text-lg mb-4">Move to the cart or continue shopping?</p> {/* Style the message text */}
+            <button onClick={() => { onClose(); navigate("/cart"); }} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">Cart</button> {/* Style the "Cart" button */}
+            <button onClick={onClose} className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Shopping</button> {/* Style the "Shopping" button */}
           </div>
         ),
       });
+      
     } catch (error) {
       console.error("Error fetching product details:", error);
     }
@@ -234,79 +242,87 @@ function SubCategory() {
 
   return (
     <div>
-      <Header />
-      <div className='subcategory'>
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-4">
-              <div className='filter-section'>
-                <div className='box'>
-                  <h5>Filter by Brand:</h5>
-                  {Array.from(new Set(products.map(product => product.brand))).map(brand => (
-                    <div key={brand}>
-                      <input
-                        type="checkbox"
-                        value={brand}
-                        checked={selectedBrands.includes(brand)}
-                        onChange={() => handleBrandCheckboxChange(brand)}
-                      />
-                      {brand}
-                    </div>
-                  ))}
-                  <h5>Search by price</h5>
-                  <label>
-                    Minimum Price:
-                    <input type="number" value={minPrice} onChange={e => setMinPriceWithInputField(e)} />
-                  </label>
-                  <label>
-                    Maximum Price:
-                    <input type="number" value={maxPrice} onChange={e => setMaxPriceWithInputField(e)} />
-                  </label>
-                  <h3>Price <span>Range</span></h3>
-                  <div>${values[0]}-${values[1]}</div>
-                  <Slider className={'slider'}
-                    onChange={(newValues: number[]) => setValuesAndMinPriceMaxPriceWithSlider(newValues)}
-                    value={values}
-                    min={lowestPrice}
-                    max={highestPrice} />
-                </div>
-                <button onClick={handleSearch}>Search</button>
+    <Header />
+    <div className='m-4 grid grid-cols-3 gap-4'>
+      <div className='col-span-1'>
+      <div className="bg-gray-100 p-4 rounded-lg mb-4 ">
+        {/* Brand filter checkboxes */}
+        <h4 className="text-lg font-semibold mb-2">Filter by Brand:</h4>
+        {products.length > 0 && (
+          <div>
+            {Array.from(new Set(products.map(product => product.brand))).map(brand => (
+              <div key={brand} className="flex items-center mb-2">
+                <input
+                  type="checkbox"
+                  className="form-checkbox h-5 w-5 text-indigo-600"
+                  id={brand}
+                  value={brand}
+                  checked={selectedBrands.includes(brand)}
+                  onChange={() => handleBrandCheckboxChange(brand)}
+                />
+                <label className="ml-2 text-sm" htmlFor={brand}>
+                  {brand}
+                </label>
+              </div>
+            ))}
+          </div>
+        )}
+        {/* Search by price section */}
+        <div className="bg-gray-100 p-4 rounded-lg mb-4">
+          <h5 className="text-lg font-semibold mb-2">Search by price</h5>
+          <div className="flex flex-col md:flex-row gap-4">
+            <div className="flex flex-col">
+              <label className="text-sm">
+                Minimum Price:
+                <input type="number" className="form-input mt-1" value={minPrice} onChange={e => setMinPriceWithInputField(e)} />
+              </label>
+              <label className="text-sm">
+                Maximum Price:
+                <input type="number" className="form-input mt-1" value={maxPrice} onChange={e => setMaxPriceWithInputField(e)} />
+              </label>
+            </div>
+           
+          </div>
+          <div className="mt-4 mb-4 slider-container w-3/5"> {/* Adjust the width as needed */}
+              <h3 className="text-lg font-semibold">Price Range</h3>
+              <div className="text-sm">${values[0]} - ${values[1]}</div>
+              <div className="mt-2">
+                <Slider
+                  className="w-full"
+                  thumbClassName="bg-blue-500 w-6 h-6 rounded-full shadow-md focus:outline-none focus:shadow-outline"
+                  trackClassName="h-1 bg-blue-500"
+                  min={lowestPrice}
+                  max={highestPrice}
+                  value={values}
+                  onChange={(newValues: number[]) => setValuesAndMinPriceMaxPriceWithSlider(newValues)}
+                />
               </div>
             </div>
-            <div className="col-lg-8">
-              <section className="py-5">
-                <div className="container px-4 px-lg-5 mt-5">
-                  <div className="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                    {filterProductsByBrand(filteredProducts).map((product, index) => (
-                      <div key={index} className="col mb-5 product-card">
-                        <div className="card h-100">
-                          <div className="badge bg-dark text-white position-absolute" style={{ top: '0.5rem', right: '0.5rem' }}>
-                            Sale
-                          </div>
-                          <img className="card-img-top" onClick={() => handleProductClick(product.id)} src={product.image ? `data:image/jpeg;base64,${product.image}` : 'default-image-url'} alt="..." />
-                          <div className="card-body p-4">
-                            <div className="text-center">
-                              <h5 className="fw-bolder" onClick={() => handleProductClick(product.id)}>{product.name}</h5>
-                              {product.price}$
-                            </div>
-                          </div>
-                          <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div className="text-center">
-                              {product.quantity > 0 && <button className="btn btn-outline-dark mt-auto" type="button" onClick={() => handleAddToCartButtonClick(product.id)}>Add to cart</button>}
-                              {product.quantity === 0 && <p style={{ color: 'red' }}>No more products in stock</p>}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </section>
+
+            <button 
+  className="mt-4 bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded" 
+  onClick={handleSearch}
+>
+  Search
+</button>        </div>
+      </div>
+      </div>
+      {/* Product listings */}
+      <div className='col-span-2 gap-4'>
+        <div className="grid  md:grid-cols-3 gap-4">
+          {filterProductsByBrand(filteredProducts).map(product => (
+            <div key={product.id} className="bg-white rounded-lg p-4 shadow-md">
+              <img onClick={() => handleProductClick(product.id)} src={product.image ? `data:image/jpeg;base64,${product.image}` : 'default-image-url'} alt="..." />
+              <h3 className="text-lg font-semibold mb-2" onClick={() => handleProductClick(product.id)}>{product.name}</h3>
+              <p className="text-gray-700">${product.price}$</p>
+              {product.quantity > 0 && <button className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded mt-4" type="button" onClick={() => handleAddToCartButtonClick(product.id)}>Add to Cart</button>}
+              {product.quantity === 0 && <p className='text-red-500'>No more products in stock</p>}
             </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>
+  </div>
   );
 }
 

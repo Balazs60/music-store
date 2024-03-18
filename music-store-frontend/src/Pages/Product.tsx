@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Header from './Header';
+import React, { useState, useEffect } from 'react';
+
 
 
 interface Product {
