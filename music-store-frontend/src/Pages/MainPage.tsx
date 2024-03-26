@@ -8,6 +8,7 @@ import { confirmAlert } from 'react-confirm-alert';
 
 
 import DiscountedProducts from './DiscountedProduct'
+import Header from './Header';
 
 /*interface Product {
   id: string;
@@ -225,42 +226,42 @@ const MainPage: React.FC = () => {
   function isProductInTheCart(productId: string) {
     const storedWantedProducts = localStorage.getItem("wantedProducts");
     const wantedProducts: Product[] = storedWantedProducts ? JSON.parse(storedWantedProducts) : [];
-  
+
     for (let i = 0; i < wantedProducts.length; i++) {
       console.log(wantedProducts[i].name);
       if (wantedProducts[i].id === productId) {
         return true;
       }
     }
-  
+
     // If the loop completes and no match is found, return false
     return false;
   }
 
-    const handleAddToCartButtonClick = async (productId: string) => {
+  const handleAddToCartButtonClick = async (productId: string) => {
 
-      try {
-        const product = await fetchProductById(productId);
+    try {
+      const product = await fetchProductById(productId);
 
-        if (!product) {
-          console.error("Product not found.");
-          return;
-        }
+      if (!product) {
+        console.error("Product not found.");
+        return;
+      }
 
-        const wantedProduct: Product = product;
-        wantedProduct.quantity = 1
+      const wantedProduct: Product = product;
+      wantedProduct.quantity = 1
 
 
 
-        const storedWantedProducts = localStorage.getItem("wantedProducts");
-        const wantedProducts: Product[] = storedWantedProducts ? JSON.parse(storedWantedProducts) : [];
+      const storedWantedProducts = localStorage.getItem("wantedProducts");
+      const wantedProducts: Product[] = storedWantedProducts ? JSON.parse(storedWantedProducts) : [];
 
-        if(isProductInTheCart(productId)){
-          console.log("benne van")
+      if (isProductInTheCart(productId)) {
+        console.log("benne van")
         for (let i = 0; i < wantedProducts.length; i++) {
           if (wantedProducts[i].id === productId) {
             wantedProducts[i].quantity += 1
-           // wantedProducts[i].price += product.price
+            // wantedProducts[i].price += product.price
           }
         }
       } else {
@@ -268,232 +269,96 @@ const MainPage: React.FC = () => {
         wantedProducts.push(wantedProduct);
       }
 
-        localStorage.setItem("wantedProducts", JSON.stringify(wantedProducts));
-        console.log("wantedproductLength " + wantedProducts[0].id);
+      localStorage.setItem("wantedProducts", JSON.stringify(wantedProducts));
+      console.log("wantedproductLength " + wantedProducts[0].id);
 
-        updateNumberOfCartItems();
-
-
-        confirmAlert({
-          title: 'Product added to the cart',
-          message: 'Move to the cart or continue shopping?',
-          buttons: [
-            {
-              label: 'Cart',
-              onClick: () => navigate("/cart"),
-            },
-            {
-              label: 'Shopping',
-            },
-          ],
-          customUI: ({ onClose }) => (
-            <div className="custom-ui">
-              <h1>Product added to the cart</h1>
-              <p>Move to the cart or continue shopping?</p>
-              <button onClick={() => { onClose(); navigate("/cart"); }}>Cart</button>
-              <button onClick={onClose}>Shopping</button>
-            </div>
-          ),
-        });
-      } catch (error) {
-        console.error("Error fetching product details:", error);
-      }
-    };
-
-    useEffect(() => {
-      filterUniqueProductsInLocaleStorage()
-    }, []);
-
-    function filterUniqueProductsInLocaleStorage() {
-      const localStorageCart = localStorage.getItem('wantedProducts');
-      if (localStorageCart) {
-        const parsedCart = JSON.parse(localStorageCart);
-        console.log("parsed " + parsedCart[0])
-        const groupedCart: Record<string, Product> = {};
-        parsedCart.forEach((product: Product) => {
-          if (!groupedCart[product.id]) {
-            groupedCart[product.id] = { ...product, quantity: 1 };
-          } else {
-            groupedCart[product.id].quantity += 1;
-          }
-        })
-        const updatedCart: Product[] = Object.values(groupedCart);
-
-        setNumberOfCartItems(updatedCart.length);
-      }
-    }
-
-    return (
+      updateNumberOfCartItems();
 
 
-
-      <div lang='en'>
-        <head>
-          <meta charSet="utf-8" />
-          <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-          <meta name="description" content="" />
-          <meta name="author" content="" />
-          <title>Shop Homepage - Start Bootstrap Template</title>
-          <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-          <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
-          <link href="css/styles.css" rel="stylesheet" />
-        </head>
-        <body>
-          <nav className="navbar navbar-expand-lg navbar-light bg-light">
-            <div className="container px-4 px-lg-5">
-              <a className="navbar-brand" href="#!">Music Shop</a>
-              <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span className="navbar-toggler-icon"></span>
-              </button>
-              <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul className="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                  <li className="nav-item"><a className="nav-link active" aria-current="page" href="#!">Home</a></li>
-                  <li className="nav-item"><a className="nav-link" href="/about">About</a></li>
-                  <li className="nav-item"><a className="nav-link" href="/contact">Contact</a></li>
-                  {token && (
-                    <li className="nav-item"><a className="nav-link" href="#" onClick={handleLogout}>Log Out</a></li>
-                  )}
-                  {!token && (
-                    <li className="nav-item"><a className="nav-link" href="#" onClick={handleLogIn}>Log In</a></li>
-                  )}
-                  {roles && roles.includes("ROLE_ADMIN") && (
-                    <>
-                      <li className="nav-item"><a className="nav-link" href="/discount">Discount</a></li>
-
-                    </>
-                  )}
-                  {roles && roles.includes("ROLE_ADMIN") && (
-                    <>
-                      <li className="nav-item"><a className="nav-link" href="/upload">Upload new product</a></li>
-
-                    </>
-                  )}
-                </ul>
-                <form className="d-flex">
-                  <button className="btn btn-outline-dark" type="button" onClick={handleCartButtonClick}>
-                    <i className="bi-cart-fill me-1"></i>
-                    Cart
-                    <span className="badge bg-dark text-white ms-1 rounded-pill">{numberOfCartItem}</span>
-                  </button>
-                </form>
-              </div>
-            </div>
-          </nav>
-
-          <div className="container mt-4">
-            <Row>
-              <Col md={3}>
-                <Dropdown as={ButtonGroup}>
-                  <Dropdown.Toggle variant="outline-secondary" id="categoryDropdown">
-                    Select Category
-                  </Dropdown.Toggle>
-                  <Dropdown.Menu>
-                    {[['Guitar', 'Gitár'],
-                    ['PercussionInstrument', 'Ütős'],
-                    ['KeyboardInstrument', 'Billentyűs'],
-                    ['WindInstrument', 'Fúvós'],
-                    ['Bass', "Basszusgitár"],
-                    ['SoundTechnic', "Hangtechnika"],
-                    ['Merch', "Merch"]
-                    ].map((category, index) => (
-                      <Dropdown.Item
-                        key={index}
-                        onClick={() => handleCategoryChange(category[0])}
-                        active={selectedCategory === category[0]}
-                      >
-                        {category[1]}
-                      </Dropdown.Item>
-                    ))}
-                  </Dropdown.Menu>
-                </Dropdown>
-              </Col>
-              <Col md={9}>
-                <div className="input-group">
-                  {filteredProducts.length > 0 && (
-                    <Dropdown show={true}>
-                      <Dropdown.Toggle variant="outline-secondary" id="dropdown-basic">
-                        Select a product
-                      </Dropdown.Toggle>
-                      <Dropdown.Menu>
-                        {filteredProducts.map(product => (
-                          <Dropdown.Item
-                            key={product.id}
-                            onClick={() => handleProductClick(product.id)}
-                          >
-                            {product.name}
-                          </Dropdown.Item>
-                        ))}
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  )}
-                  <input
-                    list="filteredProducts"
-                    type="text"
-                    className="form-control"
-                    placeholder="Search..."
-                    value={searchTerm}
-                    onChange={handleSearchChange}
-                  />
-                </div>
-              </Col>
-            </Row>
-            <header style={{backgroundImage: "url('src/assets/mainpage music store.jpg')", backgroundSize: 'cover', backgroundPosition: 'center', height: '400px'}}>
-              <div className="container px-4 px-lg-5 my-5">
-                <div className="text-center text-white">
-                  <h1 className="display-4 fw-bolder"  style={{textShadow:"-moz-initial"}}>Music Shop</h1>
-                  <p className="lead fw-normal text-white ">Hangszerek széles választéka</p>
-                </div>
-              </div>
-              <div lang='en'>
-              
-                {/* ... (your existing JSX) */}
-
-                <section className="py-5">
-
-                  <div >
-
-                  </div>
-
-                </section>
-              </div>
-            </header>
-            <section className="py-5">
-              <div >
-                <DiscountedProducts products={products} handleProductClick={handleProductClick} />
-
-              </div>
-              <div className="container px-4 px-lg-5 mt-5">
-                <div className="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                  {products.map((product, index) => (
-                    <div key={index} className="col mb-5">
-                      <div className="card h-100">
-
-                        <img className="card-img-top" onClick={() => handleProductClick(product.id)} src={product.image ? `data:image/jpeg;base64,${product.image}` : 'default-image-url'} alt="..." />
-                        <div className="card-body p-4">
-                          <div className="text-center">
-                            <h5 className="fw-bolder" onClick={() => handleProductClick(product.id)}>{product.name}</h5>
-                            {product.price}$
-                          </div>
-                        </div>
-                        <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                          <div className="text-center">
-                            {/* <a className="btn btn-outline-dark mt-auto" href="#">
-                        Add to cart
-                      </a> */}
-                           {product.quantity > 0 && <button className="btn btn-outline-dark mt-auto" type="button" onClick={() => handleAddToCartButtonClick(product.id)}>Add to cart</button> }
-                           {product.quantity === 0 && <p style={{ color: 'red' }}>No more products in stock</p>}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </section>
+      confirmAlert({
+        title: 'Product added to the cart',
+        message: 'Move to the cart or continue shopping?',
+        buttons: [
+          {
+            label: 'Cart',
+            onClick: () => navigate("/cart"),
+          },
+          {
+            label: 'Shopping',
+          },
+        ],
+        customUI: ({ onClose }) => (
+          <div className="custom-ui">
+            <h1>Product added to the cart</h1>
+            <p>Move to the cart or continue shopping?</p>
+            <button onClick={() => { onClose(); navigate("/cart"); }}>Cart</button>
+            <button onClick={onClose}>Shopping</button>
           </div>
-        </body>
-      </div>
-    );
+        ),
+      });
+    } catch (error) {
+      console.error("Error fetching product details:", error);
+    }
   };
 
-  export default MainPage;
+  useEffect(() => {
+    filterUniqueProductsInLocaleStorage()
+  }, []);
+
+  function filterUniqueProductsInLocaleStorage() {
+    const localStorageCart = localStorage.getItem('wantedProducts');
+    if (localStorageCart) {
+      const parsedCart = JSON.parse(localStorageCart);
+      console.log("parsed " + parsedCart[0])
+      const groupedCart: Record<string, Product> = {};
+      parsedCart.forEach((product: Product) => {
+        if (!groupedCart[product.id]) {
+          groupedCart[product.id] = { ...product, quantity: 1 };
+        } else {
+          groupedCart[product.id].quantity += 1;
+        }
+      })
+      const updatedCart: Product[] = Object.values(groupedCart);
+
+      setNumberOfCartItems(updatedCart.length);
+    }
+  }
+
+  return (
+
+
+
+    <div>
+      <Header />
+      <div>
+      <div
+          style={{ backgroundImage: "url('src/assets/mainpage music store.jpg')", backgroundSize: 'cover', backgroundPosition: 'center', height: '400px' }}
+          className="flex flex-col justify-center items-center h-full"
+        >
+          <h1 className="text-4xl lg:text-6xl font-bold text-white" style={{ textShadow: '-moz-initial' }}>Music Shop</h1>
+          <p className="text-lg lg:text-xl font-normal text-white lg:max-w-lg text-center">Hangszerek széles választéka</p>
+        </div>
+        <div >
+          <DiscountedProducts products={products} handleProductClick={handleProductClick} />
+        </div>
+        <div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4">
+            {products.map((product) => (
+              <div key={product.id} className="bg-white rounded-lg p-4 shadow-md">
+                <img onClick={() => handleProductClick(product.id)} src={product.image ? `data:image/jpeg;base64,${product.image}` : 'default-image-url'} alt="..." />
+                <h3 className="text-lg font-semibold mb-2" onClick={() => handleProductClick(product.id)}>{product.name}</h3>
+                <p className="text-gray-700">${product.price}$</p>
+                {product.quantity > 0 && <button className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded mt-4" type="button" onClick={() => handleAddToCartButtonClick(product.id)}>Add to Cart</button>}
+                {product.quantity === 0 && <p className='text-red-500'>No more products in stock</p>}
+              </div>
+            ))}
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  );
+};
+
+export default MainPage;
