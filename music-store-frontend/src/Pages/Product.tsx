@@ -166,49 +166,113 @@ selectedProduct.quantity = quantity
   };
 
   return (
-    <div>
-      <Header />
-      {product ? (
-        <div className="container mt-4">
-          <div className="row">
-            <div className="col-md-6">
-              {/* Product Image */}
-              <img
-                src={`data:image/png;base64,${product.image}`}
-                alt={product.name}
-                style={{ maxWidth: '100%', height: 'auto', width: '60%' }}
-              />
-            </div>
-            <div className="col-md-6">
-              {/* Product Details */}
-              <h1>{product.name}</h1>
-              <p>Brand: {product.brand}</p>
-              <p>Price: {product.price}</p>
-
-              {/* Quantity Controls */}
-             { producitQuantityInTheShop > 0 && <div className="d-flex align-items-center">
-                <button className="btn btn-outline-dark me-2" onClick={handleDecreaseQuantity}>-</button>
-                <p>{quantity}</p>
-                <button className="btn btn-outline-dark ms-2" onClick={handleIncreaseQuantity}>+</button>
-              </div> }
-
-              {producitQuantityInTheShop === 0 && <div>
-                <p style={{ color: 'red' }}>No more products in stock</p>
-                </div>}
-
-              {/* Add to Cart Button */}
-             {producitQuantityInTheShop > 0 && <button className="btn btn-dark mt-3" onClick={handleAddToCart}>
-                Add to Cart
-              </button>}
-
-              {maxQuantityReached && <p style={{ color: 'red' }}>No more products in stock</p>}
-            </div>
-          </div>
-        </div>
-      ) : (
-        <p>Loading...</p>
+  //   <div>
+  //   <Header />
+  //   {product ? (
+  //     <div className="container mt-4">
+  //       <div className="flex flex-wrap items-center">
+  //         {/* Product Image */}
+  //         <div className="w-full md:w-1/2 mb-4 md:mb-0">
+  //           <img
+  //             src={`data:image/png;base64,${product.image}`}
+  //             alt={product.name}
+  //             className="max-w-full h-auto w-60"
+  //           />
+  //         </div>
+  //         {/* Product Details and Quantity Controls */}
+  //         <div className="w-full md:w-1/2">
+  //           <h1 className="text-xl font-bold mb-2">{product.name}</h1>
+  //           <p>Brand: {product.brand}</p>
+  //           <p>Price: {product.price}</p>
+    
+  //           {/* Quantity Controls */}
+  //           {producitQuantityInTheShop > 0 && (
+  //             <div className="flex items-center">
+  //               <button className="btn btn-outline-dark me-2" onClick={handleDecreaseQuantity}>-</button>
+  //               <p>{quantity}</p>
+  //               <button className="btn btn-outline-dark ms-2" onClick={handleIncreaseQuantity}>+</button>
+  //             </div>
+  //           )}
+    
+  //           {producitQuantityInTheShop === 0 && (
+  //             <div>
+  //               <p className="text-red-500">No more products in stock</p>
+  //             </div>
+  //           )}
+    
+  //           {/* Add to Cart Button */}
+  //           {producitQuantityInTheShop > 0 && (
+  //             <button className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded mt-4" onClick={handleAddToCart}>
+  //               Add to Cart
+  //             </button>
+  //           )}
+    
+  //           {maxQuantityReached && (
+  //             <p className="text-red-500">No more products in stock</p>
+  //           )}
+  //         </div>
+  //       </div>
+  //     </div>
+  //   ) : (
+  //     <p>Loading...</p>
+  //   )}
+  // </div>
+<div>
+  <Header />
+  <div className='m-4 grid grid-cols-2 gap-4'>
+    {/* Image Section */}
+    <div className='col-span-1'>
+      {product && (
+        <img
+          src={`data:image/png;base64,${product.image}`}
+          alt={product.name}
+          className="max-w-full h-auto w-60"
+        />
       )}
     </div>
+    {/* Product Details Section */}
+    <div className='col-span-1'>
+      {product && (
+        <>
+          <h1 className="text-xl font-bold mb-2">{product.name}</h1>
+          <p>Brand: {product.brand}</p>
+          <p>Price: {product.price}</p>
+          
+          {/* Quantity Controls */}
+          {producitQuantityInTheShop > 0 && (
+            <div className="flex items-center">
+              <button className="bg-white text-gray-800 border border-gray-800 hover:bg-gray-700  px-4 py-2 rounded-md mr-2" onClick={handleDecreaseQuantity}>-</button>
+              <p>{quantity}</p>
+              <button className="bg-white text-gray-800 border border-gray-800 hover:bg-gray-700  px-4 py-2 rounded-md mr-2" onClick={handleIncreaseQuantity}>+</button>
+            </div>
+          )}
+
+          {producitQuantityInTheShop === 0 && (
+            <div>
+              <p className="text-red-500">No more products in stock</p>
+            </div>
+          )}
+
+          {/* Add to Cart Button */}
+          {producitQuantityInTheShop > 0 && (
+            <button className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded mt-4" onClick={handleAddToCart}>
+              Add to Cart
+            </button>
+          )}
+
+          {maxQuantityReached && (
+            <p className="text-red-500">No more products in stock</p>
+          )}
+        </>
+      )}
+      {product === null && (
+        <p className="text-red-500">Product not found</p>
+      )}
+    </div>
+  </div>
+</div>
+
+  
   );
 }
 
