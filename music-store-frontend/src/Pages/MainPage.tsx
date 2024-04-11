@@ -31,6 +31,14 @@ import Header from './Header';
 //   productQuantity: number;
 // }
 
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      'df-messenger': any;
+      'df-messenger-chat-bubble': any;
+    }
+  }
+}
 
 const MainPage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('');
@@ -329,35 +337,46 @@ const MainPage: React.FC = () => {
 
 
     <div>
-      <Header />
-      <div>
+    <Header />
+    <div>
       <div
-          style={{ backgroundImage: "url('src/assets/mainpage music store.jpg')", backgroundSize: 'cover', backgroundPosition: 'center', height: '400px' }}
-          className="flex flex-col justify-center items-center h-full"
-        >
-          <h1 className="text-4xl lg:text-6xl font-bold text-white" style={{ textShadow: '-moz-initial' }}>Music Shop</h1>
-          <p className="text-lg lg:text-xl font-normal text-white lg:max-w-lg text-center">Hangszerek széles választéka</p>
-        </div>
-        <div >
-          <DiscountedProducts products={products} handleProductClick={handleProductClick} />
-        </div>
-        <div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4">
-            {products.map((product) => (
-              <div key={product.id} className="bg-white rounded-lg p-4 shadow-md">
-                <img onClick={() => handleProductClick(product.id)} src={product.image ? `data:image/jpeg;base64,${product.image}` : 'default-image-url'} alt="..." />
-                <h3 className="text-lg font-semibold mb-2" onClick={() => handleProductClick(product.id)}>{product.name}</h3>
-                <p className="text-gray-700">${product.price}$</p>
-                {product.quantity > 0 && <button className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded mt-4" type="button" onClick={() => handleAddToCartButtonClick(product.id)}>Add to Cart</button>}
-                {product.quantity === 0 && <p className='text-red-500'>No more products in stock</p>}
-              </div>
-            ))}
-          </div>
-
-        </div>
-
+        style={{ backgroundImage: "url('src/assets/mainpage music store.jpg')", backgroundSize: 'cover', backgroundPosition: 'center', height: '400px' }}
+        className="flex flex-col justify-center items-center h-full"
+      >
+        <h1 className="text-4xl lg:text-6xl font-bold text-white" style={{ textShadow: '-moz-initial' }}>Music Shop</h1>
+        <p className="text-lg lg:text-xl font-normal text-white lg:max-w-lg text-center">Hangszerek széles választéka</p>
       </div>
+      <div >
+        <DiscountedProducts products={products} handleProductClick={handleProductClick} />
+      </div>
+      <div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4">
+          {products.map((product) => (
+            <div key={product.id} className="bg-white rounded-lg p-4 shadow-md">
+              <img onClick={() => handleProductClick(product.id)} src={product.image ? `data:image/jpeg;base64,${product.image}` : 'default-image-url'} alt="..." />
+              <h3 className="text-lg font-semibold mb-2" onClick={() => handleProductClick(product.id)}>{product.name}</h3>
+              <p className="text-gray-700">${product.price}$</p>
+              {product.quantity > 0 && <button className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded mt-4" type="button" onClick={() => handleAddToCartButtonClick(product.id)}>Add to Cart</button>}
+              {product.quantity === 0 && <p className='text-red-500'>No more products in stock</p>}
+            </div>
+          ))}
+        </div>
+      </div>
+      <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
+<div className="fixed bottom-16 right-16">
+      <df-messenger
+        project-id="musicstorebot"
+        agent-id="5fb20a94-a223-488e-91d4-23bd9aa364d3"
+        language-code="en"
+        max-query-length="-1">
+        <df-messenger-chat-bubble
+          chat-title="music_store_agent_bot">
+        </df-messenger-chat-bubble>
+      </df-messenger>
     </div>
+    </div>
+  </div>
+  
   );
 };
 
