@@ -17,6 +17,7 @@ import PaymentForm from './Pages/PaymentForm';
 import Upload from './Pages/Upload';
 import SuccessfulOrderPage from './Pages/SuccessfulOrderPage';
 import React from 'react';
+import ChatBox from './Pages/ChatBox';
 
 //import SuccessfulOrderPage from './Pages/SuccessfulOrderPage';
 
@@ -39,6 +40,7 @@ function App() {
         <Route path="/filloutform" element={<Elements stripe={stripePromise}><FillOutForm /></Elements>} />
         <Route path="/filloutform/order/:orderId" element={<OrderPage />} />
         <Route path="/successful-order" element={<SuccessfulOrderPage />} />
+        <Route path="/chat" element={<ChatBox />} />
         <Route path="/payment/:orderId" element={<Elements stripe={stripePromise}><PaymentForm /></Elements>} />
       <Route path="/upload" element={<Upload/>}></Route>
       </Routes>
