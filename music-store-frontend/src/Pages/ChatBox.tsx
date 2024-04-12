@@ -45,23 +45,25 @@ const ChatBox: React.FC = () => {
     return (
         <div className="fixed bottom-4 right-4">
             <button 
-                className="mt-4  bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline"
+                className="mt-4 bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline"
                 onClick={toggleChatBox}
             >
                 Chat
             </button>
             {isOpen && (
-                <div className="fixed bottom-28 right-4 w-64 h-80 bg-white p-4 shadow-lg rounded"> {/* Adjusted height here */}
-                    <button 
-                        className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 focus:outline-none"
-                        onClick={handleCloseChatBox}
-                    >
-                        <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M6.293 6.293a1 1 0 011.414 0L10 8.586l2.293-2.293a1 1 0 111.414 1.414L11.414 10l2.293 2.293a1 1 0 01-1.414 1.414L10 11.414l-2.293 2.293a1 1 0 01-1.414-1.414L8.586 10 6.293 7.707a1 1 0 010-1.414z" />
-                        </svg>
-                    </button>
-                    <div className="text-lg font-bold mb-2">Chat Box</div>
-                    <div className="h-56 overflow-y-auto"> {/* Adjusted height here */}
+                <div className="fixed bottom-28 right-4 w-64 h-80 bg-white shadow-lg rounded">
+                    <div className="bg-teal-500 text-white px-4 py-2 flex justify-between items-center rounded-t">
+                        <div className="text-lg font-bold">Chat Box</div>
+                        <button 
+                            className="text-gray-200 hover:text-gray-300 focus:outline-none"
+                            onClick={handleCloseChatBox}
+                        >
+                            <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M6.293 6.293a1 1 0 011.414 0L10 8.586l2.293-2.293a1 1 0 111.414 1.414L11.414 10l2.293 2.293a1 1 0 01-1.414 1.414L10 11.414l-2.293 2.293a1 1 0 01-1.414-1.414L8.586 10 6.293 7.707a1 1 0 010-1.414z" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div className="h-56 overflow-y-auto">
                         {messages.map((msg, index) => (
                             <div 
                                 key={index} 
@@ -71,8 +73,8 @@ const ChatBox: React.FC = () => {
                             </div>
                         ))}
                     </div>
-                    <div className="flex mt-9">
-                    <input 
+                    <div className="flex mt-2">
+                        <input 
                             type="text" 
                             value={message} 
                             onChange={handleMessageChange} 

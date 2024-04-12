@@ -26,6 +26,7 @@ const stripePromise = loadStripe('pk_test_51OaEV6CrCBDEIb4OSm45sChsKsWqyHBSp4QFS
 function App() {
   return (
     <Router>
+      <ChatBox/>
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/category/:category" element={<Category />} />
