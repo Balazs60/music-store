@@ -513,7 +513,7 @@ const GuestCart: React.FC = () => {
             </div>
           ))}
           {cart.length && (
-            <div className="flex justify-end items-center mt-8">
+            <div className="flex justify-end items-center mt-8 px-4">
               <div className="mr-4">
                 Total Price: <strong>{total}$</strong>
               </div>
