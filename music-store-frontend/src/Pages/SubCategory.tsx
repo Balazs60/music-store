@@ -1,32 +1,10 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import Slider from 'react-slider';
-//import '../musicStore.css'
 import Header from './Header';
 import { confirmAlert } from 'react-confirm-alert';
 import Product from './Product';
 import React, { useState, useEffect } from 'react';
 import '../output.css'
-
-
-import { Divider } from '@mui/material';
-
-
-
-
-// interface Product {
-//     id: string;
-//     name: string;
-//     color: string;
-//     price: number;
-//     brand: string;
-//     dtype: string;
-//     subCategoryId: string;
-//     numberOfStrings: number;
-//     numberOfSoundLayers: number;
-//     numberOfKeys: number;
-//     diameter: number;
-//     image:string
-// }
 
 
 function SubCategory() {
@@ -217,18 +195,18 @@ function SubCategory() {
           {
             label: 'Cart',
             onClick: () => navigate("/cart"),
-            className: 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2', // Add Tailwind classes for styling
+            className: 'bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded mr-2', 
           },
           {
             label: 'Shopping',
-            className: 'bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded', // Add Tailwind classes for styling
+            className: 'bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded', 
           },
         ],
         customUI: ({ onClose }) => (
           <div className="custom-ui">
             <h1 className="text-xl font-bold mb-4">Product added to the cart</h1> {/* Style the title text */}
             <p className="text-lg mb-4">Move to the cart or continue shopping?</p> {/* Style the message text */}
-            <button onClick={() => { onClose(); navigate("/cart"); }} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">Cart</button> {/* Style the "Cart" button */}
+            <button onClick={() => { onClose(); navigate("/cart"); }} className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded mr-2">Cart</button> {/* Style the "Cart" button */}
             <button onClick={onClose} className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Shopping</button> {/* Style the "Shopping" button */}
           </div>
         ),

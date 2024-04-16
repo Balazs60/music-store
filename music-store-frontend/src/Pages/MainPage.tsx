@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Dropdown, ButtonGroup, Row, Col } from 'react-bootstrap';
 import '../musicStore.css';
 import { Product } from './Products';
 import { confirmAlert } from 'react-confirm-alert';
@@ -31,19 +30,9 @@ import Header from './Header';
 //   productQuantity: number;
 // }
 
-declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      'df-messenger': any;
-      'df-messenger-chat-bubble': any;
-    }
-  }
-}
+
 
 const MainPage: React.FC = () => {
-  const [selectedCategory, setSelectedCategory] = useState<string>('');
-  const [searchTerm, setSearchTerm] = useState<string>('');
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
   const [numberOfCartItem, setNumberOfCartItems] = useState(0)
   const navigate = useNavigate();
@@ -84,22 +73,8 @@ const MainPage: React.FC = () => {
     fetchInstruments();
     updateNumberOfCartItems();
   }, []);
-  const handleLogout = () => {
 
-    localStorage.removeItem("token");
-    localStorage.removeItem("username");
-    localStorage.removeItem("wantedProducts");
 
-    navigate("/login");
-  };
-  const handleLogIn = () => {
-
-    localStorage.removeItem("token");
-    localStorage.removeItem("username");
-    localStorage.removeItem("wantedProducts");
-
-    navigate("/login");
-  };
 
   const fetchInstruments = () => {
     const token = localStorage.getItem("token");
@@ -149,29 +124,13 @@ const MainPage: React.FC = () => {
     }
   };
 
-  const handleCategoryChange = (category: string) => {
-    setSelectedCategory(category);
-    navigate(`/category/${category}`);
-  };
 
   const handleProductClick = (id: string) => {
     navigate(`/product/${id}`);
   };
 
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const searchTerm = event.target.value;
-    setSearchTerm(searchTerm);
 
-    const filteredProducts = products.filter(product =>
-      product.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
 
-    setFilteredProducts(filteredProducts);
-  };
-
-  const handleCartButtonClick = () => {
-    navigate('/cart');
-  };
 
   // const handleAddToCart = (productId: string) => {
   //   const token = localStorage.getItem("token");
@@ -290,17 +249,19 @@ const MainPage: React.FC = () => {
           {
             label: 'Cart',
             onClick: () => navigate("/cart"),
+            className: 'bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded mr-2', 
           },
           {
             label: 'Shopping',
+            className: 'bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded', 
           },
         ],
         customUI: ({ onClose }) => (
           <div className="custom-ui">
-            <h1>Product added to the cart</h1>
-            <p>Move to the cart or continue shopping?</p>
-            <button onClick={() => { onClose(); navigate("/cart"); }}>Cart</button>
-            <button onClick={onClose}>Shopping</button>
+            <h1 className="text-xl font-bold mb-4">Product added to the cart</h1> {/* Style the title text */}
+            <p className="text-lg mb-4">Move to the cart or continue shopping?</p> {/* Style the message text */}
+            <button onClick={() => { onClose(); navigate("/cart"); }} className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded mr-2">Cart</button> {/* Style the "Cart" button */}
+            <button onClick={onClose} className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Shopping</button> {/* Style the "Shopping" button */}
           </div>
         ),
       });
@@ -362,18 +323,6 @@ const MainPage: React.FC = () => {
           ))}
         </div>
       </div>
-      <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
-<div className="fixed bottom-16 right-16">
-      <df-messenger
-        project-id="musicstorebot"
-        agent-id="5fb20a94-a223-488e-91d4-23bd9aa364d3"
-        language-code="en"
-        max-query-length="-1">
-        <df-messenger-chat-bubble
-          chat-title="music_store_agent_bot">
-        </df-messenger-chat-bubble>
-      </df-messenger>
-    </div>
     </div>
   </div>
   
