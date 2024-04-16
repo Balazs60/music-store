@@ -586,20 +586,12 @@ video {
   position: relative;
 }
 
-.bottom-16 {
-  bottom: 4rem;
-}
-
 .bottom-28 {
   bottom: 7rem;
 }
 
 .bottom-4 {
   bottom: 1rem;
-}
-
-.right-16 {
-  right: 4rem;
 }
 
 .right-4 {
@@ -612,6 +604,10 @@ video {
 
 .col-span-2 {
   grid-column: span 2 / span 2;
+}
+
+.m-2 {
+  margin: 0.5rem;
 }
 
 .m-4 {
@@ -1063,11 +1059,6 @@ video {
 
 .filter {
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
-}
-
-.hover\:bg-blue-700:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(29 78 216 / var(--tw-bg-opacity));
 }
 
 .hover\:bg-gray-700:hover {
