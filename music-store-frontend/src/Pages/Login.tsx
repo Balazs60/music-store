@@ -1,11 +1,6 @@
 import { useState } from 'react';
-import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import Container from '@mui/material/Container';
-import { Grid, Paper} from '@mui/material';
 import React from 'react';
 
 
@@ -56,77 +51,43 @@ function Login() {
   };
 
   return (
-    <Container
-      style={{
-        height: '100vh',
-        backgroundColor: '#f5f5f5',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-around', // Adjusted to space-around
-      }}
-    >
-      <div>
-    
-
-        <Grid container style={{ maxWidth: '400px' }}>
-          <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            <Paper
-              elevation={3}
-              style={{
-                padding: '20px',
-                width: '100%',
-                background: '#fff',
-                borderRadius: '8px',
-              }}
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+      <div className="bg-white p-8 rounded-lg w-full max-w-md">
+        <h1 className="text-2xl mb-4 text-center">Login</h1>
+        <p className="mb-6 text-center">
+          Don't have an account?{' '}
+          <Link to="/register" className="text-teal-500">
+            Register
+          </Link>
+        </p>
+        {!isLoggedIn && (
+          <form onSubmit={handleLogin} className="flex flex-col gap-4">
+            <input
+              className="border rounded p-2"
+              type="text"
+              placeholder="Username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
+            <input
+              className="border rounded p-2"
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <button
+              type="submit"
+              className="bg-teal-500 hover:bg-teal-700 text-white p-2 rounded mt-4"
             >
-              <Typography variant="h4" style={{ marginBottom: '15px', color: '#333' }}>
-                Login
-              </Typography>
-              <Typography variant="subtitle1" style={{ marginBottom: '30px', color: '#666' }}>
-                Don't have an account?{' '}
-                <Link to={`/register`} style={{ color: '#007BFF', textDecoration: 'none' }}>
-                  Register
-                </Link>
-              </Typography>
-              {!isLoggedIn ? (
-                <form
-                  onSubmit={handleLogin}
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '16px',
-                  }}
-                >
-                  <TextField
-                    label="Username"
-                    variant="outlined"
-                    type="text"
-                    id="username"
-                    name="username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    required
-                  />
-                  <TextField
-                    label="Password"
-                    variant="outlined"
-                    type="password"
-                    id="password"
-                    name="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                  />
-                  <Button type="submit" variant="contained" color="primary" style={{ marginTop: '16px', background: '#007BFF' }}>
-                    Login
-                  </Button>
-                </form>
-              ) : null}
-            </Paper>
-          </Grid>
-        </Grid>
+              Login
+            </button>
+          </form>
+        )}
       </div>
-    </Container>
+    </div>
   );
 }
 

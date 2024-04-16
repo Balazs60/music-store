@@ -1,10 +1,4 @@
 import React, { useState } from 'react';
-import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import Grid from '@mui/material/Grid';
-import Container from '@mui/material/Container';
-import Paper from '@mui/material/Paper';
 import { Link } from 'react-router-dom';
 import { WantedProduct } from './WantedProduct';
 import { Order } from './Order';
@@ -142,120 +136,82 @@ const FillOutForm: React.FC = () => {
   }
 
   return (
-    <Container
-      style={{
-        height: '100vh',
-        backgroundColor: '#f5f5f5',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-around',
-      }}
-    >
-      <div>
-        <Grid container style={{ maxWidth: '400px' }}>
-          <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            <Paper
-              elevation={3}
-              style={{
-                padding: '20px',
-                width: '100%',
-                background: '#fff',
-                borderRadius: '8px',
-              }}
-            >
-              <Typography variant="h4" style={{ marginBottom: '15px', color: '#333' }}>
-                Billing Information
-              </Typography>
-              <Typography variant="subtitle1" style={{ marginBottom: '30px', color: '#666' }}>
-                Sign In{' '}
-                <Link to={`/login`} style={{ color: '#007BFF', textDecoration: 'none' }}>
-                  Log In
-                </Link>
-              </Typography>
-              <form onSubmit={checkBirthDateIsValid} style={{ width: '300px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                <TextField
-                  label="Name"
-                  variant="outlined"
-                  type="name"
-                  id="name"
-                  name="name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  required
-                />
-                <TextField
-                  label="Email"
-                  variant="outlined"
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-                <TextField
-                  label="Birth date"
-                  variant="outlined"
-                  type="date"
-                  id="birthDate"
-                  name=""
-                  value={birthDate}
-                  onChange={(e) => setBirthDate(e.target.value)}
-                  required
-                />
-                <TextField
-                  label="Phone number"
-                  variant="outlined"
-                  type="tel"
-                  id="phoneNumber"
-                  name="phoneNumber"
-                  value={phoneNumber}
-                  onChange={(e) => setPhoneNumber(e.target.value)}
-                  required
-                />
-                <TextField
-                  label="Post code"
-                  variant="outlined"
-                  type="text"
-                  id="postCode"
-                  name="postCode"
-                  value={postCode}
-                  onChange={(e) => setPostcode(e.target.value)}
-                  required
-                />
-                <TextField
-                  label="City"
-                  variant="outlined"
-                  type="text"
-                  id="city"
-                  name="city"
-                  value={city}
-                  onChange={(e) => setCity(e.target.value)}
-                  required
-                />
-                <TextField
-                  label="Street and house number"
-                  variant="outlined"
-                  type="text"
-                  id="streetAndHouseNumber"
-                  name="streetAndHouseNumber"
-                  value={streetAndHouseNumber}
-                  onChange={(e) => setStreetAndHouseNumber(e.target.value)}
-                  required
-                />
-                <div>
-                {orderError.length > 0  && <p style={{ color: 'red' }}>{orderError}</p>}
-                {birthDayError.length > 0  && <p style={{ color: 'red' }}>{birthDayError}</p>}
-                <Button type="submit" variant="contained" color="primary" style={{ marginTop: '16px' }}>
-                  Place Order
-                </Button>
-                </div>
-              </form>
-            </Paper>
-          </Grid>
-        </Grid>
-      </div>
-    </Container>
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+    <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+      <h1 className="text-2xl mb-4">Billing Information</h1>
+      <p className="text-gray-600 mb-6">
+        Sign In{' '}
+        <Link to={`/login`} className="text-teal-500">
+          Log In
+        </Link>
+      </p>
+      <form onSubmit={checkBirthDateIsValid} className="space-y-4">
+        <input
+          type="text"
+          placeholder="Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          className="border rounded-md p-2 w-full"
+          required
+        />
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="border rounded-md p-2 w-full"
+          required
+        />
+        <input
+          type="date"
+          placeholder="Birth date"
+          value={birthDate}
+          onChange={(e) => setBirthDate(e.target.value)}
+          className="border rounded-md p-2 w-full"
+          required
+        />
+        <input
+          type="tel"
+          placeholder="Phone number"
+          value={phoneNumber}
+          onChange={(e) => setPhoneNumber(e.target.value)}
+          className="border rounded-md p-2 w-full"
+          required
+        />
+        <input
+          type="text"
+          placeholder="Post code"
+          value={postCode}
+          onChange={(e) => setPostcode(e.target.value)}
+          className="border rounded-md p-2 w-full"
+          required
+        />
+        <input
+          type="text"
+          placeholder="City"
+          value={city}
+          onChange={(e) => setCity(e.target.value)}
+          className="border rounded-md p-2 w-full"
+          required
+        />
+        <input
+          type="text"
+          placeholder="Street and house number"
+          value={streetAndHouseNumber}
+          onChange={(e) => setStreetAndHouseNumber(e.target.value)}
+          className="border rounded-md p-2 w-full"
+          required
+        />
+        <div>
+          {orderError.length > 0 && <p className="text-red-500">{orderError}</p>}
+          {birthDayError.length > 0 && <p className="text-red-500">{birthDayError}</p>}
+          <button type="submit" className="bg-teal-500 hover:bg-teal-700 text-white rounded-md p-2 w-full">
+            Place Order
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
   );
 };
 

@@ -70,9 +70,9 @@ const PaymentForm = () => {
   }, [order]);
 
   return (
-    <div className="payment-form-container">
-      <div className='payment-form-box'>
-      {loading && <p>Loading...</p>}
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+      <div className='bg-white p-12 border-2 border-blue-500 rounded-lg w-full max-w-md flex flex-col items-center'>
+      {loading && <p className="text-center">Loading...</p>}
       {!loading && order && (
         <StripeCheckout
           stripeKey="pk_test_51ObJ8dGilE1or8vMZDVTt2gozAi1rRrpr1C1AgksSbt720nmat7GpnViTquDg0CWLCBRIZCfXUzOfx366b9m8Jb000CD1zhhtc"
