@@ -8,7 +8,6 @@ import { Order } from './Order';
 import { v4 as uuidv4 } from 'uuid';
 import { WantedProduct } from './WantedProduct';
 import { Member } from './Member';
-import css from './Cart.css'
 
 
 const GuestCart: React.FC = () => {
@@ -348,130 +347,10 @@ const GuestCart: React.FC = () => {
     setCart(updatedCart);
   };
   return (
-    //     <div className="cart-container">
-    //       <Header />
-    //       <h2>Your Shopping Cart</h2>
-    //       {cart.length === 0 ? (
-    //         <p>Your cart is empty</p>
-    //       ) : (
-    //         <div className="cart-layout">
-    //           <div className="cart-items">
-    //             {cart.map(item => (
-    //               <div key={item.id} className="cart-item-box">
-    //                 <img
-    //                   src={`data:image/png;base64,${item.image}`}
-    //                   alt={item.name}
-    //                   className="cart-item-image"
-    //                 />
-    //                 <div className="cart-item-details">
-    //                   <div className="detail">
-    //                     <div>Name:</div>
-    //                     <div><strong>{item.name}</strong></div>
-    //                   </div>
-    //                   <div className="detail">
-    //                     <div>Brand:</div>
-    //                     <div>{item.brand}</div>
-    //                   </div>
-    //                   <div className="detail">
-    //                     <div>Price:</div>
-    //                     <div>${item.price * item.quantity}</div>
-    //                   </div>
-    //                   <div className="detail">
-    //                     <div>Quantity:</div>
-    //                     <div>{item.quantity}</div>
-    //                     <button onClick={() => handleIncreaseQuantity(item.id)}>+</button>
-    //                     <button onClick={() => handleDecreaseQuantity(item.id)}>-</button>
-    //                   </div>
-    //                 </div>
-    //                 <button onClick={() => submitDelete(item.id)}>Delete</button>
-    //               </div>
-    //             ))}
-    //             <div className="cart-summary">
-    //               <strong>Total Price: ${total}</strong>
-    //             </div>
-    //           </div>
-    //           <div className="cica"></div>
-    //             <div className="delivery-options-container">
-    //             <div className="delivery-options">
-    //   <h3>Delivery Options</h3>
-    //   <div className="option">
-    //     <label>
-    //       <input
-    //         type="radio"
-    //         value="delivery"
-    //         checked={selectedDeliveryOption === 'delivery'}
-    //         onChange={() => handleOptionChange('delivery')}
-    //       />
-    //       <span>Delivery with GLS</span>
-    //     </label>
-    //   </div>
-    //   <div className="option">
-    //     <label>
-    //       <input
-    //         type="radio"
-    //         value="pickUpPoint"
-    //         checked={selectedDeliveryOption === 'pickUpPoint'}
-    //         onChange={() => handleOptionChange('pickUpPoint')}
-    //       />
-    //       <span>Pick Up Point</span>
-    //     </label>
-    //   </div>
-    //   <div className="option">
-    //     <label>
-    //       <input
-    //         type="radio"
-    //         value="pickUpAtShop"
-    //         checked={selectedDeliveryOption === 'pickUpAtShop'}
-    //         onChange={() => handleOptionChange('pickUpAtShop')}
-    //       />
-    //       <span>Pick Up at the Shop</span>
-    //     </label>
-    //   </div>
-    //   {deliveryOptionError && (
-    //     <p className="error-message">{deliveryOptionError}</p>
-    //   )}
-    // </div>
-
-    //           </div>
-    //         </div>
-    //       )}
-    //       <div className="checkout-options">
-    //         <h3>Select Payment</h3>
-    //         <div>
-    //           <label>
-    //             <input
-    //               type="radio"
-    //               value="cash"
-    //               checked={selectedPaymentOption === 'cash'}
-    //               onChange={() => handlePaymentChange('cash')}
-    //             />
-    //             Cash
-    //           </label>
-    //         </div>
-    //         <div>
-    //           <label>
-    //             <input
-    //               type="radio"
-    //               value="card"
-    //               checked={selectedPaymentOption === 'card'}
-    //               onChange={() => handlePaymentChange('card')}
-    //             />
-    //             Card
-    //           </label>
-    //         </div>
-    //       </div>
-    //       <div>
-    //         {paymentOptionError && (
-    //           <p style={{ color: 'red', marginTop: '10px' }}>{paymentOptionError}</p>
-    //         )}
-    //       </div>
-    //       <button className="pay-button" onClick={handlePayment}>
-    //         Pay Now
-    //       </button>
-    //     </div>
+  
     <div>
       <Header />
-      <div className='m-4 grid grid-cols-3 gap-4'>
+      <div className='m-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4'>
         <div className='col-span-2'>
           {cart.length ?
             <h2 className='m-2'>Your shopping cart</h2>
@@ -479,7 +358,7 @@ const GuestCart: React.FC = () => {
             <h2 className='m-2'>Your shopping cart is empty</h2>
           }
           {cart.map(item => (
-            <div key={item.id} className="grid grid-cols-6 bg-white rounded-lg p-4 shadow-md mb-4">
+            <div key={item.id} className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-6 bg-white rounded-lg p-4 shadow-md mb-4">
               <div className='col-span-1 gap-4'>
                 <img
                   src={`data:image/png;base64,${item.image}`}

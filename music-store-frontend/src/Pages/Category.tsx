@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from './Header';
 import React from 'react';
+import SubCategory from './SubCategory';
 
 
 
@@ -57,7 +58,7 @@ function Category() {
     return (
         <div>
           <Header/>
-            <h1>{category}</h1>
+            {/* <h1>{category}</h1>
             <section className="py-5">
         <div className="container px-4 px-lg-5 mt-5">
           <div className="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
@@ -75,7 +76,7 @@ function Category() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
             {/* <ul>
                 {subCategories.map((subCategory, index) => (
                     <li key={index} onClick={() => handleSubCategoryClick(subCategory.id)}>
@@ -83,6 +84,16 @@ function Category() {
                     </li>
                 ))}
             </ul> */}
+            <div>
+              <div className='grid gird-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:gird-cols-4 gap-4 m-4 '>
+                {subCategories.map((subcategory,index) => (
+                  <div key={index} className='bg-white rounded-lg p-4 shadow md'>
+                                      <img className="card-img-top" onClick={() => handleSubCategoryClick(subcategory.id)} src={subcategory.image ? `data:image/jpeg;base64,${subcategory.image}` : 'default-image-url'} alt="..." />
+                                      <h5 className="text-lg font semibold mb2 text-center mt-4" onClick={() => handleSubCategoryClick(subcategory.id)}>{subcategory.name}</h5>
+                  </div>
+                ))}
+              </div>
+            </div>
         </div>
     );
 }

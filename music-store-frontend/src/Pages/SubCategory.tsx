@@ -221,7 +221,7 @@ function SubCategory() {
   return (
     <div>
     <Header />
-    <div className='m-4 grid grid-cols-3 gap-4'>
+    <div className='m-4 grid grid-cols-1 md:grid-cols-3 gap-4'>
       <div className='col-span-1'>
       <div className="bg-gray-100 p-4 rounded-lg mb-4 ">
         {/* Brand filter checkboxes */}
@@ -287,7 +287,7 @@ function SubCategory() {
       </div>
       {/* Product listings */}
       <div className='col-span-2 gap-4'>
-        <div className="grid  md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {filterProductsByBrand(filteredProducts).map(product => (
             <div key={product.id} className="bg-white rounded-lg p-4 shadow-md">
               <img onClick={() => handleProductClick(product.id)} src={product.image ? `data:image/jpeg;base64,${product.image}` : 'default-image-url'} alt="..." />
