@@ -11,12 +11,10 @@ public class ChatController {
 
 
     private final ChatBotService chatBotService;
-    private MessageDto messageDto;
 
     @Autowired
-    public ChatController(ChatBotService chatBotService, MessageDto messageDto) {
+    public ChatController(ChatBotService chatBotService) {
         this.chatBotService = chatBotService;
-        this.messageDto = messageDto;
     }
 
     @PostMapping("/send-message")

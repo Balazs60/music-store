@@ -305,7 +305,7 @@ const MainPage: React.FC = () => {
         className="flex flex-col justify-center items-center h-full"
       >
         <h1 className="text-4xl lg:text-6xl font-bold text-white" style={{ textShadow: '-moz-initial' }}>Music Shop</h1>
-        <p className="text-lg lg:text-xl font-normal text-white lg:max-w-lg text-center">Hangszerek széles választéka</p>
+        <p className="text-lg lg:text-xl font-normal text-white lg:max-w-lg text-center">Wide range of instruments</p>
       </div>
       <div >
         <DiscountedProducts products={products} handleProductClick={handleProductClick} />

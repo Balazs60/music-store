@@ -234,15 +234,15 @@ selectedProduct.quantity = quantity
     <div className='col-span-1'>
       {product && (
         <>
-          <h1 className="text-xl font-bold mb-2">{product.name}</h1>
-          <p>Brand: {product.brand}</p>
-          <p>Price: {product.price}</p>
+          <h1 className="text-xl font-bold m-2">{product.name}</h1>
+          <p className='m-2'>Brand: {product.brand}</p>
+          <p className='m-2'>Price: {product.price}</p>
           
           {/* Quantity Controls */}
           {producitQuantityInTheShop > 0 && (
             <div className="flex items-center">
               <button className="bg-white text-gray-800 border border-gray-800 hover:bg-gray-700  px-4 py-2 rounded-md mr-2" onClick={handleDecreaseQuantity}>-</button>
-              <p>{quantity}</p>
+              <p className='m-2'>{quantity}</p>
               <button className="bg-white text-gray-800 border border-gray-800 hover:bg-gray-700  px-4 py-2 rounded-md mr-2" onClick={handleIncreaseQuantity}>+</button>
             </div>
           )}
