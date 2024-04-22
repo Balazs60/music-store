@@ -184,121 +184,6 @@ function Header() {
   }
 
   return (
-    //  <nav className="bg-white shadow-lg">
-    //       <div className="container mx-auto px-4 lg:px-5 flex justify-between items-center">
-    //         <div className="mt-4 mb-4">
-    //           <ul className="flex items-center space-x-8">
-    //             <li>
-    //               <button className="mr-5 text-gray-800 focus:outline-none" onClick={handeleHomeButtonClick}>
-    //                 Home
-    //               </button>
-    //             </li>
-    //             <li>
-    //               <button className="mr-5 text-gray-800 focus:outline-none" onClick={() => navigate('/about')}>
-    //                 About
-    //               </button>
-    //             </li>
-    //             <li>
-    //               <button className="mr-5 text-gray-800 focus:outline-none" onClick={() => navigate('/contact')}>
-    //                 Contact
-    //               </button>
-    //             </li>
-    //             {token ? (
-    //               <li>
-    //                 <button className="mr-5 text-gray-800 focus:outline-none" onClick={handleLogout}>
-    //                   Log Out
-    //                 </button>
-    //               </li>
-    //             ) : (
-    //               <li>
-    //                 <button className="mr-5 text-gray-800 focus:outline-none" onClick={handleLogIn}>
-    //                   Log In
-    //                 </button>
-    //               </li>
-    //             )}
-    //             {roles && roles.includes("ROLE_ADMIN") && (
-    //               <li>
-    //                 <button className="mr-5 text-gray-800 focus:outline-none" onClick={() => navigate('/discount')}>
-    //                   Discount
-    //                 </button>
-    //               </li>
-    //             )}
-    //             {roles && roles.includes("ROLE_ADMIN") && (
-    //               <li>
-    //                 <button className="mr-5 text-gray-800 focus:outline-none" onClick={() => navigate('/upload')}>
-    //                   Upload new product
-    //                 </button>
-    //               </li>
-    //             )}
-    //           </ul>
-    //         </div>
-    //         <div>
-    //           <button className="flex items-center bg-white text-gray-800 rounded-full focus:outline-none" type="button" onClick={handleCartButtonClick}>
-    //             <i className="bi-cart-fill"></i>
-    //             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-    //               <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
-    //             </svg>
-    //             Cart
-    //             <span className="bg-gray-800 text-white px-2 py-1 ml-1 rounded-full">{numberOfCartItem}</span>
-    //           </button>
-    //         </div>
-    //       </div>
-    //       <div className="container mt-4 mx-auto px-4 lg:px-5">
-    //         <div className="flex flex-wrap -mx-4">
-    //           <div className="w-full lg:w-1/4 px-4">
-    //             <div className="relative">
-    //               <select
-    //                 className="block w-full h-9 py-3 px-4 leading-tight focus:outline-none bg-gray-200 border-2 border-gray-300 border-solid focus:border-blue-500 mb-4"
-    //                 onChange={(e) => handleCategoryChange(e.target.value)}
-    //               >
-    //                 <option value="" disabled selected>
-    //                   Select Category
-    //                 </option>
-    //                 {[
-    //                   ['Guitar', 'Gitár'],
-    //                   ['PercussionInstrument', 'Ütős'],
-    //                   ['KeyboardInstrument', 'Billentyűs'],
-    //                   ['WindInstrument', 'Fúvós'],
-    //                   ['Bass', "Basszusgitár"],
-    //                   ['SoundTechnic', "Hangtechnika"],
-    //                   ['Merch', "Merch"]
-    //                 ].map(([category, translation], index) => (
-    //                   <option key={index} value={category}>
-    //                     {translation}
-    //                   </option>
-    //                 ))}
-    //               </select>
-    //             </div>
-    //           </div>
-    //           <div className="w-full lg:w-3/4 px-4">
-    //             <div className="relative">
-    //               {filteredProducts.length > 0 && (
-    //                 <select
-    //                   className="block w-full h-9 py-3 px-4 leading-tight focus:outline-none bg-gray-200 border-2 border-gray-300 border-solid focus:border-blue-500 mb-4"
-    //                   onChange={(e) => handleProductClick(e.target.value)}
-    //                 >
-    //                   <option value="" disabled selected>
-    //                     Select a product
-    //                   </option>
-    //                   {filteredProducts.map((product, index) => (
-    //                     <option key={index} value={product.id}>
-    //                       {product.name}
-    //                     </option>
-    //                   ))}
-    //                 </select>
-    //               )}
-    //               <input
-    //                 type="text"
-    //                 className="block w-full h-9 py-3 px-4 leading-tight focus:outline-none bg-gray-200 border-2 border-gray-300 border-solid focus:border-blue-500 mb-4"
-    //                 placeholder="Search..."
-    //                 value={searchTerm}
-    //                 onChange={handleSearchChange}
-    //               />
-    //             </div>
-    //           </div>
-    //         </div>
-    //       </div>
-    //     </nav> 
     <div>
       <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3'>
         <div className='-100 col-span-1'>
@@ -375,7 +260,7 @@ function Header() {
               <span className="bg-gray-800 text-white px-2 py-1 ml-1 rounded-full">{numberOfCartItem}</span>
             </button>
           </div>
-          <div className="mt-4 w-full lg:w-4/4 px-4">
+          {/* <div className="mt-4 w-full lg:w-4/4 px-4">
             <div className="relative">
               {filteredProducts.length > 0 && (
                 <select
@@ -400,7 +285,30 @@ function Header() {
                 onChange={handleSearchChange}
               />
             </div>
-          </div>
+          </div> */}
+          <div className="mt-4 w-full lg:w-4/4 px-4">
+              <div className="relative">
+             <input
+        type="text"
+        placeholder="Search products..."
+        value={searchTerm}
+        onChange={handleSearchChange}
+        className="block w-full h-9 py-3 px-4 leading-tight focus:outline-none bg-gray-200 border-2 border-gray-300 border-solid focus:border-blue-500 mb-4"
+      />
+      {searchTerm && (
+        <div className="absolute top-full left-0 w-full bg-white border rounded-md shadow-lg z-10">
+          {filteredProducts.map((product) => (
+            <div         onClick={() => handleProductClick(product.id)}
+              key={product.id}
+              className="px-4 py-2 cursor-pointer hover:bg-gray-200"
+            >
+              {product.name}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+    </div>
         </div>
       </div>
     </div>
