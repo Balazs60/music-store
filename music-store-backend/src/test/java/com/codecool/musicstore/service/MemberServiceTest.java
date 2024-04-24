@@ -3,6 +3,7 @@ package com.codecool.musicstore.service;
 import com.codecool.musicstore.Dao.CartItemDao;
 import com.codecool.musicstore.Dao.MemberDao;
 import com.codecool.musicstore.Dao.ProductDao;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -41,6 +42,10 @@ class MemberServiceTest {
         member = new Member();
     }
 
+    @AfterEach
+    void tearDown() throws Exception {
+        autoCloseable.close();
+    }
 
     @Test
     void getMembersChartByName() {
