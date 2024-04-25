@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../musicStore.css';
-import { Product } from './Products';
+import { Product, getDiscountPrice } from './Products';
 import { confirmAlert } from 'react-confirm-alert';
 
 
@@ -216,11 +216,11 @@ const MainPage: React.FC = () => {
           {
             label: 'Cart',
             onClick: () => navigate("/cart"),
-            className: 'bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded mr-2', 
+            className: 'bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded mr-2',
           },
           {
             label: 'Shopping',
-            className: 'bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded', 
+            className: 'bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded',
           },
         ],
         customUI: ({ onClose }) => (
@@ -262,7 +262,7 @@ const MainPage: React.FC = () => {
 
   const handleShowMoreProducts = () => {
     setProductsToShow(prev => prev + 20);
-    
+
     if (products.length <= productsToShow + 20) {
       setShowMoreButton(false);
     }
@@ -273,44 +273,45 @@ const MainPage: React.FC = () => {
 
 
     <div>
-    <Header />
-    <div>
-      <div
-        style={{ backgroundImage: "url('src/assets/mainpage music store.jpg')", backgroundSize: 'cover', backgroundPosition: 'center', height: '400px' }}
-        className="flex flex-col justify-center items-center h-full"
-      >
-        <h1 className="text-4xl lg:text-6xl font-bold text-white" style={{ textShadow: '-moz-initial' }}>Music Shop</h1>
-        <p className="text-lg lg:text-xl font-normal text-white lg:max-w-lg text-center">Wide range of instruments</p>
-      </div>
-      <div >
-        <DiscountedProducts products={products} handleProductClick={handleProductClick} />
-      </div>
+      <Header />
       <div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4">
-          {displayedProducts.map((product) => (
-            <div key={product.id} className="bg-white rounded-lg p-4 shadow-md">
-              <img className='cursor-pointer' onClick={() => handleProductClick(product.id)} src={product.image ? `data:image/jpeg;base64,${product.image}` : 'default-image-url'} alt="..." />
-              <h3 className="text-lg font-semibold mb-2 cursor-pointer" onClick={() => handleProductClick(product.id)}>{product.name}</h3>
-              <p className="text-gray-700">${product.price}$</p>
-              {product.quantity > 0 && <button className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded mt-4" type="button" onClick={() => handleAddToCartButtonClick(product.id)}>Add to Cart</button>}
-              {product.quantity === 0 && <p className='text-red-500'>No more products in stock</p>}
-            </div>
-          ))}
+        <div
+          style={{ backgroundImage: "url('src/assets/mainpage music store.jpg')", backgroundSize: 'cover', backgroundPosition: 'center', height: '400px' }}
+          className="flex flex-col justify-center items-center h-full"
+        >
+          <h1 className="text-4xl lg:text-6xl font-bold text-white" style={{ textShadow: '-moz-initial' }}>Music Shop</h1>
+          <p className="text-lg lg:text-xl font-normal text-white lg:max-w-lg text-center">Wide range of instruments</p>
         </div>
-        {showMoreButton && (
-          <div className=" mb-4 text-center mt-4">
-            <button
-              className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded"
-              onClick={handleShowMoreProducts}
-            >
-              Show more products
-            </button>
+        <div >
+          <DiscountedProducts products={products} handleProductClick={handleProductClick} handleAddToCartButtonClick={handleAddToCartButtonClick} />
+        </div>
+        <div>
+          <h2 className=" m-4 text-2xl font-bold text-center my-4">Our Products</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4">
+            {displayedProducts.map((product) => (
+              <div key={product.id} className="bg-white rounded-lg p-4 shadow-md">
+                <img className='cursor-pointer' onClick={() => handleProductClick(product.id)} src={product.image ? `data:image/jpeg;base64,${product.image}` : 'default-image-url'} alt="..." />
+                <h3 className="text-lg font-semibold mb-2 cursor-pointer" onClick={() => handleProductClick(product.id)}>{product.name}</h3>
+                <p className="text-gray-700">${getDiscountPrice(product)}$</p>
+                {product.quantity > 0 && <button className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded mt-4" type="button" onClick={() => handleAddToCartButtonClick(product.id)}>Add to Cart</button>}
+                {product.quantity === 0 && <p className='text-red-500'>No more products in stock</p>}
+              </div>
+            ))}
           </div>
-        )}
+          {showMoreButton && (
+            <div className=" mb-4 text-center mt-4">
+              <button
+                className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded"
+                onClick={handleShowMoreProducts}
+              >
+                Show more products
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </div>
-  </div>
-  
+
   );
 };
 

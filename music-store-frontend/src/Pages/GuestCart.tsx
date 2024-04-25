@@ -8,6 +8,7 @@ import { Order } from './Order';
 import { v4 as uuidv4 } from 'uuid';
 import { WantedProduct } from './WantedProduct';
 import { Member } from './Member';
+import { getDiscountPrice } from './Products';
 
 
 const GuestCart: React.FC = () => {
@@ -16,7 +17,7 @@ const GuestCart: React.FC = () => {
   const location = useLocation();
   const productOriginalPrice = location.state?.productOriginalPrice || null;
   // const producitQuantityInTheShop = location.state?.producitQuantityInTheShop || null;
-  const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const total = cart.reduce((acc, item) => acc + getDiscountPrice(item) * item.quantity, 0);
   const [member, setMember] = useState<Member | null>()
   const [selectedDeliveryOption, setSelectedDeliveryOption] = useState<string | null>(null);
   const [selectedPaymentOption, setSelectedPaymentOption] = useState<string | null>(null);
@@ -376,7 +377,7 @@ const GuestCart: React.FC = () => {
               </div>
               <div className='col-span-1'>
                 <div>Price: </div>
-                <div><strong>{item.price}</strong></div>
+                <div><strong>{getDiscountPrice(item)}</strong></div>
               </div>
               <div className='col-span-1'>
                 <div>Quantity: </div>
