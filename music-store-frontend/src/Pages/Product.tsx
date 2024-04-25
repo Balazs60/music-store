@@ -1,24 +1,25 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import Header from './Header';
 import React, { useState, useEffect } from 'react';
+import {Product, getDiscountPrice } from './Products';
 
 
 
-interface Product {
-  id: string;
-  name: string;
-  color: string;
-  price: number;
-  brand: string;
-  dtype: string;
-  subCategoryId: string;
-  numberOfStrings: number;
-  numberOfSoundLayers?: number;
-  numberOfKeys: number;
-  diameter: number;
-  image: string;
-  quantity: number;
-}
+// interface Product {
+//   id: string;
+//   name: string;
+//   color: string;
+//   price: number;
+//   brand: string;
+//   dtype: string;
+//   subCategoryId: string;
+//   numberOfStrings: number;
+//   numberOfSoundLayers?: number;
+//   numberOfKeys: number;
+//   diameter: number;
+//   image: string;
+//   quantity: number;
+// }
 
 function Product() {
   const { id } = useParams();
@@ -147,7 +148,6 @@ function Product() {
           product.id === selectedProduct.id ? { ...product, quantity: product.quantity + quantity } : product)
       } else {
 
-     // increaseQuantityIfProductIsAlreadyInTheCart(quantity)
 selectedProduct.quantity = quantity
 
        updatedWantedProducts = [...wantedProducts, selectedProduct];
@@ -166,57 +166,7 @@ selectedProduct.quantity = quantity
   };
 
   return (
-  //   <div>
-  //   <Header />
-  //   {product ? (
-  //     <div className="container mt-4">
-  //       <div className="flex flex-wrap items-center">
-  //         {/* Product Image */}
-  //         <div className="w-full md:w-1/2 mb-4 md:mb-0">
-  //           <img
-  //             src={`data:image/png;base64,${product.image}`}
-  //             alt={product.name}
-  //             className="max-w-full h-auto w-60"
-  //           />
-  //         </div>
-  //         {/* Product Details and Quantity Controls */}
-  //         <div className="w-full md:w-1/2">
-  //           <h1 className="text-xl font-bold mb-2">{product.name}</h1>
-  //           <p>Brand: {product.brand}</p>
-  //           <p>Price: {product.price}</p>
-    
-  //           {/* Quantity Controls */}
-  //           {producitQuantityInTheShop > 0 && (
-  //             <div className="flex items-center">
-  //               <button className="btn btn-outline-dark me-2" onClick={handleDecreaseQuantity}>-</button>
-  //               <p>{quantity}</p>
-  //               <button className="btn btn-outline-dark ms-2" onClick={handleIncreaseQuantity}>+</button>
-  //             </div>
-  //           )}
-    
-  //           {producitQuantityInTheShop === 0 && (
-  //             <div>
-  //               <p className="text-red-500">No more products in stock</p>
-  //             </div>
-  //           )}
-    
-  //           {/* Add to Cart Button */}
-  //           {producitQuantityInTheShop > 0 && (
-  //             <button className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded mt-4" onClick={handleAddToCart}>
-  //               Add to Cart
-  //             </button>
-  //           )}
-    
-  //           {maxQuantityReached && (
-  //             <p className="text-red-500">No more products in stock</p>
-  //           )}
-  //         </div>
-  //       </div>
-  //     </div>
-  //   ) : (
-  //     <p>Loading...</p>
-  //   )}
-  // </div>
+ 
 <div>
   <Header />
   <div className='m-4 grid grid-cols-2 gap-4'>
@@ -236,7 +186,7 @@ selectedProduct.quantity = quantity
         <>
           <h1 className="text-xl font-bold m-2">{product.name}</h1>
           <p className='m-2'>Brand: {product.brand}</p>
-          <p className='m-2'>Price: {product.price}</p>
+          <p className='m-2'>Price: {getDiscountPrice(product)}</p>
           
           {/* Quantity Controls */}
           {producitQuantityInTheShop > 0 && (

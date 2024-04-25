@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../musicStore.css';
-import { Product } from './Products';
+import { Product, getDiscountPrice } from './Products';
 import { confirmAlert } from 'react-confirm-alert';
 
 
@@ -291,7 +291,7 @@ const MainPage: React.FC = () => {
             <div key={product.id} className="bg-white rounded-lg p-4 shadow-md">
               <img className='cursor-pointer' onClick={() => handleProductClick(product.id)} src={product.image ? `data:image/jpeg;base64,${product.image}` : 'default-image-url'} alt="..." />
               <h3 className="text-lg font-semibold mb-2 cursor-pointer" onClick={() => handleProductClick(product.id)}>{product.name}</h3>
-              <p className="text-gray-700">${product.price}$</p>
+              <p className="text-gray-700">${getDiscountPrice(product)}$</p>
               {product.quantity > 0 && <button className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded mt-4" type="button" onClick={() => handleAddToCartButtonClick(product.id)}>Add to Cart</button>}
               {product.quantity === 0 && <p className='text-red-500'>No more products in stock</p>}
             </div>
