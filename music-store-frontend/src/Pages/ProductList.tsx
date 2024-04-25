@@ -54,34 +54,30 @@ const ProductList: React.FC<ProductListProps> = ({ products }) => {
 
   return (
     <section className="py-5">
-      <div className="container px-4 px-lg-5 mt-5">
-        <div className="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {products.map((product, index) => (
-            <div key={index} className="col mb-5">
-              <div className="card h-100">
+            <div key={index} className="flex flex-col items-center mb-5">
+              <div className="bg-white rounded-lg overflow-hidden shadow-md">
                 <img
-                  className="card-img-top"
+                  className="w-full"
                   src={product.image ? `data:image/jpeg;base64,${product.image}` : 'default-image-url'}
                   alt="..."
                 />
-                <div className="card-body p-4">
+                <div className="p-4">
                   <div className="text-center">
-                    <h5 className="fw-bolder">{product.name}</h5>
-                    Original Price: {product.price}$
-                    <br />
+                    <h5 className="font-semibold">{product.name}</h5>
+                    <p>Original Price: {product.price}$</p>
                     {/* Input field for discount percentage */}
                     <input
                       type="number"
                       placeholder="Discount %"
                       value={discounts[product.id] || ''}
                       onChange={(e) => handleDiscountChange(product, +e.target.value)}
+                      className="border p-2 mt-2 w-full"
                     />
-                  </div>
-                </div>
-                <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                  <div className="text-center">
                     <button
-                      className="btn btn-outline-dark mt-auto"
+                      className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded mt-4"
                       onClick={() => handleAddDiscountClick(product)}
                     >
                       Add discount

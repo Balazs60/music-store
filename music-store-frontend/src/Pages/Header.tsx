@@ -1,68 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Dropdown, ButtonGroup } from 'react-bootstrap';
 import '../musicStore.css';
 import { Product } from './Products';
 import '../output.css'
 
-// interface CartItem {
-//   id: string;
-//   member: string;
-//   product: {
-//     id: string;
-//     name: string;
-//     color: string;
-//     price: number;
-//     brand: string;
-//     dtype: string;
-//     subCategoryId: string;
-//     numberOfStrings: number;
-//     numberOfSoundLayers: number;
-//     numberOfKeys: number;
-//     diameter: number;
-//     image: string;
-//   };
-//   quantity: number;
-// }
+
 
 function Header() {
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
-  // const [cart, setCart] = useState<CartItem[]>([]);
   const [numberOfCartItem, setNumberOfCartItems] = useState(0)
+  const [showSearchResults, setShowSearchResults] = useState<boolean>(false);
   const navigate = useNavigate();
 
-  // const fetchCartData = () => {
-  //   const member = localStorage.getItem("username");
-  //   const token = localStorage.getItem("token");
-
-  //   const headers: Record<string, string> = token
-  //   ? { Authorization: `Bearer ${token}` }
-  //   : {};
-
-  //   fetch(`/api/cart/${member}`, { method: 'GET', headers: headers })
-  //     .then(response => {
-  //       if (!response.ok) {
-  //         throw new Error(`HTTP error! Status: ${response.status}`);
-  //       }
-  //       return response.json();
-  //     })
-  //     .then(data => {
-  //       console.log(data);
-  //       setCart(data);
-  //     })
-  //     .catch(error => {
-  //       console.error('Error fetching product details:', error);
-  //     });
-  // };
-
-  // useEffect(() => {
-  //   fetchCartData();
-  // }, []);
-
+  
   const token = localStorage.getItem("token");
   console.log("token" + token)
   const splitToken = token?.split(".") || [];
@@ -76,7 +30,7 @@ function Header() {
       console.log("decoded: ", decodedPayload);
 
       const parsedPayload = JSON.parse(decodedPayload);
-      roles = parsedPayload.Roles || ""; // Access the "Roles" claim
+      roles = parsedPayload.Roles || ""; 
 
       console.log("Roles: ", roles);
     } catch (error) {
@@ -162,6 +116,9 @@ function Header() {
 
   const handleProductClick = (id: string) => {
     navigate(`/product/${id}`);
+    setTimeout(() => {
+      setShowSearchResults(false);
+    }, 200);
   };
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -173,6 +130,8 @@ function Header() {
     );
 
     setFilteredProducts(filteredProducts);
+    setShowSearchResults(true);
+
   };
 
   const handleCartButtonClick = () => {
@@ -260,53 +219,32 @@ function Header() {
               <span className="bg-gray-800 text-white px-2 py-1 ml-1 rounded-full">{numberOfCartItem}</span>
             </button>
           </div>
-          {/* <div className="mt-4 w-full lg:w-4/4 px-4">
-            <div className="relative">
-              {filteredProducts.length > 0 && (
-                <select
-                  className="block w-full h-9 py-3 px-4 leading-tight focus:outline-none bg-gray-200 border-2 border-gray-300 border-solid focus:border-blue-500 mb-4"
-                  onChange={(e) => handleProductClick(e.target.value)}
-                >
-                  <option value="" disabled selected>
-                    Select a product
-                  </option>
-                  {filteredProducts.map((product, index) => (
-                    <option key={index} value={product.id}>
-                      {product.name}
-                    </option>
-                  ))}
-                </select>
-              )}
-              <input
-                type="text"
-                className="block w-full h-9 py-3 px-4 leading-tight focus:outline-none bg-gray-200 border-2 border-gray-300 border-solid focus:border-blue-500 mb-4"
-                placeholder="Search..."
-                value={searchTerm}
-                onChange={handleSearchChange}
-              />
-            </div>
-          </div> */}
           <div className="mt-4 w-full lg:w-4/4 px-4">
               <div className="relative">
-             <input
-        type="text"
-        placeholder="Search products..."
-        value={searchTerm}
-        onChange={handleSearchChange}
-        className="block w-full h-9 py-3 px-4 leading-tight focus:outline-none bg-gray-200 border-2 border-gray-300 border-solid focus:border-blue-500 mb-4"
-      />
-      {searchTerm && (
-        <div className="absolute top-full left-0 w-full bg-white border rounded-md shadow-lg z-10">
-          {filteredProducts.map((product) => (
-            <div         onClick={() => handleProductClick(product.id)}
-              key={product.id}
-              className="px-4 py-2 cursor-pointer hover:bg-gray-200"
-            >
-              {product.name}
-            </div>
-          ))}
-        </div>
-      )}
+              <input
+  type="text"
+  placeholder="Search products..."
+  value={searchTerm}
+  onChange={handleSearchChange}
+  className="block w-full h-9 py-3 px-4 leading-tight focus:outline-none bg-gray-200 border-2 border-gray-300 border-solid focus:border-blue-500 mb-4"
+   onBlur={() => setTimeout(() => {setShowSearchResults(false)},200)} // Hide search results on blur
+
+/>
+
+{showSearchResults && (
+  <div className="absolute top-full left-0 w-full bg-white border rounded-md shadow-lg z-10">
+    {filteredProducts.map((product) => (
+      <div
+        onClick={() => handleProductClick(product.id)}
+        key={product.id}
+        className="px-4 py-2 cursor-pointer hover:bg-gray-200"
+      >
+        {product.name}
+      </div>
+    ))}
+  </div>
+)}
+
     </div>
     </div>
         </div>

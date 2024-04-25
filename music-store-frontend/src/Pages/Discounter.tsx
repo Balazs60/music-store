@@ -43,16 +43,16 @@ const Discounter: React.FC = () => {
   };
 
   return (
-    <div>
-      <Row>
-        <Col>
-          <h2>Product List</h2>
-        </Col>
-      </Row>
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <Row className="mb-4">
+      <Col>
+        <h2 className="text-2xl font-bold">Product List</h2>
+      </Col>
+    </Row>
 
-      {/* Correct usage of ProductList */}
-      <ProductList products={products} onProductClick={handleProductClick} />
-    </div>
+    {/* Correct usage of ProductList */}
+    <ProductList products={products} onProductClick={handleProductClick} />
+  </div>
   );
 };
 

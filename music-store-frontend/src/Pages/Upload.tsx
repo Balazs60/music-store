@@ -120,14 +120,14 @@ const Upload: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="container mt-4">
-      <div className="mb-3">
-        <label className="form-label">Brand:</label>
-        <input type="text" className="form-control" name="brand" value={product.brand} onChange={handleInputChange} />
+    <form onSubmit={handleSubmit} className="container mx-auto mt-4">
+      <div className="mb-4">
+        <label className="block text-sm font-medium text-gray-700">Brand:</label>
+        <input type="text" className="form-input mt-1 block w-full border border-gray-300" name="brand" value={product.brand} onChange={handleInputChange} />
       </div>
-      <div className="mb-3">
-        <label className="form-label">Category:</label>
-        <select className="form-select" name="Category" value={product.dtype} onChange={handleCategoryChange}>
+      <div className="mb-4">
+        <label className="block text-sm font-medium text-gray-700">Category:</label>
+        <select className="form-select mt-1 block w-full border border-gray-300" name="Category" value={product.dtype} onChange={handleCategoryChange}>
           <option value="">Select Category</option>
           {categories.map(category => (
             <option key={category} value={category}>
@@ -136,9 +136,9 @@ const Upload: React.FC = () => {
           ))}
         </select>
       </div>
-      <div className="mb-3">
-        <label className="form-label">Subcategory:</label>
-        <select className="form-select" name="subCategoryId" value={product.subCategoryId} onChange={handleInputChange}>
+      <div className="mb-4">
+        <label className="block text-sm font-medium text-gray-700">Subcategory:</label>
+        <select className="form-select mt-1 block w-full border border-gray-300" name="subCategoryId" value={product.subCategoryId} onChange={handleInputChange}>
           <option value="">Select Subcategory</option>
           {subCategories.map(subCategory => (
             <option key={subCategory.id} value={subCategory.id}>
@@ -147,27 +147,29 @@ const Upload: React.FC = () => {
           ))}
         </select>
       </div>
-      <div className="mb-3">
-        <label className="form-label">Name:</label>
-        <input type="text" className="form-control" name="name" value={product.name} onChange={handleInputChange} />
+      <div className="mb-4">
+        <label className="block text-sm font-medium text-gray-700">Name:</label>
+        <input type="text" className="form-input mt-1 block w-full border border-gray-300" name="name" value={product.name} onChange={handleInputChange} />
       </div>
-      <div className="mb-3">
-        <label className="form-label">Price:</label>
-        <input type="number" className="form-control" name="price" value={product.price} onChange={handleInputChange} />
+      <div className="mb-4">
+        <label className="block text-sm font-medium text-gray-700">Price:</label>
+        <input type="number" className="form-input mt-1 block w-full border border-gray-300" name="price" value={product.price} onChange={handleInputChange} />
       </div>
-      <div className="mb-3">
-        <label className="form-label">Quantity:</label>
-        <input type="number" className="form-control" name="quantity" value={product.quantity} onChange={handleInputChange} />
+      <div className="mb-4">
+        <label className="block text-sm font-medium text-gray-700">Quantity:</label>
+        <input type="number" className="form-input mt-1 block w-full border border-gray-300" name="quantity" value={product.quantity} onChange={handleInputChange} />
       </div>
-      <div className="mb-3">
-        <label className="form-label">Color:</label>
-        <input type="text" className="form-control" name="color" value={product.color} onChange={handleInputChange} />
+      <div className="mb-4">
+        <label className="block text-sm font-medium text-gray-700">Color:</label>
+        <input type="text" className="form-input mt-1 block w-full border border-gray-300" name="color" value={product.color} onChange={handleInputChange} />
       </div>
-      <div className="mb-3">
-        <label className="form-label">Image:</label>
-        <input type="file" className="form-control" name="image" onChange={handleImageChange} />
+      <div className="mb-4">
+        <label className="block text-sm font-medium text-gray-700">Image:</label>
+        <input type="file" className="form-input mt-1 block w-full border border-gray-300" name="image" onChange={handleImageChange} />
       </div>
-      <button type="submit" className="btn btn-primary">Create Product</button>
+      <button type="submit" className="mb-4 bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded">
+        Create Product
+      </button>
     </form>
   );
 };
