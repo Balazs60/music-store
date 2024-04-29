@@ -18,6 +18,7 @@ import Upload from './Pages/Upload';
 import SuccessfulOrderPage from './Pages/SuccessfulOrderPage';
 import React from 'react';
 import ChatBox from './Pages/ChatBox';
+import {ContextProvider} from './Pages/Context';
 
 //import SuccessfulOrderPage from './Pages/SuccessfulOrderPage';
 
@@ -27,6 +28,7 @@ function App() {
   return (
     <Router>
       <ChatBox/>
+      <ContextProvider>
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/category/:category" element={<Category />} />
@@ -45,6 +47,7 @@ function App() {
         <Route path="/payment/:orderId" element={<Elements stripe={stripePromise}><PaymentForm /></Elements>} />
       <Route path="/upload" element={<Upload/>}></Route>
       </Routes>
+      </ContextProvider>
     </Router>
   );
 }

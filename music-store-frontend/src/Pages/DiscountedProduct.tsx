@@ -8,6 +8,7 @@ import "slick-carousel/slick/slick.css";
 
 
 
+
 interface NonDiscountedProductsProps {
   products: Product[];
   handleProductClick: (id: string) => void;
@@ -16,6 +17,7 @@ interface NonDiscountedProductsProps {
 
 const NonDiscountedProducts: React.FC<NonDiscountedProductsProps> = ({ products, handleProductClick, handleAddToCartButtonClick }) => {
   // Filter out products where regular price is not equal to discounted price
+
   const nonDiscountedProducts = products.filter(product => {
     const discountedPrice = getDiscountPrice(product);
     return product.price !== discountedPrice;
@@ -69,7 +71,7 @@ const NonDiscountedProducts: React.FC<NonDiscountedProductsProps> = ({ products,
             //     </div>
             //   </div>
             // </div>
-            <div key={product.id} className="bg-white rounded-lg p-4 shadow-md relative">
+            <div key={product.id} className="bg-gray-100 rounded-lg p-4 shadow-md relative">
               <div className="badge absolute top-0.5 right-0.5 bg-black text-white px-2 py-1">
                 -{product.discount}%
               </div>

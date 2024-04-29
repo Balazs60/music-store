@@ -87,7 +87,7 @@ function Category() {
             <div>
               <div className='grid gird-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:gird-cols-4 gap-4 m-4 '>
                 {subCategories.map((subcategory,index) => (
-                  <div key={index} className='bg-white rounded-lg p-4 shadow md'>
+                  <div key={index} className='bg-gray-100 rounded-lg p-4 shadow md'>
                                       <img className="card-img-top" onClick={() => handleSubCategoryClick(subcategory.id)} src={subcategory.image ? `data:image/jpeg;base64,${subcategory.image}` : 'default-image-url'} alt="..." />
                                       <h5 className="text-lg font semibold mb2 text-center mt-4" onClick={() => handleSubCategoryClick(subcategory.id)}>{subcategory.name}</h5>
                   </div>

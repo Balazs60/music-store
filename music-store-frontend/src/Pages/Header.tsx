@@ -1,20 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../musicStore.css';
 import { Product } from './Products';
-import '../output.css'
+import '../output.css';
+import {Context} from './Context';
+
 
 
 
 function Header() {
-  const [selectedCategory, setSelectedCategory] = useState<string>('');
+ // const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
   const [numberOfCartItem, setNumberOfCartItems] = useState(0)
   const [showSearchResults, setShowSearchResults] = useState<boolean>(false);
+  const [updatedCart, setUpdatedCart] = useState<Product[]>([]);
+  const [wantedProducts, setWantedProducts] = useState<Product[]>([]);
   const navigate = useNavigate();
+  const { cartItemsNumber } = useContext(Context);
+
+
 
   
   const token = localStorage.getItem("token");
@@ -23,6 +30,10 @@ function Header() {
   let roles = "";
   let decodedPayload = "";
 
+  
+
+
+ 
 
   if (splitToken[1]) {
     try {
@@ -37,6 +48,8 @@ function Header() {
       console.error("Error decoding payload:", error);
     }
   }
+
+  
 
   const handleLogout = () => {
 
@@ -55,6 +68,15 @@ function Header() {
     navigate("/login");
   };
 
+  useEffect(() => {
+    const wantedProductsList = localStorage.getItem('wantedProducts');
+    if(wantedProductsList){
+    const parsedWantedProductList = JSON.parse(wantedProductsList);
+    setWantedProducts(parsedWantedProductList)
+    }
+  },[]);
+
+  console.log("last wanteeed name " + wantedProducts.length)
 
   useEffect(() => {
     fetchInstruments();
@@ -63,6 +85,10 @@ function Header() {
   useEffect(() => {
     filterUniqueProductsInLocaleStorage()
   }, [numberOfCartItem]);
+
+  useEffect(() =>{
+    setNumberOfCartItems(updatedCart.length)
+  },[updatedCart])
 
   function filterUniqueProductsInLocaleStorage() {
     const localStorageCart = localStorage.getItem('wantedProducts');
@@ -77,11 +103,14 @@ function Header() {
           groupedCart[product.id].quantity += 1;
         }
       })
-      const updatedCart: Product[] = Object.values(groupedCart);
+      setUpdatedCart(Object.values(groupedCart));
 
       setNumberOfCartItems(updatedCart.length);
     }
   }
+  console.log("number of cart items " + numberOfCartItem)
+  console.log("updated csrt length " + updatedCart.length)
+  console.log("updated cart " + updatedCart)
 
   const fetchInstruments = () => {
     const token = localStorage.getItem("token");
@@ -110,7 +139,7 @@ function Header() {
   };
 
   const handleCategoryChange = (category: string) => {
-    setSelectedCategory(category);
+    //setSelectedCategory(category);
     navigate(`/category/${category}`);
   };
 
@@ -216,7 +245,7 @@ function Header() {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
               </svg>
               Cart
-              <span className="bg-gray-800 text-white px-2 py-1 ml-1 rounded-full">{numberOfCartItem}</span>
+              <span className="bg-gray-800 text-white px-2 py-1 ml-1 rounded-full">{cartItemsNumber}</span>
             </button>
           </div>
           <div className="mt-4 w-full lg:w-4/4 px-4">

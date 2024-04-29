@@ -1,7 +1,9 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import Header from './Header';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {Product, getDiscountPrice } from './Products';
+import {Context} from './Context';
+
 
 
 
@@ -33,6 +35,9 @@ function Product() {
   const productOriginalPrice = product?.price
   //const producitQuantityInTheShop = product?.quantity
   const [producitQuantityInTheShop, setProductQuantityInTheShop] = useState(0);
+  const {setCartItemsNumber: setCartItemsNumber} = useContext(Context);
+  const [numberOfCartItems, setNumberOfCartItems] = useState(1);
+
 
 
 
@@ -97,6 +102,8 @@ function Product() {
   
     // Check if the new quantity equals the max quantity
     setMaxQuantityReached(quantity + 1 === maxQuantity);
+    setNumberOfCartItems((prevcount) => prevcount +1)
+
   };
   
 
@@ -105,6 +112,9 @@ function Product() {
     setQuantity((prevQuantity) => Math.max(prevQuantity - 1, 1))
   
     setMaxQuantityReached(false);
+    if (numberOfCartItems > 1) {
+      setNumberOfCartItems((prevcount) => prevcount - 1)
+    }
   };
   
   function isProductInTheCart(productId: string) {
@@ -156,6 +166,7 @@ selectedProduct.quantity = quantity
       setWantedProducts(updatedWantedProducts);
 
       }
+      setCartItemsNumber((prevcount) => prevcount + numberOfCartItems);
       localStorage.setItem("wantedProducts", JSON.stringify(updatedWantedProducts));
       navigate(`/cart`, { state: { productOriginalPrice, producitQuantityInTheShop } });
 
