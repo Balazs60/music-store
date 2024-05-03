@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../musicStore.css';
 import { Product, getDiscountPrice } from './Products';
 import { confirmAlert } from 'react-confirm-alert';
+import {Context} from './Context';
 
 
 import DiscountedProducts from './DiscountedProduct'
@@ -34,11 +35,12 @@ import Header from './Header';
 
 const MainPage: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
-  const [numberOfCartItem, setNumberOfCartItems] = useState(0)
+ // const [numberOfCartItem, setNumberOfCartItems] = useState(0)
   const [displayedProducts, setDisplayedProducts] = useState<Product[]>([]);
   const [productsToShow, setProductsToShow] = useState(20); // Number of products to display initially
   const [showMoreButton, setShowMoreButton] = useState(true); // Show the "Show more products" button
   const navigate = useNavigate();
+  const {setCartItemsNumber: setCartItemsNumber} = useContext(Context);
 
 
   const token = localStorage.getItem("token");
@@ -64,17 +66,17 @@ const MainPage: React.FC = () => {
     }
   }
 
-  const updateNumberOfCartItems = () => {
-    const localStorageCart = localStorage.getItem('wantedProducts');
-    if (localStorageCart) {
-      const parsedCart = JSON.parse(localStorageCart);
-      setNumberOfCartItems(parsedCart.length);
-    }
-  };
+  // const updateNumberOfCartItems = () => {
+  //   const localStorageCart = localStorage.getItem('wantedProducts');
+  //   if (localStorageCart) {
+  //     const parsedCart = JSON.parse(localStorageCart);
+  //     setNumberOfCartItems(parsedCart.length);
+  //   }
+  // };
 
   useEffect(() => {
     fetchInstruments();
-    updateNumberOfCartItems();
+   // updateNumberOfCartItems();
   }, []);
 
 
@@ -206,7 +208,9 @@ const MainPage: React.FC = () => {
       localStorage.setItem("wantedProducts", JSON.stringify(wantedProducts));
       console.log("wantedproductLength " + wantedProducts[0].id);
 
-      updateNumberOfCartItems();
+        setCartItemsNumber((prevcount) => prevcount +1)
+
+    //  updateNumberOfCartItems();
 
 
       confirmAlert({
@@ -254,9 +258,9 @@ const MainPage: React.FC = () => {
           groupedCart[product.id].quantity += 1;
         }
       })
-      const updatedCart: Product[] = Object.values(groupedCart);
+    //  const updatedCart: Product[] = Object.values(groupedCart);
 
-      setNumberOfCartItems(updatedCart.length);
+    //  setNumberOfCartItems(updatedCart.length);
     }
   }
 
@@ -289,7 +293,7 @@ const MainPage: React.FC = () => {
           <h2 className=" m-4 text-2xl font-bold text-center my-4">Our Products</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4">
             {displayedProducts.map((product) => (
-              <div key={product.id} className="bg-white rounded-lg p-4 shadow-md">
+              <div key={product.id} className="bg-gray-100 rounded-lg p-4 shadow-md">
                 <img className='cursor-pointer' onClick={() => handleProductClick(product.id)} src={product.image ? `data:image/jpeg;base64,${product.image}` : 'default-image-url'} alt="..." />
                 <h3 className="text-lg font-semibold mb-2 cursor-pointer" onClick={() => handleProductClick(product.id)}>{product.name}</h3>
                 <p className="text-gray-700">${getDiscountPrice(product)}$</p>

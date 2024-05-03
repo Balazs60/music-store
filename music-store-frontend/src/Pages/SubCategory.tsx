@@ -3,9 +3,11 @@ import Slider from 'react-slider';
 import Header from './Header';
 import { confirmAlert } from 'react-confirm-alert';
 import Product from './Product';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import '../output.css'
 import { getDiscountPrice } from './Products';
+import {Context} from './Context';
+
 
 
 function SubCategory() {
@@ -18,6 +20,7 @@ function SubCategory() {
   const [selectedBrands, setSelectedBrands] = useState<string[]>([])
   const { category, subcategoryid } = useParams();
   const [values, setValues] = useState([lowestPrice, highestPrice])
+  const {setCartItemsNumber: setCartItemsNumber} = useContext(Context);
   const navigate = useNavigate();
 
   console.log("cat " + category);
@@ -168,7 +171,6 @@ function SubCategory() {
       wantedProduct.quantity = 1
 
 
-
       const storedWantedProducts = localStorage.getItem("wantedProducts");
       const wantedProducts: Product[] = storedWantedProducts ? JSON.parse(storedWantedProducts) : [];
 
@@ -187,7 +189,8 @@ function SubCategory() {
 
       localStorage.setItem("wantedProducts", JSON.stringify(wantedProducts));
       console.log("wantedproductLength " + wantedProducts[0].id);
-
+     
+        setCartItemsNumber((prevcount) => prevcount +1)
 
       confirmAlert({
         title: 'Product added to the cart',
@@ -290,7 +293,7 @@ function SubCategory() {
       <div className='col-span-2 gap-4'>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {filterProductsByBrand(filteredProducts).map(product => (
-            <div key={product.id} className="bg-white rounded-lg p-4 shadow-md">
+            <div key={product.id} className="bg-gray-100 rounded-lg p-4 shadow-md">
               <img onClick={() => handleProductClick(product.id)} src={product.image ? `data:image/jpeg;base64,${product.image}` : 'default-image-url'} alt="..." />
               <h3 className="text-lg font-semibold mb-2" onClick={() => handleProductClick(product.id)}>{product.name}</h3>
               <p className="text-gray-700">${getDiscountPrice(product)}$</p>

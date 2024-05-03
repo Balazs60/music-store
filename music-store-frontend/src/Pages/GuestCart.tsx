@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Header from './Header';
 import Product from './Product';
 import { useNavigate } from 'react-router-dom';
@@ -9,6 +9,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { WantedProduct } from './WantedProduct';
 import { Member } from './Member';
 import { getDiscountPrice } from './Products';
+import { Context } from './Context';
+
 
 
 const GuestCart: React.FC = () => {
@@ -24,6 +26,8 @@ const GuestCart: React.FC = () => {
   const [deliveryOptionError, setDeliveryOptionError] = useState<string | null>(null);
   const [paymentOptionError, setPaymentOptionError] = useState<string | null>(null);
   const [products, setProducts] = useState<Product[]>([]);
+  const { cartItemsNumber: cartItemsNumber, setCartItemsNumber: setCartItemsNumber } = useContext(Context);
+
 
   console.log("products " + products)
 
@@ -231,21 +235,27 @@ const GuestCart: React.FC = () => {
 
 
 
-
   const handleDelete = (itemId: string) => {
-
     const localStorageCart = localStorage.getItem('wantedProducts');
-
+  
     if (localStorageCart) {
       const parsedCart = JSON.parse(localStorageCart);
-
-      const updatedCart = parsedCart.filter((product: Product) => product.id !== itemId);
-
-      localStorage.setItem('wantedProducts', JSON.stringify(updatedCart));
-
-      setCart(updatedCart);
+      const deletedProduct = parsedCart.find((product: Product) => product.id === itemId);
+  
+      if (deletedProduct) {
+        // Decrease cartItemsNumber by the quantity of the deleted item
+        setCartItemsNumber((prevcount) => prevcount - deletedProduct.quantity);
+        
+        // Remove the deleted product from localStorage
+        const updatedCart = parsedCart.filter((product: Product) => product.id !== itemId);
+        localStorage.setItem('wantedProducts', JSON.stringify(updatedCart));
+        
+        // Update the cart state
+        setCart(updatedCart);
+      }
     }
   };
+  
 
 
   const submitDelete = (itemId: string) => {
@@ -267,7 +277,7 @@ const GuestCart: React.FC = () => {
           <h1 className="text-xl font-bold mb-4">Confirm delete</h1>
           <p className="text-lg mb-4">Are you sure to delete this item?</p>
           <button onClick={() => { onClose(); handleDelete(itemId); }} className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded mr-2">Yes</button>
-          <button onClick={onClose}className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">No</button>
+          <button onClick={onClose} className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">No</button>
         </div>
       ),
     });
@@ -317,6 +327,7 @@ const GuestCart: React.FC = () => {
     });
 
     setCart(updatedCart);
+    setCartItemsNumber((prevcount) => prevcount + 1)
   };
 
   const handleDecreaseQuantity = (itemId: string) => {
@@ -346,9 +357,12 @@ const GuestCart: React.FC = () => {
     });
 
     setCart(updatedCart);
+    if (cartItemsNumber > 1) {
+      setCartItemsNumber((prevcount) => prevcount - 1)
+    }
   };
   return (
-  
+
     <div>
       <Header />
       <div className='m-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4'>
@@ -359,7 +373,7 @@ const GuestCart: React.FC = () => {
             <h2 className='m-2'>Your shopping cart is empty</h2>
           }
           {cart.map(item => (
-            <div key={item.id} className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-6 bg-white rounded-lg p-4 shadow-md mb-4">
+            <div key={item.id} className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-6 bg-gray-100 rounded-lg p-4 shadow-md mb-4">
               <div className='col-span-1 gap-4'>
                 <img
                   src={`data:image/png;base64,${item.image}`}
