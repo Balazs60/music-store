@@ -32,13 +32,12 @@ const ChatBox: React.FC = () => {
                     throw new Error('Failed to send message');
                 }
 
-                const responseData = await response.text(); // Assuming the response is a string
+                const responseData = await response.text(); 
                 console.log("response data " + responseData)
-                setMessages([...messages, message, responseData]); // Add user message and backend response to messages array
+                setMessages([...messages, message, responseData]); 
                 setMessage('');
             } catch (error) {
                 console.error('Error sending message:', error);
-                // Handle error, e.g., show error message to the user
             }
         }
     };

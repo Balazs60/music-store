@@ -1,14 +1,8 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-//import Box from '@mui/material/Box';
 import { useNavigate } from 'react-router-dom';
 import React from 'react';
 
-
-
-
-// Import your logo (adjust the path accordingly)
-//import CircleLogo from './path-to-your-circle-logo.png';
 
 function Registration() {
   const [username, setUsername] = useState('');
@@ -51,8 +45,8 @@ function Registration() {
           if (data.token === "fail") {
             setErrorMassage("This UserName is already in use , Please try Another One")
           } else {
-            setToken(data.token); // Set the 'token' here
-            console.log("token " + data.token); // Use data.token here
+            setToken(data.token); 
+            console.log("token " + data.token); 
 
             localStorage.setItem('token', data.token);
             localStorage.setItem('username', username);

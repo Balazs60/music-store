@@ -10,35 +10,12 @@ import {Context} from './Context';
 import DiscountedProducts from './DiscountedProduct'
 import Header from './Header';
 
-/*interface Product {
-  id: string;
-  name: string;
-  color: string;
-  price: number;
-  brand: string;
-  dtype: string;
-  subCategoryId: string;
-  numberOfStrings: number;
-  numberOfSoundLayers: number;
-  numberOfKeys: number;
-  diameter: number;
-  image: string;
-  getDiscountPrice(): number;
-}*/
-
-// interface WantedProduct {
-//   productId: string;
-//   productQuantity: number;
-// }
-
-
 
 const MainPage: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
- // const [numberOfCartItem, setNumberOfCartItems] = useState(0)
   const [displayedProducts, setDisplayedProducts] = useState<Product[]>([]);
-  const [productsToShow, setProductsToShow] = useState(20); // Number of products to display initially
-  const [showMoreButton, setShowMoreButton] = useState(true); // Show the "Show more products" button
+  const [productsToShow, setProductsToShow] = useState(20); 
+  const [showMoreButton, setShowMoreButton] = useState(true); 
   const navigate = useNavigate();
   const {setCartItemsNumber: setCartItemsNumber} = useContext(Context);
 
@@ -58,7 +35,7 @@ const MainPage: React.FC = () => {
       console.log("decoded: ", decodedPayload);
 
       const parsedPayload = JSON.parse(decodedPayload);
-      roles = parsedPayload.Roles || ""; // Access the "Roles" claim
+      roles = parsedPayload.Roles || "";
 
       console.log("Roles: ", roles);
     } catch (error) {
@@ -66,17 +43,8 @@ const MainPage: React.FC = () => {
     }
   }
 
-  // const updateNumberOfCartItems = () => {
-  //   const localStorageCart = localStorage.getItem('wantedProducts');
-  //   if (localStorageCart) {
-  //     const parsedCart = JSON.parse(localStorageCart);
-  //     setNumberOfCartItems(parsedCart.length);
-  //   }
-  // };
-
   useEffect(() => {
     fetchInstruments();
-   // updateNumberOfCartItems();
   }, []);
 
 
@@ -210,9 +178,6 @@ const MainPage: React.FC = () => {
 
         setCartItemsNumber((prevcount) => prevcount +1)
 
-    //  updateNumberOfCartItems();
-
-
       confirmAlert({
         title: 'Product added to the cart',
         message: 'Move to the cart or continue shopping?',
@@ -229,8 +194,8 @@ const MainPage: React.FC = () => {
         ],
         customUI: ({ onClose }) => (
           <div className="custom-ui">
-            <h1 className="text-xl font-bold mb-4">Product added to the cart</h1> {/* Style the title text */}
-            <p className="text-lg mb-4">Move to the cart or continue shopping?</p> {/* Style the message text */}
+            <h1 className="text-xl font-bold mb-4">Product added to the cart</h1> 
+            <p className="text-lg mb-4">Move to the cart or continue shopping?</p> 
             <button onClick={() => { onClose(); navigate("/cart"); }} className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded mr-2">Cart</button> {/* Style the "Cart" button */}
             <button onClick={onClose} className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Shopping</button> {/* Style the "Shopping" button */}
           </div>
@@ -258,9 +223,6 @@ const MainPage: React.FC = () => {
           groupedCart[product.id].quantity += 1;
         }
       })
-    //  const updatedCart: Product[] = Object.values(groupedCart);
-
-    //  setNumberOfCartItems(updatedCart.length);
     }
   }
 

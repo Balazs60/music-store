@@ -18,7 +18,6 @@ const ContactPage: React.FC = () => {
 
         <div className="lg:w-1/2">
           <h2 className="text-xl font-bold mb-2">Location</h2>
-          {/* Use an iframe for embedding a map */}
           <iframe
             title="Company Location"
             width="100%"

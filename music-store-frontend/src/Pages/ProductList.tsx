@@ -1,8 +1,7 @@
-// ProductList.tsx
 
 import React, { useState } from 'react';
-import { Product } from './Products'; // Import the Product type
-import '../musicStore.css'; // Import your CSS file
+import { Product } from './Products'; 
+import '../musicStore.css'; 
 
 interface ProductListProps {
   products: Product[];
@@ -10,7 +9,6 @@ interface ProductListProps {
 }
 
 const ProductList: React.FC<ProductListProps> = ({ products }) => {
-  // State to store discount percentage for each product
   const [discounts, setDiscounts] = useState<{ [productId: string]: number }>({});
 
   const handleDiscountChange = (product: Product, discount: number) => {
@@ -44,7 +42,6 @@ const ProductList: React.FC<ProductListProps> = ({ products }) => {
         return response.json();
       })
       .then(data => {
-        // Handle the response from the backend if needed
         console.log('Discount added successfully:', data);
       })
       .catch(error => {
@@ -68,7 +65,6 @@ const ProductList: React.FC<ProductListProps> = ({ products }) => {
                   <div className="text-center">
                     <h5 className="font-semibold">{product.name}</h5>
                     <p>Original Price: {product.price}$</p>
-                    {/* Input field for discount percentage */}
                     <input
                       type="number"
                       placeholder="Discount %"

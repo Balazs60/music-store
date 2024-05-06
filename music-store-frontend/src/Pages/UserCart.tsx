@@ -32,7 +32,6 @@ const UserCart: React.FC = () => {
     console.log("token"+token)
 
       if(token){
-       // console.log("nem kellene belemennie")
             const headers = {
             Authorization: `Bearer ${token}`,
           };
@@ -71,7 +70,7 @@ const UserCart: React.FC = () => {
   
   
     fetch(`/api/cart/update-quantity/${itemId}/${newQuantity}`, {
-      method: 'PATCH', // Use PATCH for partial updates
+      method: 'PATCH',
       headers: headers,
     })
    
@@ -82,7 +81,6 @@ const UserCart: React.FC = () => {
         return response.json();
       })
       .then(data => {
-        // Handle successful response if needed
         console.log('Quantity updated successfully:', data);
       })
       .catch(error => {
@@ -199,9 +197,7 @@ const UserCart: React.FC = () => {
             ))}
           </ul>
           <div className="cart-summary">
-            {/* Add a total price or any other summary information */}
           </div>
-          {/* Add more elements/buttons as needed */}
         </div>
       )}
     </div>

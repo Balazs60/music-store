@@ -155,7 +155,6 @@ function SubCategory() {
       }
     }
 
-    // If the loop completes and no match is found, return false
     return false;
   }
 
@@ -179,7 +178,6 @@ function SubCategory() {
         for (let i = 0; i < wantedProducts.length; i++) {
           if (wantedProducts[i].id === productId) {
             wantedProducts[i].quantity += 1
-            // wantedProducts[i].price += product.price
           }
         }
       } else {
@@ -208,8 +206,8 @@ function SubCategory() {
         ],
         customUI: ({ onClose }) => (
           <div className="custom-ui">
-            <h1 className="text-xl font-bold mb-4">Product added to the cart</h1> {/* Style the title text */}
-            <p className="text-lg mb-4">Move to the cart or continue shopping?</p> {/* Style the message text */}
+            <h1 className="text-xl font-bold mb-4">Product added to the cart</h1>
+            <p className="text-lg mb-4">Move to the cart or continue shopping?</p>
             <button onClick={() => { onClose(); navigate("/cart"); }} className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded mr-2">Cart</button> {/* Style the "Cart" button */}
             <button onClick={onClose} className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Shopping</button> {/* Style the "Shopping" button */}
           </div>
@@ -228,7 +226,6 @@ function SubCategory() {
     <div className='m-4 grid grid-cols-1 md:grid-cols-3 gap-4'>
       <div className='col-span-1'>
       <div className="bg-gray-100 p-4 rounded-lg mb-4 ">
-        {/* Brand filter checkboxes */}
         <h4 className="text-lg font-semibold mb-2">Filter by Brand:</h4>
         {products.length > 0 && (
           <div>
@@ -249,7 +246,6 @@ function SubCategory() {
             ))}
           </div>
         )}
-        {/* Search by price section */}
         <div className="bg-gray-100 p-4 rounded-lg mb-4">
           <h5 className="text-lg font-semibold mb-2">Search by price</h5>
           <div className="flex flex-col md:flex-row gap-4">
@@ -265,7 +261,7 @@ function SubCategory() {
             </div>
            
           </div>
-          <div className="mt-4 mb-4 slider-container w-3/5"> {/* Adjust the width as needed */}
+          <div className="mt-4 mb-4 slider-container w-3/5">
               <h3 className="text-lg font-semibold">Price Range</h3>
               <div className="text-sm">${values[0]} - ${values[1]}</div>
               <div className="mt-2">
@@ -289,7 +285,6 @@ function SubCategory() {
 </button>        </div>
       </div>
       </div>
-      {/* Product listings */}
       <div className='col-span-2 gap-4'>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {filterProductsByBrand(filteredProducts).map(product => (

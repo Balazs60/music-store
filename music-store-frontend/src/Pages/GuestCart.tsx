@@ -18,7 +18,6 @@ const GuestCart: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const productOriginalPrice = location.state?.productOriginalPrice || null;
-  // const producitQuantityInTheShop = location.state?.producitQuantityInTheShop || null;
   const total = cart.reduce((acc, item) => acc + getDiscountPrice(item) * item.quantity, 0);
   const [member, setMember] = useState<Member | null>()
   const [selectedDeliveryOption, setSelectedDeliveryOption] = useState<string | null>(null);
@@ -187,7 +186,6 @@ const GuestCart: React.FC = () => {
 
         console.log(order)
         fetchOrder(order);
-        // navigate(`order/${order.id}`);
       }
     }
   };
@@ -243,14 +241,11 @@ const GuestCart: React.FC = () => {
       const deletedProduct = parsedCart.find((product: Product) => product.id === itemId);
   
       if (deletedProduct) {
-        // Decrease cartItemsNumber by the quantity of the deleted item
         setCartItemsNumber((prevcount) => prevcount - deletedProduct.quantity);
         
-        // Remove the deleted product from localStorage
         const updatedCart = parsedCart.filter((product: Product) => product.id !== itemId);
         localStorage.setItem('wantedProducts', JSON.stringify(updatedCart));
         
-        // Update the cart state
         setCart(updatedCart);
       }
     }
@@ -303,7 +298,6 @@ const GuestCart: React.FC = () => {
 
         const newQuantity = item.quantity + 1;
         let cartItemNewQuantity = item.quantity;
-        // const newPrice = item.price + productOriginalPrice
         const localStorageCart = localStorage.getItem('wantedProducts')
         if (localStorageCart) {
           const wantedProducts = JSON.parse(localStorageCart)
@@ -311,7 +305,6 @@ const GuestCart: React.FC = () => {
             if (product.id === itemId && newQuantity <= maxQuantity) {
               cartItemNewQuantity = newQuantity
               product.quantity = newQuantity
-              //product.price += productOriginalPrice
             }
           }
           localStorage.setItem('wantedProducts', JSON.stringify(wantedProducts));
@@ -320,7 +313,6 @@ const GuestCart: React.FC = () => {
         return {
           ...item,
           quantity: cartItemNewQuantity,
-          //   price: newPrice,
         };
       }
       return item;
@@ -334,7 +326,6 @@ const GuestCart: React.FC = () => {
     const updatedCart = cart.map(item => {
       if (item.id === itemId && item.quantity > 1) {
         const newQuantity = item.quantity - 1;
-        // const newPrice = item.price - productOriginalPrice
         const localStorageCart = localStorage.getItem('wantedProducts')
         if (localStorageCart) {
           const wantedProducts = JSON.parse(localStorageCart)
@@ -342,7 +333,6 @@ const GuestCart: React.FC = () => {
             if (product.id === itemId) {
 
               product.quantity = newQuantity
-              //product.price -= productOriginalPrice
             }
           }
           localStorage.setItem('wantedProducts', JSON.stringify(wantedProducts));
@@ -350,7 +340,6 @@ const GuestCart: React.FC = () => {
         } return {
           ...item,
           quantity: newQuantity,
-          //   price: newPrice,
         };
       }
       return item;
