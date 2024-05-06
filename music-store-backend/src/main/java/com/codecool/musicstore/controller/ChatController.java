@@ -21,7 +21,6 @@ public class ChatController {
     public String sendMessage(@RequestBody MessageDto messageDto) {
         System.out.println("user message " + messageDto.getMessage());
         try {
-            System.out.println("dialogflow answer " + chatBotService.detectIntent(messageDto.getMessage()));
             return chatBotService.detectIntent(messageDto.getMessage());
         } catch (Exception e) {
             e.printStackTrace();

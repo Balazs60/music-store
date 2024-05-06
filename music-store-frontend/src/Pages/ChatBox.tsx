@@ -33,6 +33,7 @@ const ChatBox: React.FC = () => {
                 }
 
                 const responseData = await response.text(); // Assuming the response is a string
+                console.log("response data " + responseData)
                 setMessages([...messages, message, responseData]); // Add user message and backend response to messages array
                 setMessage('');
             } catch (error) {

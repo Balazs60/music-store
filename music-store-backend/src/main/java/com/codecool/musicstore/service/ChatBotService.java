@@ -39,7 +39,9 @@ public class ChatBotService {
                 DetectIntentResponse response = sessionsClient.detectIntent(request);
 
                 QueryResult queryResult = response.getQueryResult();
-                System.out.println("query result " + queryResult);
+//                System.out.println("query result " + queryResult);
+            System.out.println("query result " + queryResult.getResponseMessagesList().get(0).getText().getText(0));
+
 
                 List<ResponseMessage> responseMessagesList = queryResult.getResponseMessagesList();
                 if (!responseMessagesList.isEmpty()) {

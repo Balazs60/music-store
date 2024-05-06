@@ -95,6 +95,7 @@ public class OrderService {
             wantedProductDao.saveWantedProduct(wantedProduct);
         }
         if(orderValidationByStore(order)){
+            System.out.println("orderValidation " + orderValidationByStore(order));
             orderDao.saveOrder(order);
             decreaseProductQuantities(order);
             return true;
