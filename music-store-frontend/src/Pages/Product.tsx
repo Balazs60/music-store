@@ -4,25 +4,6 @@ import React, { useState, useEffect, useContext } from 'react';
 import {Product, getDiscountPrice } from './Products';
 import {Context} from './Context';
 
-
-
-
-// interface Product {
-//   id: string;
-//   name: string;
-//   color: string;
-//   price: number;
-//   brand: string;
-//   dtype: string;
-//   subCategoryId: string;
-//   numberOfStrings: number;
-//   numberOfSoundLayers?: number;
-//   numberOfKeys: number;
-//   diameter: number;
-//   image: string;
-//   quantity: number;
-// }
-
 function Product() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -33,7 +14,6 @@ function Product() {
   const [maxQuantityReached, setMaxQuantityReached] = useState(false);
   const [quantity, setQuantity] = useState(1)
   const productOriginalPrice = product?.price
-  //const producitQuantityInTheShop = product?.quantity
   const [producitQuantityInTheShop, setProductQuantityInTheShop] = useState(0);
   const {setCartItemsNumber: setCartItemsNumber} = useContext(Context);
   const [numberOfCartItems, setNumberOfCartItems] = useState(1);
@@ -89,18 +69,15 @@ function Product() {
 
   const handleIncreaseQuantity = () => {
     if (maxQuantityReached) {
-      // If max quantity is reached, don't allow further increase
       return;
     }
   
     const maxQuantity = product?.quantity || 1;
   
-    // Update the quantity if it's less than the max quantity
     if (quantity < maxQuantity) {
       setQuantity((prevQuantity) => prevQuantity + 1);
     }
   
-    // Check if the new quantity equals the max quantity
     setMaxQuantityReached(quantity + 1 === maxQuantity);
     setNumberOfCartItems((prevcount) => prevcount +1)
 
@@ -128,21 +105,9 @@ function Product() {
       }
     }
   
-    // If the loop completes and no match is found, return false
     return false;
   }
 
-
-  // function increaseQuantityIfProductIsAlreadyInTheCart(quantity:number) {
-  //   if (selectedProduct && product) {
-  //     for (const instrument of wantedProducts) {
-  //       if (instrument.id === selectedProduct.id) {
-  //         console.log("product price " + product.price)
-  //         instrument.quantity += quantity
-  //       }
-  //     }
-  //   }
-  // }
 
   const handleAddToCart = () => {
 
@@ -181,7 +146,6 @@ selectedProduct.quantity = quantity
 <div>
   <Header />
   <div className='m-4 grid grid-cols-2 gap-4'>
-    {/* Image Section */}
     <div className='col-span-1'>
       {product && (
         <img
@@ -191,7 +155,6 @@ selectedProduct.quantity = quantity
         />
       )}
     </div>
-    {/* Product Details Section */}
     <div className='col-span-1'>
       {product && (
         <>
@@ -199,7 +162,6 @@ selectedProduct.quantity = quantity
           <p className='m-2'>Brand: {product.brand}</p>
           <p className='m-2'>Price: {getDiscountPrice(product)}</p>
           
-          {/* Quantity Controls */}
           {producitQuantityInTheShop > 0 && (
             <div className="flex items-center">
               <button className="bg-white text-gray-800 border border-gray-800 hover:bg-gray-700  px-4 py-2 rounded-md mr-2" onClick={handleDecreaseQuantity}>-</button>
@@ -214,7 +176,6 @@ selectedProduct.quantity = quantity
             </div>
           )}
 
-          {/* Add to Cart Button */}
           {producitQuantityInTheShop > 0 && (
             <button className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded mt-4" onClick={handleAddToCart}>
               Add to Cart

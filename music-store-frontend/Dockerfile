@@ -7,4 +7,5 @@ COPY package.json .
 RUN npm install
 
 COPY . . 
+COPY assets /app/assets
 CMD [ "npm" , "start" ]

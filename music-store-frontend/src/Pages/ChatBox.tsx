@@ -32,13 +32,12 @@ const ChatBox: React.FC = () => {
                     throw new Error('Failed to send message');
                 }
 
-                const responseData = await response.text(); // Assuming the response is a string
+                const responseData = await response.text(); 
                 console.log("response data " + responseData)
-                setMessages([...messages, message, responseData]); // Add user message and backend response to messages array
+                setMessages([...messages, message, responseData]); 
                 setMessage('');
             } catch (error) {
                 console.error('Error sending message:', error);
-                // Handle error, e.g., show error message to the user
             }
         }
     };
@@ -82,12 +81,13 @@ const ChatBox: React.FC = () => {
                             className="w-5/6 mr-0 border-2 border-gray-300 rounded px-2 py-1 focus:outline-none"
                             placeholder="Type your message..."
                         />
-                        <button 
-                            className="w-1/6 bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                            onClick={sendMessage}
-                        >
-                            S
-                        </button>
+              <button 
+    className="w-1/6 bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded flex items-center justify-center focus:outline-none focus:shadow-outline"
+    onClick={sendMessage}
+>
+    Send
+</button>
+
                     </div>
                 </div>
             )}

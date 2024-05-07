@@ -10,7 +10,6 @@ import {Context} from './Context';
 
 
 function Header() {
- // const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
@@ -139,7 +138,6 @@ function Header() {
   };
 
   const handleCategoryChange = (category: string) => {
-    //setSelectedCategory(category);
     navigate(`/category/${category}`);
   };
 

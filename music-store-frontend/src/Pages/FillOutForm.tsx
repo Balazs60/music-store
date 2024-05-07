@@ -102,13 +102,6 @@ const FillOutForm: React.FC = () => {
       console.log("first product quantity of order" + order.wantedProducts[0].productQuantity)
       console.log(order)
       fetchOrder(order);
-      //  navigate(`order/${order.id}`);
-
-      // if (selectedPaymentOption === "cash") {
-      //   navigate(`/successful-order`)
-      // } else {
-      //   navigate(`/payment/${order.id}`)
-      // }
     }
   };
 

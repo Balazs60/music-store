@@ -20,8 +20,6 @@ import React from 'react';
 import ChatBox from './Pages/ChatBox';
 import {ContextProvider} from './Pages/Context';
 
-//import SuccessfulOrderPage from './Pages/SuccessfulOrderPage';
-
 const stripePromise = loadStripe('pk_test_51OaEV6CrCBDEIb4OSm45sChsKsWqyHBSp4QFSIGuE3jln2zhlBPo6qfsnnBrBjKr511gp4YWgpmjUgPq7yWTBOm1001deX3C2G');
 
 function App() {

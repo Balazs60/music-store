@@ -1,7 +1,6 @@
-// NonDiscountedProducts.tsx
 import React, { useRef } from 'react';
 import { Product, getDiscountPrice } from './Products';
-import './sildeshow.css'; // Corrected filename
+import './sildeshow.css'; 
 import '../musicStore.css';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -16,14 +15,13 @@ interface NonDiscountedProductsProps {
 }
 
 const NonDiscountedProducts: React.FC<NonDiscountedProductsProps> = ({ products, handleProductClick, handleAddToCartButtonClick }) => {
-  // Filter out products where regular price is not equal to discounted price
 
   const nonDiscountedProducts = products.filter(product => {
     const discountedPrice = getDiscountPrice(product);
     return product.price !== discountedPrice;
   });
 
-  const sliderRef = useRef<Slider>(null);
+  const sliderRef = useRef<typeof Slider>(null);
 
   const settings = {
     dots: false,
@@ -42,35 +40,6 @@ const NonDiscountedProducts: React.FC<NonDiscountedProductsProps> = ({ products,
       <div >
         <Slider ref={sliderRef} {...settings}>
           {nonDiscountedProducts.map((product) => (
-            // <div key={index} className="col m-2">
-            //   <div className="bg-white rounded-lg overflow-hidden shadow-md relative">
-            //     <div className="badge absolute top-0.5 right-0.5 bg-black text-white px-2 py-1">
-            //       -{product.discount}%
-            //     </div>
-            //     <img
-            //       className="w-full cursor-pointer"
-            //       onClick={() => handleProductClick(product.id)}
-            //       src={product.image ? `data:image/jpeg;base64,${product.image}` : 'default-image-url'}
-            //       alt="..."
-            //     />
-            //     <div className="p-4">
-            //       <div className="text-center">
-            //         <h5 className="font-semibold cursor-pointer" onClick={() => handleProductClick(product.id)}>
-            //           {product.name}
-            //         </h5>
-            //         <p className="mt-2">Original Price: {product.price}$</p>
-            //         <p>Discount Price: {getDiscountPrice(product)}</p>
-            //       </div>
-            //     </div>
-            //     <div className="p-4 pt-0 border-t-0 bg-transparent">
-            //       <div className="text-center">
-            //         <a className="btn btn-outline-dark mt-auto" href="#">
-            //           Add to cart
-            //         </a>
-            //       </div>
-            //     </div>
-            //   </div>
-            // </div>
             <div key={product.id} className="bg-gray-100 rounded-lg p-4 shadow-md relative">
               <div className="badge absolute top-0.5 right-0.5 bg-black text-white px-2 py-1">
                 -{product.discount}%
