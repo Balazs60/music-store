@@ -5,6 +5,7 @@ import '../musicStore.css';
 import { Product, getDiscountPrice } from './Products';
 import { confirmAlert } from 'react-confirm-alert';
 import {Context} from './Context';
+import image from '../assets/mainpage_music_store.jpg'
 
 
 import DiscountedProducts from './DiscountedProduct'
@@ -242,8 +243,8 @@ const MainPage: React.FC = () => {
       <Header />
       <div>
         <div
-          style={{ backgroundImage: "url('src/assets/mainpage music store.jpg')", backgroundSize: 'cover', backgroundPosition: 'center', height: '400px' }}
-          className="flex flex-col justify-center items-center h-full"
+  style={{ backgroundImage: `url(${image})`, backgroundSize: 'cover', backgroundPosition: 'center', height: '400px' }}
+  className="flex flex-col justify-center items-center h-full"
         >
           <h1 className="text-4xl lg:text-6xl font-bold text-white" style={{ textShadow: '-moz-initial' }}>Music Shop</h1>
           <p className="text-lg lg:text-xl font-normal text-white lg:max-w-lg text-center">Wide range of instruments</p>

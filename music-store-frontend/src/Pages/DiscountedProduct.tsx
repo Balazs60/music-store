@@ -21,7 +21,7 @@ const NonDiscountedProducts: React.FC<NonDiscountedProductsProps> = ({ products,
     return product.price !== discountedPrice;
   });
 
-  const sliderRef = useRef<Slider>(null);
+  const sliderRef = useRef<typeof Slider>(null);
 
   const settings = {
     dots: false,

@@ -23,6 +23,7 @@ services:
       DB_PASSWORD: password
       DB_PORT: 5432
       DB_NAME: music-store
+      STRIPE_SECRETKEY: 51ObJ8dGilE1or8vMq7WqZQOS0BEp1whxzkL8NDaYJJyVlbOnRV3Rm7lM77mqbV5gBy9iL7qpOeuqqDnaKDiGmhcN00ue0gp8az
     ports:
       - "8080:8080"
     depends_on:

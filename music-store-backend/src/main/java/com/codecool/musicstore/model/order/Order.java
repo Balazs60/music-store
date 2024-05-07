@@ -29,7 +29,7 @@ public class Order {
     private String phoneNumber ;
     private int postCode ;
     private String city ;
-    private String streetAndHoseNumber;
+    private String streetAndHouseNumber;
     private String pickUpOption;
 
 
