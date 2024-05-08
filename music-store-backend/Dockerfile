@@ -1,7 +1,7 @@
 # Build stage
 FROM maven AS builder
 WORKDIR /app
-COPY pom.xml .
+COPY ../../../Maven/pom.xml .
 COPY src ./src
 RUN mvn clean package
 

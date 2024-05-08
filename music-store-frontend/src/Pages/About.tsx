@@ -54,19 +54,19 @@ const About: React.FC<AboutProps> = () => {
           <>
             <h2 className="text-xl font-bold mb-4">About Us</h2>
             <p className="mb-2">
-              Welcome to HarmonyTunes, your premier online music destination! At HarmonyTunes, we are dedicated to
+              Welcome to Soundwaves, your premier online music destination! At Soundwaves, we are dedicated to
               providing music enthusiasts with a diverse and immersive platform to explore and enjoy the world of
               music.
             </p>
             <p className="mb-2">
-              Founded in [Year], HarmonyTunes has been a pioneer in the digital music industry, offering a vast catalog
+              Founded in 2023, Soundwaves has been a pioneer in the digital music industry, offering a vast catalog
               of genres, from the latest chart-toppers to timeless classics. Our mission is to make music accessible to
               everyone, connecting artists and listeners in a harmonious online space.
             </p>
             <p>
               Whether you're discovering new artists, creating personalized playlists, or enjoying instant downloads, our
               user-friendly interface ensures a seamless and enjoyable musical journey. Embrace the future of music with
-              HarmonyTunes, where the melody meets the digital age.
+              Soundwaves, where the melody meets the digital age.
             </p>
           </>
         )}
@@ -75,7 +75,7 @@ const About: React.FC<AboutProps> = () => {
           <>
             <h2 className="text-xl font-bold mb-4">Mission</h2>
             <p className="mb-2">
-              Our mission at HarmonyTunes is to enrich lives through the power of music. We strive to create a
+              Our mission at Soundwaves is to enrich lives through the power of music. We strive to create a
               collaborative and inclusive space where artists can thrive, and music lovers can discover, share, and
               celebrate their passion for diverse musical expressions.
             </p>
