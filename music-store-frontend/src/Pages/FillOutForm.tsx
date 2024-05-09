@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { WantedProduct } from './WantedProduct';
 import { Order } from './Order';
 import { v4 as uuidv4 } from 'uuid';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
+import { Context } from './Context';
+
 
 const FillOutForm: React.FC = () => {
   const [name, setName] = useState('');
@@ -18,6 +20,8 @@ const FillOutForm: React.FC = () => {
   const location = useLocation();
   const { selectedDeliveryOption, selectedPaymentOption } = location.state || {};
   const [orderError, setOrderError] = useState("");
+  const {setCartItemsNumber: setCartItemsNumber } = useContext(Context);
+
 
   console.log("birthdate" + birthDate)
 
@@ -45,6 +49,7 @@ const FillOutForm: React.FC = () => {
         if (data === true) {
           console.log('Order submitted successfully');
           localStorage.removeItem('wantedProducts');
+          setCartItemsNumber(0);
           if (selectedPaymentOption === "cash") {
             navigate(`/successful-order`);
           } else {
