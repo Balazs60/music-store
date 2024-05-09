@@ -29,6 +29,17 @@ git clone https://github.com/Balazs60/music-store
 
 cd music-store/music-store-backend  
 
+#### Fill out the properties in template_env file  
+
+POSTGRES_USER =  
+POSTGRES_PASSWORD =  
+POSTGRES_DB_NAME =  
+STRIPE_SECRET_KEY = If you want to use the card payment in the webshop  
+                    get your stripe secret key from the stripe website.  
+
+#### Rename the template_env file to .env
+
+
 #### Run command:  
 
 docker compose up  
