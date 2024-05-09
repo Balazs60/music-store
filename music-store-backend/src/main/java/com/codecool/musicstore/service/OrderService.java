@@ -50,25 +50,6 @@ public class OrderService {
        return orderDao.getOrderByID(id);
     }
 
-
-    /*public boolean orderValidationByStore(Order order) {
-        List<Product> allProducts = productDao.getAllProduct();
-        Set<String> productIds = new HashSet<>();
-        for (Product allProduct : allProducts) {
-            UUID id = allProduct.getId();
-            productIds.add(String.valueOf(id));
-        }
-
-        return order.getWantedProducts().stream()
-                .anyMatch(wantedProduct ->
-                        productIds.contains(wantedProduct.getProductId()) &&
-                                allProducts.stream()
-                                        .anyMatch(product ->
-                                                product.getId().equals(wantedProduct.getProductId()) &&
-                                                        product.getQuantity() >= wantedProduct.getProductQuantity()
-                                        )
-                );
-    }*/
     public void decreaseProductQuantities(Order order) {
         List<Product> allProducts = productDao.getAllProduct();
 
