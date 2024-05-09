@@ -3,12 +3,14 @@ services:
 
   kanban-postgres:
     image: "postgres:13-alpine"
+    env_file:
+      - .env
     ports:
       - "5000:5432"
     environment:
-      POSTGRES_DB: music-store
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
+      POSTGRES_DB: ${POSTGRES_DB_NAME}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - kanban-data:/var/lib/postgresql/data
 
@@ -17,13 +19,15 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: kanban-app
+    env_file:
+      - .env
     environment:
       DB_HOST: kanban-postgres
-      DB_USER: user
-      DB_PASSWORD: password
+      DB_USER: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
       DB_PORT: 5432
-      DB_NAME: music-store
-      STRIPE_SECRETKEY: 51ObJ8dGilE1or8vMq7WqZQOS0BEp1whxzkL8NDaYJJyVlbOnRV3Rm7lM77mqbV5gBy9iL7qpOeuqqDnaKDiGmhcN00ue0gp8az
+      DB_NAME: ${POSTGRES_DB_NAME}
+      STRIPE_SECRETKEY: ${STRIPE_SECRET_KEY}
     ports:
       - "8080:8080"
     depends_on:
