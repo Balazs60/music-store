@@ -411,9 +411,7 @@ public class ProductGeneratorImpl implements ProductGenerator {
     }
 
     private static void setPictureOfInstrument(Product instrument , String filePath ) {
-        System.out.println("filepath" + filePath);
         String imagePath = "src/main/resources/stockpohotos/" + filePath;
-        System.out.println("imagePath" + imagePath);
         Path path = Path.of(imagePath);
 
         try {
@@ -429,7 +427,6 @@ public class ProductGeneratorImpl implements ProductGenerator {
     public void setPictureOfSubCategory(SubCategory subCategory, String filePath) {
         String imagePath = "src/main/resources/stockpohotos/" + filePath;
 Path path = Path.of(imagePath);
-        System.out.println("peth " + path);
         try {
             byte[] imageData = Files.readAllBytes(path);
             subCategory.setImage(imageData);

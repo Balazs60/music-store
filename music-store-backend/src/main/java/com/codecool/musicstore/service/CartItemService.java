@@ -89,17 +89,13 @@ public class CartItemService {
             }
         }
 
-       // logGuestCartDetails(guestChart);
 
         return ResponseEntity.ok(guestCartProduct);
     }
 
     private void logGuestCartDetails(List<GuestCartController.WantedProduct> guestChart) {
-        System.out.println("---------------- Guest Cart Details ----------------");
         for (GuestCartController.WantedProduct wantedProduct : guestChart) {
-            System.out.println("Product ID: " + wantedProduct.productId);
-            System.out.println("Product Quantity: " + wantedProduct.productQuantity);
+
         }
-        System.out.println("---------------- End of Guest Cart Details ----------------");
     }
 }
