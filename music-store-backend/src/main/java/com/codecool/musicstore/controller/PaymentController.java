@@ -19,11 +19,17 @@ public class PaymentController {
 
 
     @PostMapping("/process")
-    public ResponseEntity<String> processPayment(@RequestBody PaymentRequest paymentRequest) {
+    public String processPayment(@RequestBody PaymentRequest paymentRequest) {
         System.out.println(paymentRequest.getOrderId()+" order id a req ben");
         String result = paymentService.processPayment(paymentRequest.getToken(), paymentRequest.getAmount() , paymentRequest.getOrderId() );
         System.out.println("payment token " + paymentRequest.getToken());
-        return ResponseEntity.ok(result);
+        //return ResponseEntity.ok(result);
+        try {
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Error occurred: " + e.getMessage();
+        }
     }
     @PostMapping("/create-checkout-session")
     public ResponseEntity<Map<String, Object>> createCheckoutSession(@RequestBody PaymentRequest paymentRequest) {
