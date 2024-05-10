@@ -49,7 +49,7 @@ const FillOutForm: React.FC = () => {
         if (data === true) {
           console.log('Order submitted successfully');
           localStorage.removeItem('wantedProducts');
-          setCartItemsNumber(0);
+          setCartItemsNumber(0)
           if (selectedPaymentOption === "cash") {
             navigate(`/successful-order`);
           } else {

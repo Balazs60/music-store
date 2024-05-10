@@ -45,9 +45,9 @@ public class PaymentService {
                 orderService.saveOrder(order);
             }
 
-            return "Payment successful. Charge ID: " + charge.getId();
+            return "Payment successful!";
         } catch (StripeException e) {
-            return "Payment failed: " + e.getMessage();
+            return "Payment failed!";
         }
     }
     public Map<String, Object> createCheckoutSession(int amount) {

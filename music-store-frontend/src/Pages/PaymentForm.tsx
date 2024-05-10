@@ -26,11 +26,13 @@ const PaymentForm = () => {
         body: JSON.stringify({ token: token.id, amount: fullPrice, orderId: orderId }),
       });
 
-      if (response.ok) {
-        console.log('Payment successful on the server side');
+const responseData = await response.text()
+console.log("respdata " + responseData)
+      if (response.ok && responseData === "Payment successful!") {
+        console.log("respdata2 " + responseData)
         navigate(`/successful-order`);
-      } else {
-        console.error('Payment failed on the server side');
+      } else if(!response.ok || responseData === "Payment failed!") {
+        navigate(`/unsuccessful-order`);
       }
     } catch (error) {
       console.error('Error sending token to server:', error);
