@@ -32,6 +32,7 @@ console.log("respdata " + responseData)
         console.log("respdata2 " + responseData)
         navigate(`/successful-order`);
       } else if(!response.ok || responseData === "Payment failed!") {
+        console.log("respdata3 " + responseData)
         navigate(`/unsuccessful-order`);
       }
     } catch (error) {
