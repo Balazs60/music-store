@@ -8,6 +8,8 @@ import com.stripe.model.billingportal.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import io.github.cdimascio.dotenv.Dotenv;
+
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -17,8 +19,12 @@ import java.util.UUID;
 @Service
 public class PaymentService {
 
-    @Value("${stripe.secretKey}")
-    private String stripeSecretKey;
+//    @Value("${stripe.secretKey}")
+//    private String stripeSecretKey;
+    private static Dotenv dotenv = Dotenv.configure().load();
+    private String stripeSecretKey = dotenv.get("STRIPE_SECRET_KEY");
+
+
     private OrderService orderService;
 @Autowired
     public PaymentService(OrderService orderService) {
@@ -26,6 +32,8 @@ public class PaymentService {
     }
 
     public String processPayment(String token, int amount , String orderId) {
+
+        System.out.println("stripe secret key :" + stripeSecretKey);
         Stripe.apiKey = stripeSecretKey;
 
         Map<String, Object> params = new HashMap<>();
