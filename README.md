@@ -3,7 +3,11 @@
 
 ## About The Project  
 
-We wantred to create a professional webshop in music theme because instuments and music are both of our interest. Both developers working as fullstack(backend and frontend).We using technologies like Java, Spring, PostgreSQL, TypeScript and React. This project is still in development stage.  
+We want to create a professional webshop with a music theme because  
+instruments and music are both of our interests. Both developers work as  
+full-stack developers on the project. We are using technologies such as  
+Java, Spring, PostgreSQL, TypeScript, and React.  
+
 
 ## Built With  
 Java  
@@ -11,6 +15,7 @@ Spring
 Postgresql  
 TypeScript  
 React  
+Tailwind CSS  
 
 ## Getting Started  
 
@@ -25,19 +30,26 @@ Docker Desktop
 
 git clone https://github.com/Balazs60/music-store  
 
+
+
+#### Fill out the properties in template_env file (optional)  
+
+To enable card payments and chatbot functionality in the webshop,  
+you need to fill out the following properties in the template_env file:  
+
+STRIPE_SECRET_KEY = Get your stripe secret key from the stripe website.  
+
+GOOGLE_APPLICATION_CREDENTIALS = Get your API credential from Google Cloud Platform  
+for the Dialogflow chatbot. You can find the instructions on the Google Cloud Platform  
+website. Next download and copy the credentials json file into the src/main/resources folder and  
+add the path to here.  
+
+Finally, rename the template_env file to .env   
+
+
 #### Navigate to the required directory:  
 
 cd music-store/music-store-backend  
-
-#### Fill out the properties in template_env file  
-
-POSTGRES_USER =  
-POSTGRES_PASSWORD =  
-POSTGRES_DB_NAME =  
-STRIPE_SECRET_KEY = If you want to use the card payment in the webshop  
-                    get your stripe secret key from the stripe website.  
-
-#### Rename the template_env file to .env
 
 
 #### Run command:  
