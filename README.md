@@ -37,7 +37,7 @@ git clone https://github.com/Balazs60/music-store
 To enable card payments and chatbot functionality in the webshop,  
 you need to fill out the following properties in the template_env file:  
 
-STRIPE_SECRET_KEY = Get your stripe secret key from the stripe website.  
+STRIPE_SECRET_KEY = Get your Stripe secret key from the Stripe website.  
 
 GOOGLE_APPLICATION_CREDENTIALS = Get your API credential from Google Cloud Platform  
 for the Dialogflow chatbot. You can find the instructions on the Google Cloud Platform  
