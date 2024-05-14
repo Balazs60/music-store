@@ -32,19 +32,23 @@ git clone https://github.com/Balazs60/music-store
 
 
 
-#### Fill out the properties in template_env file (optional)  
+#### Find the env_example file in the music-store/music-store-backend folder and fill out the properties    
+
+POSTGRES_USER=  
+POSTGRES_PASSWORD=  
+POSTGRES_DB_NAME=  
 
 To enable card payments and chatbot functionality in the webshop,  
 you need to fill out the following properties in the template_env file:  
 
-STRIPE_SECRET_KEY = Get your Stripe secret key from the Stripe website.  
+STRIPE_SECRET_KEY = Get your Stripe secret key from the Stripe website. (optional)  
 
 GOOGLE_APPLICATION_CREDENTIALS = Get your API credential from Google Cloud Platform  
 for the Dialogflow chatbot. You can find the instructions on the Google Cloud Platform  
 website. Next download and copy the credentials json file into the src/main/resources folder and  
-add the path to here.  
+add the path to here. (optional)  
 
-Finally, rename the template_env file to .env   
+Finally, rename the env_example file to .env   
 
 
 #### Navigate to the required directory:  
