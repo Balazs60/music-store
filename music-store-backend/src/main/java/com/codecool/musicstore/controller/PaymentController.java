@@ -31,9 +31,5 @@ public class PaymentController {
             return "Error occurred: " + e.getMessage();
         }
     }
-    @PostMapping("/create-checkout-session")
-    public ResponseEntity<Map<String, Object>> createCheckoutSession(@RequestBody PaymentRequest paymentRequest) {
-        Map<String, Object> response = paymentService.createCheckoutSession(paymentRequest.getAmount());
-        return ResponseEntity.ok(response);
-    }
+
 }
