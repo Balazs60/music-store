@@ -3,12 +3,14 @@ services:
 
   kanban-postgres:
     image: "postgres:13-alpine"
+    env_file:
+      - .env
     ports:
       - "5000:5432"
     environment:
-      POSTGRES_DB: music-store
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
+      POSTGRES_DB: ${POSTGRES_DB_NAME}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - kanban-data:/var/lib/postgresql/data
 
@@ -21,10 +23,10 @@ services:
       - .env
     environment:
       DB_HOST: kanban-postgres
-      DB_USER: user
-      DB_PASSWORD: password
+      DB_USER: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
       DB_PORT: 5432
-      DB_NAME: music-store
+      DB_NAME: ${POSTGRES_DB_NAME}
       STRIPE_SECRETKEY: ${STRIPE_SECRET_KEY}
       GOOGLE_APPLICATION_CREDENTIALS: ${GOOGLE_APPLICATION_CREDENTIALS}
     ports:
