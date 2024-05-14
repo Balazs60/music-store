@@ -21,14 +21,17 @@ public class PaymentService {
 
 //    @Value("${stripe.secretKey}")
 //    private String stripeSecretKey;
-    private static Dotenv dotenv = Dotenv.configure().load();
-    private String stripeSecretKey = dotenv.get("STRIPE_SECRET_KEY");
+//    private static Dotenv dotenv = Dotenv.configure().load();
+//    private String stripeSecretKey = dotenv.get("STRIPE_SECRET_KEY");
+
+    private String stripeSecretKey = System.getenv("STRIPE_SECRET_KEY");
 
 
     private OrderService orderService;
 @Autowired
     public PaymentService(OrderService orderService) {
         this.orderService = orderService;
+    System.out.println("kamu stripe " + stripeSecretKey);
     }
 
     public String processPayment(String token, int amount , String orderId) {

@@ -7,7 +7,7 @@ services:
       - "5000:5432"
     environment:
       POSTGRES_DB: music-store
-      POSTGRES_USER: user
+      POSTGRES_USER: userx
       POSTGRES_PASSWORD: password
     volumes:
       - kanban-data:/var/lib/postgresql/data
@@ -21,7 +21,7 @@ services:
       - .env
     environment:
       DB_HOST: kanban-postgres
-      DB_USER: user
+      DB_USER: userx
       DB_PASSWORD: password
       DB_PORT: 5432
       DB_NAME: music-store
