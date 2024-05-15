@@ -39,7 +39,8 @@ POSTGRES_PASSWORD=
 POSTGRES_DB_NAME=  
 
 To enable card payments and chatbot functionality in the webshop,  
-you need to fill out the following properties in the template_env file:  
+you need to fill out the following properties. If you dont want to use these functionalities,  
+just leave these fields empty.  
 
 STRIPE_SECRET_KEY = Get your Stripe secret key from the Stripe website. (optional)  
 
