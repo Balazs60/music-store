@@ -31,7 +31,6 @@ public class PaymentService {
 @Autowired
     public PaymentService(OrderService orderService) {
         this.orderService = orderService;
-    System.out.println("kamu stripe " + stripeSecretKey);
     }
 
     public String processPayment(String token, int amount , String orderId) {
