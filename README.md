@@ -63,7 +63,7 @@ docker compose up
 
 #### Use the following port:  
 
-http://localehost:4200/  
+http://localhost:4200/  
 
 ## Authors  
 Borisz Bisits  
